@@ -1,0 +1,42 @@
+.tab {
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.tabInput {
+    display: none;
+}
+
+.tabTab {
+    width: 100px;
+    height: 35px;
+    background: #F3F3F3;
+    border: 3px solid #000000;
+    border-radius: 10px 10px 0px 0px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #000000;
+}
+
+.tabTab:hover {
+    color: #00ced1;
+    box-shadow: 1px 1px 1px black;
+}
+
+.tabTab::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #FFFFFF;
+    border-radius: 10px 10px 0px 0px;
+
+    transform: scale(0);
+    transition: transform 0.15s;
+}
+
+.tabInput:checked + .tabTab::after {
+    transform: scale(1);
+}

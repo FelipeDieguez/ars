@@ -1,0 +1,51 @@
+.grid{
+    width: 720px;
+    height: 1024px;
+    display: inline-flex;
+    box-sizing: border-box;
+    background: #F3F3F3;
+    border: 2px solid #000000;
+}
+
+.gridSolos {
+    width: 310px;
+    height: 115px;
+    margin-left: 10px;
+    margin-top: 10px;
+    display: grid;
+    grid-row-gap: 10px;
+}
+
+.gridSolos div {
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.gridMetodos {
+    width: 165px;
+    height: 87px;
+    margin-left: 10px;
+    margin-top: 38px;
+    display: grid;
+    grid-row-gap: 10px;
+}
+
+.gridDimensoes {
+    width: 200px;
+    height: 87px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 38px;
+    display: grid;
+    grid-row-gap: 10px;
+}
+
+.gridDimensoes div {
+    display: inline-flex;
+    justify-content: space-around;
+}
+
+.gridTabela {
+    width: 50px;
+    height: 87px;
+}

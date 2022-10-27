@@ -1,0 +1,39 @@
+.radio {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 15px;
+    color: #000000;
+}
+
+.radioInput {
+    display: none;
+}
+
+.radioRadio {
+    width: 15px;
+    height: 15px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    margin-right: 5px;
+    box-sizing: border-box;
+    padding: 2px;
+}
+
+.radioRadio::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #00ced1;
+    border-radius: 50%;
+
+    transform: scale(0);
+    transition: transform 0.15s;
+}
+
+.radioInput:checked + .radioRadio::after {
+    transform: scale(1);
+}

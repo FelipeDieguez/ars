@@ -8,8 +8,9 @@
     cursor: pointer;
     font-size: 15px;
     color: #000000;
-    
+    flex: 1;
     transition: .5s;
+    margin: 0 5px;
 }
 
 .btn:hover {

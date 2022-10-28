@@ -18,6 +18,7 @@
     box-sizing: border-box;
     font-size: 15px;
     color: #000000;
+    text-align: center;
 }
 
 .tabTab:hover {

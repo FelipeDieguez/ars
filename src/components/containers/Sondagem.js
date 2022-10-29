@@ -20,7 +20,8 @@ function Sondagem() {
     // Definindo useState do radio button que irá mudar o array do select
     const [radio, setRadio] = useState(["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"])
 
-    // Fazendo request para api a fim de encontrar os dados para mostrar na tabela
+    // Fazendo request de api e setando data para mostrar na interface (essa função no começo e toda vez que data é alterado)
+    // Onde data está sendo alterado fora dessa função???? 
     const [data, setData] = useState([{}])
     
     useEffect(() => {
@@ -28,9 +29,9 @@ function Sondagem() {
             .then((response) => {
                 setData(response.data)
         })
-    }, [])
+    }, [data])
     
-    // Atualizando values toda vez que um input é alterado 
+    // Atualiza obj initial Camada toda vez que o input muda
     const [values, setValues] = useState(initialCamada)
 
     function onChange(ev) {
@@ -39,16 +40,10 @@ function Sondagem() {
         setValues({ ...values, [name]: value })
     }
 
-    // Enviando dados para api e atualizando visualização da tabela
+    // Enviando obj initial Camada com valores preenchidos para api
     function onClick(ev) {
         ev.preventDefault()
         axios.post('http://localhost:5000/sondagens', values)
-            .then(
-                axios.get('http://localhost:5000/sondagens')
-                    .then((response) => {
-                        setData(response.data)
-                })
-        )
     }
 
     return (

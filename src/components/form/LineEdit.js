@@ -1,13 +1,11 @@
 import styles from './LineEdit.module.css'
 
-function LineEdit ({type, text, width, id}) {
+function LineEdit ({text, type, name, width, onChange}) {
     return (
-        <div> 
-            <label className={styles.lineEdit}>
-                {text}
-                <input type={type} id={id} className={styles.lineEditInput} style={{width: width}}/>
-            </label>
-        </div> 
+        <> 
+            <label htmlFor={name} className={styles.lineEdit}>{text}</label>
+            <input type={type} name={name} className={styles.lineEditInput} style={{width: width}} onChange={onChange}/>
+        </> 
     )
 }
 

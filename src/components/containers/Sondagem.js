@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 import Button from '../form/Button'
 import Label from '../form/Label'
@@ -10,35 +11,45 @@ import Table from '../form/Table'
 
 import styles from './Sondagem.module.css'
 
+const initialCamada = {
+    "solos": "",
+    "nspt": ""
+}
+
 function Sondagem() {
-    function cadastrar(e) {
-        e.preventDefault()
-        console.log(solo)
-        console.log(nspt)
+    // Definindo useState do radio button que irá mudar o array do select
+    const [radio, setRadio] = useState(["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"])
+
+    // Fazendo request para api a fim de encontrar os dados para mostrar na tabela
+    const [data, setData] = useState([{}])
+    
+    useEffect(() => {
+        axios.get('http://localhost:5000/sondagens')
+            .then((response) => {
+                setData(response.data)
+        })
+    }, [])
+    
+    // Atualizando values toda vez que um input é alterado 
+    const [values, setValues] = useState(initialCamada)
+
+    function onChange(ev) {
+        const { name, value } = ev.target
+        
+        setValues({ ...values, [name]: value })
     }
 
-    const [radio, setRadio] = useState(["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"])
-    const [solo, setSolo] = useState()
-    const [nspt, setNspt] = useState()
-
-    const data = [
-        {
-            "solos": "Argila",
-            "nspt": "10",
-            "resistência Lateral": "50",
-            "resistência Ponta": "30",
-            "c. Rup. (kN)": "80",
-            "c. Adm. (kN)": "40"
-        },
-        {
-            "solos": "Areia",
-            "nspt": "5",
-            "resistência Lateral": "30",
-            "resistência Ponta": "20",
-            "c. Rup. (kN)": "50",
-            "c. Adm. (kN)": "25"
-        }
-    ]
+    // Enviando dados para api e atualizando visualização da tabela
+    function onClick(ev) {
+        ev.preventDefault()
+        axios.post('http://localhost:5000/sondagens', values)
+            .then(
+                axios.get('http://localhost:5000/sondagens')
+                    .then((response) => {
+                        setData(response.data)
+                })
+        )
+    }
 
     return (
         <div className={styles.grid}>
@@ -69,17 +80,17 @@ function Sondagem() {
                         <div className={styles.step}>
                             <Select
                                 text="Solo:"
+                                name="solos"
                                 list={radio}
                                 width="160px"
-                                id="solos"
-                                onChange={(e) => setSolo(e.target.value)}
+                                onChange={onChange}
                             />
                             <LineEdit
-                                type="number"
                                 text="Nspt="
+                                type="number"
+                                name="nspt"
                                 width="50px"
-                                id="nspt"
-                                onChange={(e) => setNspt(e.target.value)}
+                                onChange={onChange}
                             />
                         </div>
                         <div className={styles.step}>
@@ -87,7 +98,7 @@ function Sondagem() {
                                 text="Cadastrar"
                                 width="100px"
                                 id="cadastrar"
-                                onSubmit={cadastrar}
+                                onClick={onClick}
                             />
                             <Button
                                 text="Editar"

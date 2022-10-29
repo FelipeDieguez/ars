@@ -43,4 +43,5 @@ section {
     margin: 0px 10px 10px 10px;
     background: #ffffff;
     border: 2px solid #000000;
+    flex-grow: 1;
 }

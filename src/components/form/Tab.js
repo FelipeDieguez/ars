@@ -1,15 +1,15 @@
 import styles from './Tab.module.css'
 
-function Tab ({text, name, onChange, id, checked}) {
+function Tab ({text, id, name, onChange}) {
     return (      
-        <div> 
+        <> 
             <label htmlFor={id} className={styles.tab}>
-                <input type="radio" name={name} id={id} className={styles.tabInput} onChange={onChange} checked={checked}/>
+                <input type="radio" id={id} name={name} onChange={onChange} className={styles.tabInput}/>
                 <div className={styles.tabTab}>
                     {text}
                 </div>
             </label>
-        </div> 
+        </> 
     )
 }
 

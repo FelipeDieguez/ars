@@ -1,9 +1,9 @@
 import styles from './Button.module.css'
 
-function Button ({text, width, id, onClick}) {
+function Button ({text, name, width, onClick}) {
     return (
         <>
-            <button id={id} className={styles.btn} style={{width: width}} onClick={onClick}>
+            <button name={name} style={{width: width}} onClick={onClick} className={styles.btn}>
                 {text}
             </button>
         </>

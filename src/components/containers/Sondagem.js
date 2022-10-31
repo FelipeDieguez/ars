@@ -12,24 +12,25 @@ import Table from '../form/Table'
 import styles from './Sondagem.module.css'
 
 const initialCamada = {
+    "#": "",
     "solos": "",
     "nspt": ""
 }
 
 function Sondagem() {
     // Definindo useState do radio button que irá mudar o array do select
-    const [radio, setRadio] = useState(["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"])
+    const [radio, setRadio] = useState([])
 
     // Fazendo request de api e setando data para mostrar na interface (essa função no começo e toda vez que data é alterado)
     // Onde data está sendo alterado fora dessa função???? 
     const [data, setData] = useState([{}])
     
     useEffect(() => {
-        axios.get('http://localhost:5000/sondagens')
+        axios.get('/sondagem')
             .then((response) => {
-                setData(response.data)
-        })
-    }, [data])
+                setData(response.data["sondagens"])
+            })
+    }, [])
     
     // Atualiza obj initial Camada toda vez que o input muda
     const [values, setValues] = useState(initialCamada)
@@ -40,11 +41,37 @@ function Sondagem() {
         setValues({ ...values, [name]: value })
     }
 
+    // DEFININDO FUNÇÕES DE BOTÕES
     // Enviando obj initial Camada com valores preenchidos para api
-    function onClick(ev) {
+    function cadastrar(ev) {
         ev.preventDefault()
-        axios.post('http://localhost:5000/sondagens', values)
+        let count = data.length
+        values["#"] = count + 1
+        console.log(values)
+        axios.post('/sondagem/cadastrar', values)
     }
+
+    const [selectedRow, setSelectedRow] = useState()
+
+    // Se tiver uma linha selecionada, mandar informação # da linha e dos novos solo e nspt
+    function editar(ev) {
+        ev.preventDefault()
+        if (typeof selectedRow === "string") {
+            values["#"] = Number(selectedRow)
+            console.log(values)
+            axios.post('/sondagem/editar', values)
+        }
+    }
+    
+    // Se tiver uma linha selecionada, mandar informação # da linha para excluir
+    function remover(ev) {
+        ev.preventDefault()
+        if (typeof selectedRow === "string") {
+            values["#"] = Number(selectedRow)
+            console.log(values)
+            axios.post('/sondagem/remover', values)
+        }
+    } 
 
     return (
         <div className={styles.grid}>
@@ -55,21 +82,21 @@ function Sondagem() {
                         <div className={styles.step}>
                             <Radio
                                 text="Areia"
+                                id="areia"
                                 name="solos"
                                 onChange={() => { setRadio(["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"]) }}
-                                id="areia"
                             />
                             <Radio
                                 text="Argila"
+                                id="argila"
                                 name="solos"
                                 onChange={(e) => { setRadio(["Argila", "Argila arenosa", "Argila areno-siltosa", "Argila siltosa", "Argila silto-arenosa"]) }}
-                                id="argila"
                             />
                             <Radio
                                 text="Silte"
+                                id="silte"
                                 name="solos"
                                 onChange={(e) => { setRadio(["Silte", "Silte arenoso", "Silte areno-argiloso", "Silte argiloso", "Silte argilo-arenoso"]) }}
-                                id="silte"
                             />
                         </div>
                         <div className={styles.step}>
@@ -91,19 +118,21 @@ function Sondagem() {
                         <div className={styles.step}>
                             <Button
                                 text="Cadastrar"
+                                name="cadastrar"
                                 width="100px"
-                                id="cadastrar"
-                                onClick={onClick}
+                                onClick={cadastrar}
                             />
                             <Button
                                 text="Editar"
+                                name="editar"
                                 width="70px"
-                                id="editar"
+                                onClick={editar}
                             />
                             <Button
                                 text="Remover"
+                                name="remover"
                                 width="100px"
-                                id="remover"
+                                onClick={remover}
                             />
                         </div>
                     </div>
@@ -114,15 +143,15 @@ function Sondagem() {
                         <div className={styles.step}>
                             <Radio
                                 text="Aoki-Velloso"
-                                name="metodos"
                                 id="aoki"
+                                name="metodos"
                             />
                         </div>
                         <div className={styles.step}>
                             <Radio
                                 text="Decourt-Quaresma"
-                                name="metodos"
                                 id="decourt"
+                                name="metodos"
                             />
                         </div>
                     </div>
@@ -130,24 +159,24 @@ function Sondagem() {
                         <div className={styles.step}>
                             <Select
                                 text="Tipo:"
+                                name="tipos"
                                 list={["Franki", "Metálica", "Pré-moldada", "Escavada", "Raiz", "Hélice contínua", "Barrete", "Ômega"]}
                                 width="135px"
-                                id="tipos"
                             />
                         </div>
                         <div className={styles.step}>
                             <LineEdit
-                                type="number"
                                 text="Diâmetro="
-                                width="50px"
-                                id="dimensao_1"
+                                type="number"
+                                name="dimensao_1"
+                                width="50px" 
                             />
                         </div>
                         <div className={styles.step}>
                             <Button
                                 text="Calcular"
+                                name="calcular"
                                 width="80px"
-                                id="calcular"
                             />
                         </div>
                     </div>
@@ -155,18 +184,22 @@ function Sondagem() {
             </header>
             <nav>
                 <Tab 
-                    text="Compressão" 
-                    name="tabelas"
+                    text="Compressão"
                     id="compressao"
+                    name="tabelas"
                 />
                 <Tab 
                     text="Tração"
-                    name="tabelas"
                     id="tracao"
+                    name="tabelas"
                 />
             </nav>
             <section>
-                <Table data={data} />
+                <Table data={data} 
+                    onChange={
+                        (ev) => setSelectedRow(ev.target.id)
+                        }
+                />
             </section>
         </div>
     )

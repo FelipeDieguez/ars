@@ -4,7 +4,7 @@ function Select ({text, name, list, width, onChange}) {
     return (
         <>
             <label htmlFor={name} className={styles.label}>{text}</label>
-            <select name={name} className={styles.select} style={{width: width}} onChange={onChange}>
+            <select name={name} style={{width: width}} onChange={onChange} className={styles.select}>
                 {list.map((element) => (
                     <option key={element} className={styles.option}>{element}</option>
                 ))}

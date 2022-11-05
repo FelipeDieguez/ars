@@ -13,65 +13,115 @@ import styles from './Sondagem.module.css'
 
 const initialCamada = {
     "#": "",
-    "solos": "",
-    "nspt": ""
+    "solo": "Areia",
+    "nspt": 0
+}
+
+const initialDadosEntrada = {
+    "tipo": "Franki",
+    "dimensao_1": 0,
+    "dimensao_2": 0
 }
 
 function Sondagem() {
-    // Definindo useState do radio button que irá mudar o array do select
-    const [radio, setRadio] = useState([])
+    // Atualiza obj initial Camada toda vez que o input muda
+    const [camada, setCamada] = useState(initialCamada)
 
-    // Fazendo request de api e setando data para mostrar na interface (essa função no começo e toda vez que data é alterado)
-    // Onde data está sendo alterado fora dessa função???? 
+    function updateCamada(ev) {
+        const { name, value } = ev.target
+        
+        setCamada({ ...camada, [name]: value })
+    }
+
+    // Configurações dos Radios e Selects
+    const areias = ["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"]
+    const argilas = ["Argila", "Argila arenosa", "Argila areno-siltosa", "Argila siltosa", "Argila silto-arenosa"]
+    const siltes = ["Silte", "Silte arenoso", "Silte areno-argiloso", "Silte argiloso", "Silte argilo-arenoso"]
+    const [solo, setSolo] = useState("Areia")
+    const [solos, setSolos] = useState(areias)
+
+    // Fazendo request de api e setando data para mostrar na interface
     const [data, setData] = useState([{}])
+    const [updateTable, setUpdateTable] = useState(0)
+    const [calculo, setCalculo] = useState(0)
     
     useEffect(() => {
         axios.get('/sondagem')
             .then((response) => {
+                if (calculo === 1) {
+                    response.data["sondagens"].forEach((element, index) => {
+                        element["lateral"] = response.data["resultados"]["aoki-velloso"][index]["lateral"]
+                        element["ponta"] = response.data["resultados"]["aoki-velloso"][index]["ponta"]
+                        element["c. rup. (kN)"] = response.data["resultados"]["aoki-velloso"][index]["c. rup. (kN)"]
+                        element["c. adm. (kN)"] = response.data["resultados"]["aoki-velloso"][index]["c. adm. (kN)"]
+                    })
+                }
+                else {
+                    response.data["sondagens"].forEach((element, index) => {
+                        element["lateral"] = ""
+                        element["ponta"] = ""
+                        element["c. rup. (kN)"] = ""
+                        element["c. adm. (kN)"] = ""
+                    })
+                }
+                
                 setData(response.data["sondagens"])
+                setUpdateTable(0)
             })
-    }, [])
-    
-    // Atualiza obj initial Camada toda vez que o input muda
-    const [values, setValues] = useState(initialCamada)
+    }, [updateTable, calculo])
 
-    function onChange(ev) {
-        const { name, value } = ev.target
-        
-        setValues({ ...values, [name]: value })
-    }
-
-    // DEFININDO FUNÇÕES DE BOTÕES
-    // Enviando obj initial Camada com valores preenchidos para api
+    // MANIPULAÇÃO DA TABELA (CADATRAR/EDITAR/REMOVER)
     function cadastrar(ev) {
         ev.preventDefault()
         let count = data.length
-        values["#"] = count + 1
-        console.log(values)
-        axios.post('/sondagem/cadastrar', values)
+        camada["#"] = count + 1
+        axios.post('/sondagem/cadastrar', camada)
+        setUpdateTable(1)
+        setCalculo(0)
     }
 
     const [selectedRow, setSelectedRow] = useState()
 
-    // Se tiver uma linha selecionada, mandar informação # da linha e dos novos solo e nspt
     function editar(ev) {
         ev.preventDefault()
         if (typeof selectedRow === "string") {
-            values["#"] = Number(selectedRow)
-            console.log(values)
-            axios.post('/sondagem/editar', values)
+            camada["#"] = Number(selectedRow)
+            axios.post('/sondagem/editar', camada)
+            setUpdateTable(1)
+            setCalculo(0)
         }
     }
     
-    // Se tiver uma linha selecionada, mandar informação # da linha para excluir
     function remover(ev) {
         ev.preventDefault()
         if (typeof selectedRow === "string") {
-            values["#"] = Number(selectedRow)
-            console.log(values)
-            axios.post('/sondagem/remover', values)
+            camada["#"] = Number(selectedRow)
+            axios.post('/sondagem/remover', camada)
+            setUpdateTable(1)
+            setCalculo(0)
         }
     } 
+
+    // Atualiza obj initial DadosEntrada toda vez que o input muda
+    const [dadosEntrada, setDadosEntrada] = useState(initialDadosEntrada)
+
+    function updateDadosEntrada(ev) {
+        const { name, value } = ev.target
+
+        setDadosEntrada({ ...dadosEntrada, [name]: value })
+    }
+
+    //Configuração dos Radios e Selects
+    const [metodo, setMetodo] = useState("aoki-velloso")
+    const tipos = ["Franki", "Metálica", "Pré-moldada", "Escavada", "Raiz", "Hélice contínua", "Barrete", "Ômega"]
+
+    //MANIPULAÇÃO DA TABELA (CALCULAR)
+    function calcular(ev) {
+        ev.preventDefault()
+        axios.post('/sondagem/calcular', dadosEntrada)
+        setUpdateTable(1)
+        setCalculo(1)
+    }
 
     return (
         <div className={styles.grid}>
@@ -84,35 +134,47 @@ function Sondagem() {
                                 text="Areia"
                                 id="areia"
                                 name="solos"
-                                onChange={() => { setRadio(["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"]) }}
+                                checked={solo === "Areia"}
+                                onChange={() => { setSolo("Areia")
+                                                setSolos(areias)
+                                                setCamada({ ...camada, "solo": areias[0] })
+                                                }}
                             />
                             <Radio
                                 text="Argila"
                                 id="argila"
                                 name="solos"
-                                onChange={(e) => { setRadio(["Argila", "Argila arenosa", "Argila areno-siltosa", "Argila siltosa", "Argila silto-arenosa"]) }}
+                                checked={solo === "Argila"}
+                                onChange={(e) => { setSolo("Argila")
+                                                setSolos(argilas)
+                                                setCamada({ ...camada, "solo": argilas[0] })
+                                                }}
                             />
                             <Radio
                                 text="Silte"
                                 id="silte"
                                 name="solos"
-                                onChange={(e) => { setRadio(["Silte", "Silte arenoso", "Silte areno-argiloso", "Silte argiloso", "Silte argilo-arenoso"]) }}
+                                checked={solo === "Silte"}
+                                onChange={(e) => { setSolo("Silte")
+                                                setSolos(siltes)
+                                                setCamada({ ...camada, "solo": siltes[0] })
+                                                }}
                             />
                         </div>
                         <div className={styles.step}>
                             <Select
                                 text="Solo:"
-                                name="solos"
-                                list={radio}
+                                name="solo"
+                                list={solos}
                                 width="160px"
-                                onChange={onChange}
+                                onChange={updateCamada}
                             />
                             <LineEdit
                                 text="Nspt="
                                 type="number"
                                 name="nspt"
                                 width="50px"
-                                onChange={onChange}
+                                onChange={updateCamada}
                             />
                         </div>
                         <div className={styles.step}>
@@ -144,14 +206,22 @@ function Sondagem() {
                             <Radio
                                 text="Aoki-Velloso"
                                 id="aoki"
-                                name="metodos"
+                                name="metodo"
+                                checked={metodo === "aoki-velloso"}
+                                onChange={() => { setMetodo("aoki-velloso") 
+                                                setCalculo(0)
+                                                }}
                             />
                         </div>
                         <div className={styles.step}>
                             <Radio
                                 text="Decourt-Quaresma"
                                 id="decourt"
-                                name="metodos"
+                                name="metodo"
+                                checked={metodo === "decourt-quaresma"}
+                                onChange={() => { setMetodo("decourt-quaresma") 
+                                                setCalculo(0)
+                                                }}
                             />
                         </div>
                     </div>
@@ -159,9 +229,10 @@ function Sondagem() {
                         <div className={styles.step}>
                             <Select
                                 text="Tipo:"
-                                name="tipos"
-                                list={["Franki", "Metálica", "Pré-moldada", "Escavada", "Raiz", "Hélice contínua", "Barrete", "Ômega"]}
+                                name="tipo"
+                                list={tipos}
                                 width="135px"
+                                onChange={updateDadosEntrada}
                             />
                         </div>
                         <div className={styles.step}>
@@ -169,7 +240,8 @@ function Sondagem() {
                                 text="Diâmetro="
                                 type="number"
                                 name="dimensao_1"
-                                width="50px" 
+                                width="50px"
+                                onChange={updateDadosEntrada}
                             />
                         </div>
                         <div className={styles.step}>
@@ -177,6 +249,7 @@ function Sondagem() {
                                 text="Calcular"
                                 name="calcular"
                                 width="80px"
+                                onClick={calcular}
                             />
                         </div>
                     </div>

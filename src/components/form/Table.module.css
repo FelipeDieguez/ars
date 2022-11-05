@@ -18,8 +18,11 @@
     font-size: 15px;
     padding: 0px;
     color: black;
-    text-transform: capitalize;
     border: 2.5px solid black;
+}
+
+.th::first-letter {
+    text-transform: capitalize;
 }
 
 .trBody {

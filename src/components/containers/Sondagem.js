@@ -23,8 +23,29 @@ const initialDadosEntrada = {
     "dimensao_2": 0
 }
 
-function Sondagem() {
-    // Atualiza obj initial Camada toda vez que o input muda
+function Sondagem(fundacao) {
+    // Configurações dos Radios e Selects
+    const [solo, setSolo] = useState("areia")
+    const [solos, setSolos] = useState(["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"])
+
+    function changeSolos(ev) {
+        const id = ev.target.id
+        const solos = {
+            "areia": ["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"],
+            "argila": ["Argila", "Argila arenosa", "Argila areno-siltosa", "Argila siltosa", "Argila silto-arenosa"],
+            "silte": ["Silte", "Silte arenoso", "Silte areno-argiloso", "Silte argiloso", "Silte argilo-arenoso"]
+        }
+        for (const [key, value] of Object.entries(solos)) {
+            if (id === key) {
+                var solosSelect = value
+            }
+        }
+        setSolo(id)
+        setSolos(solosSelect)
+        setCamada({ ...camada, "solo": solosSelect[0] })
+    }
+
+    // Atualiza json initialCamada toda vez que o input muda
     const [camada, setCamada] = useState(initialCamada)
 
     function updateCamada(ev) {
@@ -33,18 +54,106 @@ function Sondagem() {
         setCamada({ ...camada, [name]: value })
     }
 
-    // Configurações dos Radios e Selects
-    const areias = ["Areia", "Areia siltosa", "Areia silto-argilosa", "Areia argilosa", "Areia argilo-siltosa"]
-    const argilas = ["Argila", "Argila arenosa", "Argila areno-siltosa", "Argila siltosa", "Argila silto-arenosa"]
-    const siltes = ["Silte", "Silte arenoso", "Silte areno-argiloso", "Silte argiloso", "Silte argilo-arenoso"]
-    const [solo, setSolo] = useState("Areia")
-    const [solos, setSolos] = useState(areias)
+    // Manipulação da tabela (CADATRAR/EDITAR/REMOVER)
+    const [selectedRow, setSelectedRow] = useState()
+
+    function changeCamadas(ev) {
+        ev.preventDefault()
+        const name = ev.target.name
+        const options = {
+            "cadastrar": () => {
+                let count = data.length
+                camada["#"] = count + 1
+                axios.post('/sondagem/cadastrar', camada)
+            },
+            "editar": () => {
+                if (typeof selectedRow === "string") {
+                    camada["#"] = Number(selectedRow)
+                    axios.post('/sondagem/editar', camada)
+                }
+            },
+            "remover": () => {
+                if (typeof selectedRow === "string") {
+                    camada["#"] = Number(selectedRow)
+                    axios.post('/sondagem/remover', camada)
+                }
+            }
+        }
+        for (const [key, value] of Object.entries(options)) {
+            if (name === key) {
+                value()
+            }
+        }
+        setUpdateTable(1)
+        setCalculo(0)
+    }
+
+    // Configuração dos Radios e Selects
+    const [metodo, setMetodo] = useState("aoki-velloso")
+    const [tipos, setTipos] = useState(["Franki", "Metálica", "Pré-moldada", "Escavada", "Raiz", "Hélice contínua", "Barrete", "Ômega"])
+
+    function changeFundacao(tipoFundacao) {
+        const metodos = {
+            "estacas": ["Franki", "Metálica", "Pré-moldada", "Escavada", "Raiz", "Hélice contínua", "Barrete", "Ômega"],
+            "sapatas": ["Sapata retangular", "Sapata circular"],
+            "tubulao": ["Tubulão"]
+        }
+        for (const [key, value] of Object.entries(metodos)) {
+            if (tipoFundacao === key) {
+                setTipos(value)
+                break
+            }
+        }
+        console.log(tipoFundacao)
+        // Mudar métodos e adicionar LN + decimal para sapatas
+    }
+
+    const [secondDimension, setSecondDimension] = useState()
+
+    function changeTipo(ev) {
+        const tipo = ev.target.value
+        const secoes = {
+            "estaca circular": [["Franki", "Pré-moldada", "Escavada", "Raiz", "Hélice contínua", "Ômega"], undefined],
+            "estaca retangular": [["Metálica", "Barrete"], 1],
+            "sapata circular": [["Sapata circular"], undefined],
+            "sapata retangular": [["Sapata retangular"], 1],
+            "tubulao": [["Tubulão"], 1]
+        }
+        for (const [key, value] of Object.entries(secoes)) {
+            for (const element of value[0]) {
+                if (tipo === element) {
+                    setSecondDimension(value[1])
+                    break
+                }
+            }
+        }
+    }
+
+    // Atualiza obj initial DadosEntrada toda vez que o input muda
+    const [dadosEntrada, setDadosEntrada] = useState(initialDadosEntrada)
+
+    function updateDadosEntrada(ev) {
+        const { name, value } = ev.target
+
+        setDadosEntrada({ ...dadosEntrada, [name]: value })
+    }
+
+    //MANIPULAÇÃO DA TABELA (CALCULAR)
+    function calcular(ev) {
+        ev.preventDefault()
+        axios.post('/sondagem/calcular', dadosEntrada)
+        setUpdateTable(1)
+        setCalculo(1)
+    }
 
     // Fazendo request de api e setando data para mostrar na interface
     const [data, setData] = useState([{}])
     const [updateTable, setUpdateTable] = useState(0)
     const [calculo, setCalculo] = useState(0)
     
+    // Navegando nas tabs da tabela
+    const [esforco, setEsforco] = useState("compressao")
+
     useEffect(() => {
         axios.get('/sondagem')
             .then((response) => {
@@ -67,61 +176,9 @@ function Sondagem() {
                 
                 setData(response.data["sondagens"])
                 setUpdateTable(0)
+                changeFundacao(fundacao["fundacao"])
             })
-    }, [updateTable, calculo])
-
-    // MANIPULAÇÃO DA TABELA (CADATRAR/EDITAR/REMOVER)
-    function cadastrar(ev) {
-        ev.preventDefault()
-        let count = data.length
-        camada["#"] = count + 1
-        axios.post('/sondagem/cadastrar', camada)
-        setUpdateTable(1)
-        setCalculo(0)
-    }
-
-    const [selectedRow, setSelectedRow] = useState()
-
-    function editar(ev) {
-        ev.preventDefault()
-        if (typeof selectedRow === "string") {
-            camada["#"] = Number(selectedRow)
-            axios.post('/sondagem/editar', camada)
-            setUpdateTable(1)
-            setCalculo(0)
-        }
-    }
-    
-    function remover(ev) {
-        ev.preventDefault()
-        if (typeof selectedRow === "string") {
-            camada["#"] = Number(selectedRow)
-            axios.post('/sondagem/remover', camada)
-            setUpdateTable(1)
-            setCalculo(0)
-        }
-    } 
-
-    // Atualiza obj initial DadosEntrada toda vez que o input muda
-    const [dadosEntrada, setDadosEntrada] = useState(initialDadosEntrada)
-
-    function updateDadosEntrada(ev) {
-        const { name, value } = ev.target
-
-        setDadosEntrada({ ...dadosEntrada, [name]: value })
-    }
-
-    //Configuração dos Radios e Selects
-    const [metodo, setMetodo] = useState("aoki-velloso")
-    const tipos = ["Franki", "Metálica", "Pré-moldada", "Escavada", "Raiz", "Hélice contínua", "Barrete", "Ômega"]
-
-    //MANIPULAÇÃO DA TABELA (CALCULAR)
-    function calcular(ev) {
-        ev.preventDefault()
-        axios.post('/sondagem/calcular', dadosEntrada)
-        setUpdateTable(1)
-        setCalculo(1)
-    }
+    }, [updateTable, calculo, fundacao])
 
     return (
         <div className={styles.grid}>
@@ -134,31 +191,22 @@ function Sondagem() {
                                 text="Areia"
                                 id="areia"
                                 name="solos"
-                                checked={solo === "Areia"}
-                                onChange={() => { setSolo("Areia")
-                                                setSolos(areias)
-                                                setCamada({ ...camada, "solo": areias[0] })
-                                                }}
+                                checked={solo === "areia"}
+                                onChange={changeSolos}
                             />
                             <Radio
                                 text="Argila"
                                 id="argila"
                                 name="solos"
-                                checked={solo === "Argila"}
-                                onChange={(e) => { setSolo("Argila")
-                                                setSolos(argilas)
-                                                setCamada({ ...camada, "solo": argilas[0] })
-                                                }}
+                                checked={solo === "argila"}
+                                onChange={changeSolos}
                             />
                             <Radio
                                 text="Silte"
                                 id="silte"
                                 name="solos"
-                                checked={solo === "Silte"}
-                                onChange={(e) => { setSolo("Silte")
-                                                setSolos(siltes)
-                                                setCamada({ ...camada, "solo": siltes[0] })
-                                                }}
+                                checked={solo === "silte"}
+                                onChange={changeSolos}
                             />
                         </div>
                         <div className={styles.step}>
@@ -182,19 +230,19 @@ function Sondagem() {
                                 text="Cadastrar"
                                 name="cadastrar"
                                 width="100px"
-                                onClick={cadastrar}
+                                onClick={changeCamadas}
                             />
                             <Button
                                 text="Editar"
                                 name="editar"
                                 width="70px"
-                                onClick={editar}
+                                onClick={changeCamadas}
                             />
                             <Button
                                 text="Remover"
                                 name="remover"
                                 width="100px"
-                                onClick={remover}
+                                onClick={changeCamadas}
                             />
                         </div>
                     </div>
@@ -232,17 +280,42 @@ function Sondagem() {
                                 name="tipo"
                                 list={tipos}
                                 width="135px"
-                                onChange={updateDadosEntrada}
+                                onChange={(ev) => {updateDadosEntrada(ev)
+                                                changeTipo(ev)}}
                             />
                         </div>
                         <div className={styles.step}>
-                            <LineEdit
-                                text="Diâmetro="
-                                type="number"
-                                name="dimensao_1"
-                                width="50px"
-                                onChange={updateDadosEntrada}
-                            />
+                            {
+                                !secondDimension && (
+                                    <LineEdit
+                                    text="Diâmetro="
+                                    type="number"
+                                    name="dimensao_1"
+                                    width="50px"
+                                    onChange={updateDadosEntrada}
+                                />
+                                )
+                            }
+                            {
+                                secondDimension && (
+                                <>
+                                    <LineEdit
+                                    text="L="
+                                    type="number"
+                                    name="dimensao_1"
+                                    width="50px"
+                                    onChange={updateDadosEntrada}
+                                />
+                                    <LineEdit
+                                        text="B="
+                                        type="number"
+                                        name="dimensao_2"
+                                        width="50px"
+                                        onChange={updateDadosEntrada}
+                                />
+                                </>
+                                )
+                            }
                         </div>
                         <div className={styles.step}>
                             <Button
@@ -260,11 +333,15 @@ function Sondagem() {
                     text="Compressão"
                     id="compressao"
                     name="tabelas"
+                    checked={esforco === "compressao"}
+                    onChange={(ev) => {setEsforco(ev.target.id)}}
                 />
                 <Tab 
                     text="Tração"
                     id="tracao"
                     name="tabelas"
+                    checked={esforco === "tracao"}
+                    onChange={(ev) => {setEsforco(ev.target.id)}}
                 />
             </nav>
             <section>

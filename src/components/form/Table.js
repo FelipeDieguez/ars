@@ -12,15 +12,15 @@ function Table ({ data, onChange }) {
                 </tr>
             </thead>
             <tbody className={styles.tbody}>
-                {data.map((obj, index) => (
+                {data.map((obj) => (
                     <>
                         <input type="radio" name="tabela" id={obj["#"]} onChange={onChange}></input>
-                        <tr className={styles.trBody} key={index}>
+                        <tr className={styles.trBody}>
                             {/*<td className={styles.td}>{index + 1}</td> e antes de ...keys, colocar "#",*/}
-                            {keys.map((item, index) => {
+                            {keys.map((item) => {
                                 let value = obj[item]
                                 return (
-                                    <td className={styles.td} key={index}>
+                                    <td className={styles.td}>
                                         <label htmlFor={obj["#"]}>
                                             {value}
                                         </label>

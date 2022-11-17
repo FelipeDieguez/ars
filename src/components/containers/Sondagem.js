@@ -16,6 +16,8 @@ import areia from "../data/areia.json";
 import argila from "../data/argila.json";
 import silte from "../data/silte.json";
 
+import { listar } from "../services/sondagem";
+
 const initialCamada = {
   "#": "",
   solo: "Areia",
@@ -78,7 +80,7 @@ function Sondagem() {
       editar: () => {
         if (typeof selectedRow === "string") {
           camada["#"] = Number(selectedRow);
-          axios.post("/sondagem/editar", camada);
+          axios.post(`/sondagem/editar/${selectedRow}`, camada);
         }
       },
       remover: () => {
@@ -192,7 +194,7 @@ function Sondagem() {
   const [esforco, setEsforco] = useState("compressao");
 
   useEffect(() => {
-    axios.get("/sondagem").then((response) => {
+    listar().then((response) => {
       if (calculo === 1) {
         response.data["sondagens"].forEach((element, index) => {
           element["lateral"] =

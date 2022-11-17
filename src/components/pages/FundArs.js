@@ -1,22 +1,17 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import Sondagem from '../containers/Sondagem'
-import Fundacao from '../containers/Fundacao'
+import Sondagem from "../containers/Sondagem";
+import Fundacao from "../containers/Fundacao";
 
-import styles from './FundArs.module.css'
+import styles from "./FundArs.module.css";
 
 function FundArs() {
-    const [fundacao, setFundacao] = useState("estacas")
-
-    function getFundacao(fundacao) {
-        setFundacao(fundacao)
-    }
-    return (
-        <div className={styles.page}>
-        <Sondagem fundacao={fundacao}></Sondagem>
-        <Fundacao onSubmit={getFundacao}></Fundacao>
-        </div>
-    )
+  return (
+    <div className={styles.page}>
+      <Sondagem></Sondagem>
+      <Fundacao></Fundacao>
+    </div>
+  );
 }
 
-export default FundArs
+export default FundArs;

@@ -12,6 +12,10 @@ import Table from "../form/Table";
 import styles from "./Sondagem.module.css";
 import { useFoundationStore } from "../stores/foundationStore";
 
+import areia from "../data/areia.json";
+import argila from "../data/argila.json";
+import silte from "../data/silte.json";
+
 const initialCamada = {
   "#": "",
   solo: "Areia",
@@ -31,38 +35,14 @@ function Sondagem() {
 
   // Configurações dos Radios e Selects
   const [solo, setSolo] = useState("areia");
-  const [solos, setSolos] = useState([
-    "Areia",
-    "Areia siltosa",
-    "Areia silto-argilosa",
-    "Areia argilosa",
-    "Areia argilo-siltosa",
-  ]);
+  const [solos, setSolos] = useState(areia);
 
   function changeSolos(ev) {
     const id = ev.target.id;
     const solos = {
-      areia: [
-        "Areia",
-        "Areia siltosa",
-        "Areia silto-argilosa",
-        "Areia argilosa",
-        "Areia argilo-siltosa",
-      ],
-      argila: [
-        "Argila",
-        "Argila arenosa",
-        "Argila areno-siltosa",
-        "Argila siltosa",
-        "Argila silto-arenosa",
-      ],
-      silte: [
-        "Silte",
-        "Silte arenoso",
-        "Silte areno-argiloso",
-        "Silte argiloso",
-        "Silte argilo-arenoso",
-      ],
+      areia: areia,
+      argila: argila,
+      silte: silte,
     };
     for (const [key, value] of Object.entries(solos)) {
       if (id === key) {

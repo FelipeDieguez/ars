@@ -1,13 +1,11 @@
-import styles from './Label.module.css'
+import styles from "./Label.module.css";
 
-function Label ({text}) {
-    return (
-        <>
-            <label className={styles.label}>
-                {text}
-            </label>
-        </>
-    )
+function Label({ text }) {
+  return (
+    <>
+      <label className={styles.label}>{text}</label>
+    </>
+  );
 }
 
-export default Label
+export default Label;

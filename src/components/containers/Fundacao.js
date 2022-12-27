@@ -1,38 +1,14 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-
-import Button from '../form/Button'
 import Label from '../form/Label'
-import LineEdit from '../form/LineEdit'
-import Radio from '../form/Radio'
-import Select from '../form/Select'
-import Tab from '../form/Tab'
-import Table from '../form/Table'
+
+import FundacaoTypeSet from './Fundacao/FundacaoTypeSet'
 
 import styles from './Sondagem.module.css'
 
-function Fundacao({ onSubmit }) {
+function Fundacao({ fundacao, setFundacao, setTipos, changeSondagemInput, changeFundacaoGeometry }) {
     return (
         <div className={styles.grid}>
             <nav>
-                <Tab 
-                    text="ESTACAS"
-                    id="estacas"
-                    name="fundacoes"
-                    onChange={(ev) => {onSubmit(ev.target.id)}}
-                />
-                <Tab 
-                    text="SAPATAS"
-                    id="sapatas"
-                    name="fundacoes"
-                    onChange={(ev) => {onSubmit(ev.target.id)}}
-                />
-                <Tab 
-                    text="TUBULÃO"
-                    id="tubulao"
-                    name="fundacoes"
-                    onChange={(ev) => {onSubmit(ev.target.id)}}
-                />
+                <FundacaoTypeSet fundacao={fundacao} setFundacao={setFundacao} setTipos={setTipos} changeSondagemInput={changeSondagemInput} changeFundacaoGeometry={changeFundacaoGeometry} />
             </nav>
         </div>
     )

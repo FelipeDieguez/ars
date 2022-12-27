@@ -1,0 +1,5 @@
+{
+    "estacas": ["Franki", "Metálica", "Pré-moldada", "Escavada", "Raiz", "Hélice contínua", "Barrete", "Ômega"],
+    "sapatas": ["Sapata retangular", "Sapata circular"],
+    "tubuloes": ["Tubulão"]
+  }

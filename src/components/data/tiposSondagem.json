@@ -1,0 +1,39 @@
+{
+    "compressao": {
+        "estacas": {
+            "#": [],
+            "Solo": [],
+            "Nspt": [],
+            "Lateral": [],
+            "Ponta": [],
+            "C. Rup. (kN)": [],
+            "C. Adm. (kN)": []
+        },
+        "sapatas": {
+            "#": [],
+            "Solo": [],
+            "Nspt": [],
+            "γsolo": [],
+            "Sobrecarga": [],
+            "T. Adm. (kPa)": []
+        },
+        "tubuloes": {
+            "#": [],
+            "Solo": [],
+            "Nspt": [],
+            "Ponta": [],
+            "T. Rup. (kPa)": [],
+            "T. Adm. (kPa)": []
+        }
+    },
+    "tracao": {
+        "estacas": {
+            "#": [],
+            "Solo": [],
+            "Nspt": [],
+            "Lateral": [],
+            "Tronco de Cone": [],
+            "C. Adm. (kN)": []
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export function listar() {
-    return axios.get("/sondagem");
+    return axios.get("/sondagem")
 }
 
 export function cadastrarCamada(data) {
@@ -19,6 +19,3 @@ export function removerCamada(data) {
 export function calcular(data) {
     return axios.post('/sondagem/calcular', data);
 }
-
-
-

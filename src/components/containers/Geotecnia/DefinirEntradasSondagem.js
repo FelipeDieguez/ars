@@ -1,10 +1,10 @@
 import LineEdit from '../../form/LineEdit'
 import Select from '../../form/Select'
 
-function SoloNsptSet({ solos, camada, setCamada }) {
-    function updateCamada(ev) {
+function DefinirEntradasSondagem({ tiposSolo, mudarEntradasSondagem }) {
+    function alterarEntradasSondagem(ev) {
         const { name, value } = ev.target
-        setCamada({ ...camada, [name]: value })
+        mudarEntradasSondagem(name, value)
     }
 
     return (
@@ -12,19 +12,19 @@ function SoloNsptSet({ solos, camada, setCamada }) {
             <Select
                 text="Solo:"
                 name="solo"
-                list={solos}
+                list={tiposSolo}
                 width="160px"
-                onChange={updateCamada}
+                onChange={alterarEntradasSondagem}
             />
             <LineEdit
                 text="Nspt="
                 type="number"
                 name="nspt"
-                width="50px"
-                onChange={updateCamada}
+                width="45px"
+                onChange={alterarEntradasSondagem}
             />
         </>
     )
 }
 
-export default SoloNsptSet
+export default DefinirEntradasSondagem

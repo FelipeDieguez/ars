@@ -1,15 +1,16 @@
-import {listar, cadastrarCamada, editarCamada, removerCamada, calcular} from '../../services/sondagem'
-
 import Button from '../../form/Button'
 import Select from '../../form/Select'
 
-function AcaoCalcularGeotecnia({ geometriaFundacao, entradasGeotecnia, mudarEntradasGeotecnia, setAtualizarSondagem, setResultados }) {
+import {listar, cadastrarCamada, editarCamada, removerCamada, calcular} from '../../services/sondagem'
+import fundacaoGeometrias from "../../data/fundacaoGeometrias.json"
+
+function AcaoCalcularGeotecnia({ entradasGeotecnia, mudarEntradasGeotecnia, setAtualizarSondagem, setResultados }) {
     function calcularGeotecnia() {
         setAtualizarSondagem(1)
         //setResultados(calcular(entradasGeotecnia))
     }
 
-    if (geometriaFundacao === "sapata retangular" || geometriaFundacao === "sapata circular") {
+    if (fundacaoGeometrias[entradasGeotecnia["tipo"]] === "sapata retangular" || fundacaoGeometrias[entradasGeotecnia["tipo"]] === "sapata circular") {
         return (
             <>
                 <Select

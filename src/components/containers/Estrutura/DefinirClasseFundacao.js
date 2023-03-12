@@ -2,16 +2,10 @@ import Tab from '../../form/Tab'
 
 import fundacaoTipos from "../../data/fundacaoTipos.json"
 
-function DefinirClasseFundacao({ classeFundacao, setClasseFundacao, setTiposFundacao, mudarEntradasGeotecnia }) {
+function DefinirClasseFundacao({ classeFundacao, setClasseFundacao, mudarEntradasGeotecnia }) {
     function mudarClasseFundacao(ev) {
         const tipo_fundacao = ev.target.id
         setClasseFundacao(tipo_fundacao)
-        for (const [key, value] of Object.entries(fundacaoTipos)) {
-            if (tipo_fundacao === key) {
-                setTiposFundacao(value)
-                break
-            }
-        }
         mudarEntradasGeotecnia("tipo", fundacaoTipos[tipo_fundacao][0])
     }
 

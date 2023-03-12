@@ -3,8 +3,6 @@ import axios from 'axios'
 
 import Label from '../form/Label'
 
-import soloTipos from "../data/soloTipos.json"
-
 import DefinirClasseSolo from './Geotecnia/DefinirClasseSolo'
 import DefinirEntradasSondagem from './Geotecnia/DefinirEntradasSondagem'
 import DefinirSondagemGeotecnia from './Geotecnia/DefinirSondagemGeotecnia'
@@ -24,9 +22,8 @@ const inicialEntradasSondagem = {
     "nspt": "0"
 }
 
-function Geotecnia({ classeFundacao, tiposFundacao, geometriaFundacao, entradasGeotecnia, mudarEntradasGeotecnia}) {
+function Geotecnia({ classeFundacao, entradasGeotecnia, mudarEntradasGeotecnia}) {
     const [classeSolo, setClasseSolo] = useState("areia")
-    const [tiposSolo, setTiposSolo] = useState(soloTipos["areia"])
 
     const [entradasSondagem, setEntradasSondagem] = useState(inicialEntradasSondagem)
     const [sondagemGeotecnia, setSondagemGeotecnia] = useState([])
@@ -61,13 +58,12 @@ function Geotecnia({ classeFundacao, tiposFundacao, geometriaFundacao, entradasG
                             <DefinirClasseSolo
                                 classeSolo={classeSolo}
                                 setClasseSolo={setClasseSolo}
-                                setTiposSolo={setTiposSolo}
                                 mudarEntradasSondagem={mudarEntradasSondagem} 
                             />
                         </div>
                         <div className={styles.step}>
                             <DefinirEntradasSondagem
-                                tiposSolo={tiposSolo}
+                                classeSolo={classeSolo}
                                 mudarEntradasSondagem={mudarEntradasSondagem}
                             />
                         </div>
@@ -82,7 +78,7 @@ function Geotecnia({ classeFundacao, tiposFundacao, geometriaFundacao, entradasG
                     </div>
                     <div className={styles.steps}>
                         <DefinirMetodoGeotecnia
-                            geometriaFundacao={geometriaFundacao}
+                            classeFundacao={classeFundacao}
                             mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                             metodoGeotecnia={metodoGeotecnia}
                             setMetodoGeotecnia={setMetodoGeotecnia}
@@ -92,19 +88,18 @@ function Geotecnia({ classeFundacao, tiposFundacao, geometriaFundacao, entradasG
                     <div className={styles.steps}>
                         <div className={styles.step}>
                             <DefinirTipoEntradasGeotecnia
-                                tiposFundacao={tiposFundacao}
+                                classeFundacao={classeFundacao}
                                 mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                             />
                         </div>
                         <div className={styles.step}>
                             <DefinirDimensoesEntradasGeotecnia
-                                geometriaFundacao={geometriaFundacao}
+                                entradasGeotecnia={entradasGeotecnia}
                                 mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                             />
                         </div>
                         <div className={styles.step}>
                             <AcaoCalcularGeotecnia
-                                geometriaFundacao={geometriaFundacao}
                                 entradasGeotecnia={entradasGeotecnia}
                                 mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                                 setAtualizarSondagem={setAtualizarSondagem}

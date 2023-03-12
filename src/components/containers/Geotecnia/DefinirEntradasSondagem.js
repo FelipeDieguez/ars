@@ -1,7 +1,9 @@
 import LineEdit from '../../form/LineEdit'
 import Select from '../../form/Select'
 
-function DefinirEntradasSondagem({ tiposSolo, mudarEntradasSondagem }) {
+import soloTipos from "../../data/soloTipos.json"
+
+function DefinirEntradasSondagem({ classeSolo, mudarEntradasSondagem }) {
     function alterarEntradasSondagem(ev) {
         const { name, value } = ev.target
         mudarEntradasSondagem(name, value)
@@ -12,7 +14,7 @@ function DefinirEntradasSondagem({ tiposSolo, mudarEntradasSondagem }) {
             <Select
                 text="Solo:"
                 name="solo"
-                list={tiposSolo}
+                list={soloTipos[classeSolo]}
                 width="160px"
                 onChange={alterarEntradasSondagem}
             />

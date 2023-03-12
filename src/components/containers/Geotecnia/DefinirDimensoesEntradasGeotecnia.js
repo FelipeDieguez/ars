@@ -1,7 +1,9 @@
 import LineEdit from '../../form/LineEdit'
 
-function DefinirDimensoesEntradasGeotecnia({ geometriaFundacao, mudarEntradasGeotecnia }) {        
-    if (geometriaFundacao === "estaca circular" || geometriaFundacao === "sapata circular") {
+import fundacaoGeometrias from "../../data/fundacaoGeometrias.json"
+
+function DefinirDimensoesEntradasGeotecnia({ entradasGeotecnia, mudarEntradasGeotecnia }) {        
+    if (fundacaoGeometrias[entradasGeotecnia["tipo"]] === "estaca circular" || fundacaoGeometrias[entradasGeotecnia["tipo"]] === "sapata circular") {
         return (
             <LineEdit
                 text="Diâmetro(m)="
@@ -12,7 +14,7 @@ function DefinirDimensoesEntradasGeotecnia({ geometriaFundacao, mudarEntradasGeo
             />
         )
     }
-    else if (geometriaFundacao === "estaca retangular" || geometriaFundacao === "sapata retangular") {
+    else if (fundacaoGeometrias[entradasGeotecnia["tipo"]] === "estaca retangular" || fundacaoGeometrias[entradasGeotecnia["tipo"]] === "sapata retangular") {
         return (
             <>
                 <LineEdit

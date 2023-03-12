@@ -2,11 +2,10 @@ import Radio from '../../form/Radio'
 
 import soloTipos from "../../data/soloTipos.json"
 
-function DefinirClasseSolo({ classeSolo, setClasseSolo, setTiposSolo, mudarEntradasSondagem }) {
+function DefinirClasseSolo({ classeSolo, setClasseSolo, mudarEntradasSondagem }) {
     function mudarClasseSolo(ev) {
         const classe_solo = ev.target.id
         setClasseSolo(classe_solo)
-        setTiposSolo(soloTipos[classe_solo])
         mudarEntradasSondagem("solo", soloTipos[classe_solo][0])
     }
     

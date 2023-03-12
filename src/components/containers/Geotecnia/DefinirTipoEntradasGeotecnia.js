@@ -1,6 +1,8 @@
 import Select from '../../form/Select'
 
-function DefinirTipoEntradasGeotecnia({ tiposFundacao, mudarEntradasGeotecnia }) {
+import fundacaoTipos from "../../data/fundacaoTipos.json"
+
+function DefinirTipoEntradasGeotecnia({ classeFundacao, mudarEntradasGeotecnia }) {
     function mudarTipoEntradasGeotecnia(ev) {
         const { name, value } = ev.target
         mudarEntradasGeotecnia(name, value)
@@ -11,7 +13,7 @@ function DefinirTipoEntradasGeotecnia({ tiposFundacao, mudarEntradasGeotecnia })
             <Select
                 text="Tipo:"
                 name="tipo"
-                list={tiposFundacao}
+                list={fundacaoTipos[classeFundacao]}
                 width="150px"
                 onChange={mudarTipoEntradasGeotecnia}
             />

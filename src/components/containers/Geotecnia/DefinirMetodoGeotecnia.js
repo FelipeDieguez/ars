@@ -4,7 +4,7 @@ import Select from '../../form/Select'
 
 import styles from '../Geotecnia.module.css'
 
-function DefinirMetodoGeotecnia({ geometriaFundacao, mudarEntradasSondagem, metodoGeotecnia, setMetodoGeotecnia, setResultados }) {
+function DefinirMetodoGeotecnia({ classeFundacao, mudarEntradasSondagem, metodoGeotecnia, setMetodoGeotecnia, setResultados }) {
     function mudarMetodoGeotecnia(ev) {
         const metodo = ev.target.id
         setMetodoGeotecnia(metodo)
@@ -12,7 +12,7 @@ function DefinirMetodoGeotecnia({ geometriaFundacao, mudarEntradasSondagem, meto
         mudarEntradasSondagem("metodo", metodo)
     }
 
-    if (geometriaFundacao === "sapata retangular" || geometriaFundacao === "sapata circular") {
+    if (classeFundacao === "sapatas") {
         return (
             <>
                 <div className={styles.step}>

@@ -1,7 +1,13 @@
 {
-    "estaca circular": ["Franki", "Pré-moldada", "Escavada", "Raiz", "Hélice contínua", "Ômega"],
-    "estaca retangular": ["Metálica", "Barrete"],
-    "sapata circular": ["Sapata circular"],
-    "sapata retangular": ["Sapata retangular"],
-    "tubulao": ["Tubulão"]
+    "Franki": "estaca circular",
+    "Pré-moldada": "estaca circular",
+    "Escavada": "estaca circular",
+    "Raiz": "estaca circular",
+    "Hélice contínua": "estaca circular",
+    "Ômega": "estaca circular",
+    "Metálica": "estaca retangular",
+    "Barrete": "estaca retangular",
+    "Sapata circular": "sapata circular",
+    "Sapata retangular": "sapata retangular",
+    "Tubulão": "tubulao"
 }

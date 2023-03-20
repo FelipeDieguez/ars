@@ -3,10 +3,10 @@ import Select from '../../form/Select'
 
 import soloTipos from "../../data/soloTipos.json"
 
-function DefinirEntradasSondagem({ classeSolo, mudarEntradasSondagem }) {
-    function alterarEntradasSondagem(ev) {
+function CamadaEntradas({ classeSolo, mudarCamadaDados }) {
+    function mudancasCamadaEntradas(ev) {
         const { name, value } = ev.target
-        mudarEntradasSondagem(name, value)
+        mudarCamadaDados(name, value)
     }
 
     return (
@@ -16,17 +16,17 @@ function DefinirEntradasSondagem({ classeSolo, mudarEntradasSondagem }) {
                 name="solo"
                 list={soloTipos[classeSolo]}
                 width="160px"
-                onChange={alterarEntradasSondagem}
+                onChange={mudancasCamadaEntradas}
             />
             <LineEdit
                 text="Nspt="
                 type="number"
                 name="nspt"
                 width="45px"
-                onChange={alterarEntradasSondagem}
+                onChange={mudancasCamadaEntradas}
             />
         </>
     )
 }
 
-export default DefinirEntradasSondagem
+export default CamadaEntradas

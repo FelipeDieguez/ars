@@ -2,24 +2,21 @@ import {listar, cadastrarCamada, editarCamada, removerCamada, calcular} from '..
 
 import Button from '../../form/Button'
 
-function DefinirSondagemGeotecnia({ entradasSondagem, setAtualizarSondagem, camadaSondagem, setResultados }) {
-    function mudarSondagemGeotecnia(ev) {
+function CamadaAcoes({ camadaDados, setAtualizarGeotecnia }) {
+    function mudancasCamadaAcoes(ev) {
         const acao = ev.target.name
         const opcoes = {
             "cadastrar": () => {
-                cadastrarCamada(entradasSondagem)
+                cadastrarCamada(camadaDados)
             },
             "editar": () => {
-                if (typeof camadaSondagem === "string") {
-                    //Trocar para setCamada, ja tentei porém não atualizava instantâneo
-                    entradasSondagem["ordem"] = Number(camadaSondagem)
-                    editarCamada(entradasSondagem)
+                if (camadaDados["ordem"] !== "") {
+                    editarCamada(camadaDados)
                 }
             },
             "remover": () => {
-                if (typeof camadaSondagem === "string") {
-                    entradasSondagem["ordem"] = Number(camadaSondagem)
-                    removerCamada(entradasSondagem)
+                if (camadaDados["ordem"] !== "") {
+                    removerCamada(camadaDados)
                 }
             }
         }
@@ -28,8 +25,7 @@ function DefinirSondagemGeotecnia({ entradasSondagem, setAtualizarSondagem, cama
                 value()
             }
         }
-        setAtualizarSondagem(1)
-        setResultados([])
+        setAtualizarGeotecnia(1)
     }
 
     return (
@@ -38,22 +34,22 @@ function DefinirSondagemGeotecnia({ entradasSondagem, setAtualizarSondagem, cama
                 text="Cadastrar"
                 name="cadastrar"
                 width="100px"
-                onClick={mudarSondagemGeotecnia}
+                onClick={mudancasCamadaAcoes}
             />
             <Button
                 text="Editar"
                 name="editar"
                 width="70px"
-                onClick={mudarSondagemGeotecnia}
+                onClick={mudancasCamadaAcoes}
             />
             <Button
                 text="Remover"
                 name="remover"
                 width="100px"
-                onClick={mudarSondagemGeotecnia}
+                onClick={mudancasCamadaAcoes}
             />
         </>
     )
 }
 
-export default DefinirSondagemGeotecnia
+export default CamadaAcoes

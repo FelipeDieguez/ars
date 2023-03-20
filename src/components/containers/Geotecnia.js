@@ -1,125 +1,111 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useState } from 'react'
 
 import Label from '../form/Label'
 
-import DefinirClasseSolo from './Geotecnia/DefinirClasseSolo'
-import DefinirEntradasSondagem from './Geotecnia/DefinirEntradasSondagem'
-import DefinirSondagemGeotecnia from './Geotecnia/DefinirSondagemGeotecnia'
-import DefinirMetodoGeotecnia from './Geotecnia/DefinirMetodoGeotecnia'
-import DefinirTipoEntradasGeotecnia from './Geotecnia/DefinirTipoEntradasGeotecnia'
-import DefinirDimensoesEntradasGeotecnia from './Geotecnia/DefinirDimensoesEntradasGeotecnia'
-import AcaoCalcularGeotecnia from './Geotecnia/AcaoCalcularGeotecnia'
-import DefinirEsforcoGeotecnia from './Geotecnia/DefinirEsforcoGeotecnia'
-import DefinirCamadaSondagem from './Geotecnia/DefinirCamadaSondagem'
+import CamadaDefinir from './Geotecnia/CamadaDefinir'
+import CamadaEntradas from './Geotecnia/CamadaEntradas'
+import CamadaAcoes from './Geotecnia/CamadaAcoes'
+import MetodoDefinir from './Geotecnia/MetodoDefinir'
+import CalculoDefinir from './Geotecnia/CalculoDefinir'
+import CalculoEntradas1 from './Geotecnia/CalculoEntradas1'
+import CalculoEntradas2 from './Geotecnia/CalculoEntradas2'
+import CalculoAcoes from './Geotecnia/CalculoAcoes'
+import EsforcoDefinir from './Geotecnia/EsforcoDefinir'
+import ResultadoTabela from './Geotecnia/ResultadoTabela'
 
 import styles from './Geotecnia.module.css'
 
-const inicialEntradasSondagem = {
+const inicialCamadaDados = {
     "id_sondagem": "1",
     "ordem": "",
     "solo": "Areia",
     "nspt": "0"
 }
 
-function Geotecnia({ classeFundacao, entradasGeotecnia, mudarEntradasGeotecnia}) {
+function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforcoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, mudarEntradasGeotecnia, dadosGeotecnia, setDadosGeotecnia, atualizarGeotecnia, setAtualizarGeotecnia}) {
     const [classeSolo, setClasseSolo] = useState("areia")
+    const [camadaDados, setCamadaDados] = useState(inicialCamadaDados)
 
-    const [entradasSondagem, setEntradasSondagem] = useState(inicialEntradasSondagem)
-    const [sondagemGeotecnia, setSondagemGeotecnia] = useState([])
-    const [atualizarSondagem, setAtualizarSondagem] = useState(0)
-    const [camadaSondagem, setCamadaSondagem] = useState()
-
-    const [metodoGeotecnia, setMetodoGeotecnia] = useState("aoki-velloso")
-    const [esforcoGeotecnia, setEsforcoGeotecnia] = useState("compressao")
-    
-    const [resultados, setResultados] = useState([])
-
-    function mudarEntradasSondagem(name, value) {
-        setEntradasSondagem({ ...entradasSondagem, [name]: value })
-        setAtualizarSondagem(1)
+    function mudarCamadaDados(name, value) {
+        setCamadaDados({ ...camadaDados, [name]: value })
+        setAtualizarGeotecnia(1)
+        console.log(camadaDados)
     }
-
-    useEffect(() => {
-        axios.get('/sondagem')
-            .then((response) => {
-                setSondagemGeotecnia(response["data"])
-                setAtualizarSondagem(0)
-            })
-    }, [classeFundacao, atualizarSondagem, metodoGeotecnia, resultados])
 
     return (
         <div className={styles.grid}>
             <header>
-                <Label text="SONDAGEM" />
+                <strong> <Label text="GEOTECNIA" /> </strong>
                 <div className={styles.stepsContainer}>
                     <div className={styles.steps}>
                         <div className={styles.step}>
-                            <DefinirClasseSolo
+                            <Label text="SONDAGEM:" />
+                        </div>
+                        <div className={styles.step}>
+                            <CamadaDefinir
                                 classeSolo={classeSolo}
                                 setClasseSolo={setClasseSolo}
-                                mudarEntradasSondagem={mudarEntradasSondagem} 
+                                mudarCamadaDados={mudarCamadaDados} 
                             />
                         </div>
                         <div className={styles.step}>
-                            <DefinirEntradasSondagem
+                            <CamadaEntradas
                                 classeSolo={classeSolo}
-                                mudarEntradasSondagem={mudarEntradasSondagem}
+                                mudarCamadaDados={mudarCamadaDados}
                             />
                         </div>
                         <div className={styles.step}>
-                            <DefinirSondagemGeotecnia
-                                entradasSondagem={entradasSondagem}
-                                setAtualizarSondagem={setAtualizarSondagem}
-                                camadaSondagem={camadaSondagem}
-                                setResultados={setResultados}
+                            <CamadaAcoes
+                                camadaDados={camadaDados}
+                                setAtualizarGeotecnia={setAtualizarGeotecnia}
                             />
                         </div>
                     </div>
                     <div className={styles.steps}>
-                        <DefinirMetodoGeotecnia
+                        <MetodoDefinir
                             classeFundacao={classeFundacao}
-                            mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                             metodoGeotecnia={metodoGeotecnia}
                             setMetodoGeotecnia={setMetodoGeotecnia}
-                            setResultados={setResultados}
+                            mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                         />
                     </div>
                     <div className={styles.steps}>
                         <div className={styles.step}>
-                            <DefinirTipoEntradasGeotecnia
+                            <CalculoDefinir
                                 classeFundacao={classeFundacao}
                                 mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                             />
                         </div>
                         <div className={styles.step}>
-                            <DefinirDimensoesEntradasGeotecnia
+                            <CalculoEntradas1
                                 entradasGeotecnia={entradasGeotecnia}
                                 mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                             />
                         </div>
                         <div className={styles.step}>
-                            <AcaoCalcularGeotecnia
-                                entradasGeotecnia={entradasGeotecnia}
+                            <CalculoEntradas2
+                                classeFundacao={classeFundacao}
                                 mudarEntradasGeotecnia={mudarEntradasGeotecnia}
-                                setAtualizarSondagem={setAtualizarSondagem}
-                                setResultados={setResultados}
+                            />
+                        </div>
+                        <div className={styles.step}>
+                            <CalculoAcoes
+                                setAtualizarGeotecnia={setAtualizarGeotecnia}
                             />
                         </div>
                     </div>
                 </div>
             </header>
             <nav>
-                <DefinirEsforcoGeotecnia
+                <EsforcoDefinir
                     esforcoGeotecnia={esforcoGeotecnia}
                     setEsforcoGeotecnia={setEsforcoGeotecnia}
                 />
             </nav>
             <section>
-                <DefinirCamadaSondagem
-                    sondagemGeotecnia={sondagemGeotecnia}
-                    setCamadaSondagem={setCamadaSondagem}
-                    resultados={resultados}
+                <ResultadoTabela
+                    dadosGeotecnia={dadosGeotecnia}
+                    mudarCamadaDados={mudarCamadaDados}
                 />
             </section>
         </div>

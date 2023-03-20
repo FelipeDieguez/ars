@@ -2,11 +2,11 @@ import Radio from '../../form/Radio'
 
 import soloTipos from "../../data/soloTipos.json"
 
-function DefinirClasseSolo({ classeSolo, setClasseSolo, mudarEntradasSondagem }) {
-    function mudarClasseSolo(ev) {
+function CamadaDefinir({ classeSolo, setClasseSolo, mudarCamadaDados }) {
+    function mudancasCamadaDefinir(ev) {
         const classe_solo = ev.target.id
         setClasseSolo(classe_solo)
-        mudarEntradasSondagem("solo", soloTipos[classe_solo][0])
+        mudarCamadaDados("solo", soloTipos[classe_solo][0])
     }
     
     return (
@@ -16,25 +16,25 @@ function DefinirClasseSolo({ classeSolo, setClasseSolo, mudarEntradasSondagem })
                 id="areia"
                 name="solos"
                 checked={classeSolo === "areia"}
-                onChange={mudarClasseSolo}
+                onChange={mudancasCamadaDefinir}
             />
             <Radio
                 text="Argila"
                 id="argila"
                 name="solos"
                 checked={classeSolo === "argila"}
-                onChange={mudarClasseSolo}
+                onChange={mudancasCamadaDefinir}
             />
             <Radio
                 text="Silte"
                 id="silte"
                 name="solos"
                 checked={classeSolo === "silte"}
-                onChange={mudarClasseSolo}
+                onChange={mudancasCamadaDefinir}
             />
         </>
     )
 }
 
-export default DefinirClasseSolo
+export default CamadaDefinir
 

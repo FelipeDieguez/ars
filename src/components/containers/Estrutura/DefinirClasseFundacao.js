@@ -1,11 +1,14 @@
 import Tab from '../../form/Tab'
 
 import fundacaoTipos from "../../data/fundacaoTipos.json"
+import geotecniaMetodos from "../../data/geotecniaMetodos.json"
 
-function DefinirClasseFundacao({ classeFundacao, setClasseFundacao, mudarEntradasGeotecnia }) {
+function DefinirClasseFundacao({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setEsforcoGeotecnia, mudarEntradasGeotecnia }) {
     function mudarClasseFundacao(ev) {
         const tipo_fundacao = ev.target.id
         setClasseFundacao(tipo_fundacao)
+        setMetodoGeotecnia(geotecniaMetodos[tipo_fundacao])
+        setEsforcoGeotecnia("compressao")
         mudarEntradasGeotecnia("tipo", fundacaoTipos[tipo_fundacao][0])
     }
 

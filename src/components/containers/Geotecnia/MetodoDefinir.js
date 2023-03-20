@@ -1,15 +1,12 @@
 import Label from '../../form/Label'
 import Radio from '../../form/Radio'
-import Select from '../../form/Select'
 
 import styles from '../Geotecnia.module.css'
 
-function DefinirMetodoGeotecnia({ classeFundacao, mudarEntradasSondagem, metodoGeotecnia, setMetodoGeotecnia, setResultados }) {
-    function mudarMetodoGeotecnia(ev) {
+function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, mudarEntradasGeotecnia }) {
+    function mudancasMetodoDefinir(ev) {
         const metodo = ev.target.id
         setMetodoGeotecnia(metodo)
-        setResultados([])
-        mudarEntradasSondagem("metodo", metodo)
     }
 
     if (classeFundacao === "sapatas") {
@@ -24,16 +21,7 @@ function DefinirMetodoGeotecnia({ classeFundacao, mudarEntradasSondagem, metodoG
                         id="bulbo tensoes"
                         name="metodo"
                         checked={metodoGeotecnia === "bulbo tensoes"}
-                        onChange={mudarMetodoGeotecnia}
-                    />
-                </div>
-                <div>
-                    <Select
-                        text="N.A.(m)="
-                        name="na"
-                        list={[0, 1 , 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                        width="50px"
-                        //onChange={mudarEntradasGeotecnia}
+                        onChange={mudancasMetodoDefinir}
                     />
                 </div>
             </>
@@ -51,7 +39,7 @@ function DefinirMetodoGeotecnia({ classeFundacao, mudarEntradasSondagem, metodoG
                         id="aoki-velloso"
                         name="metodo"
                         checked={metodoGeotecnia === "aoki-velloso"}
-                        onChange={mudarMetodoGeotecnia}
+                        onChange={mudancasMetodoDefinir}
                     />
                 </div>
                 <div className={styles.step}>
@@ -60,7 +48,7 @@ function DefinirMetodoGeotecnia({ classeFundacao, mudarEntradasSondagem, metodoG
                         id="decourt-quaresma"
                         name="metodo"
                         checked={metodoGeotecnia === "decourt-quaresma"}
-                        onChange={mudarMetodoGeotecnia}
+                        onChange={mudancasMetodoDefinir}
                     />
                 </div>
             </>
@@ -68,4 +56,4 @@ function DefinirMetodoGeotecnia({ classeFundacao, mudarEntradasSondagem, metodoG
     }
 }
 
-export default DefinirMetodoGeotecnia
+export default MetodoDefinir

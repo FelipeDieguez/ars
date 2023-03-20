@@ -2,7 +2,12 @@ import LineEdit from '../../form/LineEdit'
 
 import fundacaoGeometrias from "../../data/fundacaoGeometrias.json"
 
-function DefinirDimensoesEntradasGeotecnia({ entradasGeotecnia, mudarEntradasGeotecnia }) {        
+function CalculoEntradas1({ entradasGeotecnia, mudarEntradasGeotecnia }) {      
+    function mudancasCalculoEntradas1(ev) {
+        const { name, value } = ev.target
+        mudarEntradasGeotecnia(name, value)
+    }
+    
     if (fundacaoGeometrias[entradasGeotecnia["tipo"]] === "estaca circular" || fundacaoGeometrias[entradasGeotecnia["tipo"]] === "sapata circular") {
         return (
             <LineEdit
@@ -10,7 +15,7 @@ function DefinirDimensoesEntradasGeotecnia({ entradasGeotecnia, mudarEntradasGeo
                 type="number"
                 name="dimensao_1"
                 width="45px"
-                onChange={mudarEntradasGeotecnia}
+                onChange={mudancasCalculoEntradas1}
             />
         )
     }
@@ -22,14 +27,14 @@ function DefinirDimensoesEntradasGeotecnia({ entradasGeotecnia, mudarEntradasGeo
                     type="number"
                     name="dimensao_1"
                     width="45px"
-                    onChange={mudarEntradasGeotecnia}
+                    onChange={mudancasCalculoEntradas1}
                 />
                 <LineEdit
                     text="B(m)="
                     type="number"
                     name="dimensao_2"
                     width="45px"
-                    onChange={mudarEntradasGeotecnia}
+                    onChange={mudancasCalculoEntradas1}
                 />
             </>
         )
@@ -42,18 +47,18 @@ function DefinirDimensoesEntradasGeotecnia({ entradasGeotecnia, mudarEntradasGeo
                     type="number"
                     name="dimensao_1"
                     width="45px"
-                    onChange={mudarEntradasGeotecnia}
+                    onChange={mudancasCalculoEntradas1}
                 />
                 <LineEdit
                     text="Db(m)="
                     type="number"
                     name="dimensao_2"
                     width="45px"
-                    onChange={mudarEntradasGeotecnia}
+                    onChange={mudancasCalculoEntradas1}
                 />
             </>
         )
     }
 }
 
-export default DefinirDimensoesEntradasGeotecnia
+export default CalculoEntradas1

@@ -90,6 +90,8 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
                         </div>
                         <div className={styles.step}>
                             <CalculoAcoes
+                                entradasGeotecnia={entradasGeotecnia}
+                                dadosGeotecnia={dadosGeotecnia}
                                 setAtualizarGeotecnia={setAtualizarGeotecnia}
                             />
                         </div>

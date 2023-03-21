@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTable } from'react-table'
 import axios from 'axios'
 
 import Geotecnia from '../containers/Geotecnia'
@@ -22,9 +23,9 @@ function FundArs() {
     const [metodoGeotecnia, setMetodoGeotecnia] = useState("aoki-velloso")
     const [esforcoGeotecnia, setEsforcoGeotecnia] = useState("compressao")
     const [entradasGeotecnia, setEntradasGeotecnia] = useState(inicialEntradasGeotecnia)
-    const [dadosGeotecnia, setDadosGeotecnia] = useState(geotecniaDados[classeFundacao][esforcoGeotecnia][metodoGeotecnia])
+    const [dadosGeotecnia, setDadosGeotecnia] = useState([{}])
     const [atualizarGeotecnia, setAtualizarGeotecnia] = useState(0)
-    
+
     function mudarEntradasGeotecnia(name, value) {
         setEntradasGeotecnia({ ...entradasGeotecnia, [name]: value })
         console.log(entradasGeotecnia)
@@ -33,12 +34,15 @@ function FundArs() {
     useEffect(() => {
         axios.get('/sondagem')
             .then((response) => {
-                for (const [chave, valor] of Object.entries(response["data"])) {
-                    setDadosGeotecnia({ ...dadosGeotecnia, [chave]: valor })
-                }
+                const dados = []
+                response["data"].map((camada, i) => {
+                    const dado = Object.assign(camada, geotecniaDados[classeFundacao][esforcoGeotecnia][metodoGeotecnia][0])
+                    dados.push(dado)
+                })
+                setDadosGeotecnia(dados)
                 setAtualizarGeotecnia(0)
             })
-    }, [classeFundacao, metodoGeotecnia])
+    }, [classeFundacao, atualizarGeotecnia])
 
     return (
         <div className={styles.page}>

@@ -1,56 +1,41 @@
 {
     "estacas":{
         "compressao": {
-            "aoki-velloso": {
-                "#": [],
-                "Solo": [],
-                "Nspt": [],
-                "Lateral": [],
-                "Ponta": [],
-                "C. Rup. (kN)": [],
-                "C. Adm. (kN)": []
-            },
-            "decourt-quaresma": {
-                "#": [],
-                "Solo": [],
-                "Nspt": [],
-                "Lateral": [],
-                "Ponta": [],
-                "C. Rup. (kN)": [],
-                "C. Adm. (kN)": []
-            }
+            "aoki-velloso": [{
+                "Lateral": "",
+                "Ponta": "",
+                "C. Rup. (kN)": "",
+                "C. Adm. (kN)": ""
+            }],
+            "decourt-quaresma": [{
+                "Lateral": "",
+                "Ponta": "",
+                "C. Rup. (kN)": "",
+                "C. Adm. (kN)": ""
+            }]
         }
     },
     "sapatas": {
         "compressao":{
-            "bulbo tensoes": {
-                "#": [],
-                "Solo": [],
-                "Nspt": [],
-                "γsolo": [],
-                "Sobrecarga": [],
-                "T. Adm. (kPa)": []
-            }
+            "bulbo tensoes": [{
+                "gsolo": "",
+                "Sobrecarga": "",
+                "T. Adm. (kPa)": ""
+            }]
         }
     },
     "tubuloes": {
         "compressao": {
-            "aoki-velloso": {
-                "#": [],
-                "Solo": [],
-                "Nspt": [],
-                "Ponta": [],
-                "T. Rup. (kPa)": [],
-                "T. Adm. (kPa)": []
-            },
-            "decourt-quaresma": {
-                "#": [],
-                "Solo": [],
-                "Nspt": [],
-                "Ponta": [],
-                "T. Rup. (kPa)": [],
-                "T. Adm. (kPa)": []
-            }
+            "aoki-velloso": [{
+                "Ponta": "",
+                "T. Rup. (kPa)": "",
+                "T. Adm. (kPa)": ""
+            }],
+            "decourt-quaresma": [{
+                "Ponta": "",
+                "T. Rup. (kPa)": "",
+                "T. Adm. (kPa)": ""
+            }]
         }
     }
 }

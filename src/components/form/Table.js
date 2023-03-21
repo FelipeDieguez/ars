@@ -5,22 +5,22 @@ function Table ({ dados, onChange }) {
         <table className={styles.table}> 
             <thead className={styles.thead}>
                 <tr className={styles.trHead}>
-                    {Object.entries(dados).map(([chave, valor], i) => (
+                    {Object.entries(dados[0]).map(([chave, valor], i) => (
                         <th className={styles.th} key={i}>{chave}</th>
                         )
                     )}
                 </tr>
             </thead>
             <tbody className={styles.tbody}>
-                {dados["#"].map((camada, i) => (
+                {dados.map((camada, i) => (
                     <>
-                        <input type="radio" name="tabela" id={camada} onChange={onChange}></input>
+                        <input type="radio" name="tabela" id={i+1} onChange={onChange}></input>
                         <tr className={styles.trBody}>
-                            {Object.entries(dados).map(([chave, valor]) => {
+                            {Object.entries(camada).map(([chave, valor]) => {
                                 return (
                                     <td className={styles.td}>
-                                        <label htmlFor={camada}>
-                                            {valor[i]}
+                                        <label htmlFor={i+1}>
+                                            {valor}
                                         </label>
                                     </td>
                                 )

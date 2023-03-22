@@ -3,7 +3,7 @@ import Radio from '../../form/Radio'
 
 import styles from '../Geotecnia.module.css'
 
-function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, mudarEntradasGeotecnia }) {
+function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia }) {
     function mudancasMetodoDefinir(ev) {
         const metodo = ev.target.id
         setMetodoGeotecnia(metodo)

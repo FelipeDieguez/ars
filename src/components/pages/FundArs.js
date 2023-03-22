@@ -10,7 +10,6 @@ import styles from './FundArs.module.css'
 import geotecniaDados from "../data/geotecniaDados.json"
 
 const inicialEntradasGeotecnia = {
-    "id_sondagem": "1",
     "tipo": "Franki",
     "dimensao_1": 0,
     "dimensao_2": 0,
@@ -28,7 +27,7 @@ function FundArs() {
 
     function mudarEntradasGeotecnia(name, value) {
         setEntradasGeotecnia({ ...entradasGeotecnia, [name]: value })
-        console.log(entradasGeotecnia)
+        setAtualizarGeotecnia(1)
     }
 
     useEffect(() => {
@@ -52,7 +51,7 @@ function FundArs() {
                 esforcoGeotecnia={esforcoGeotecnia} setEsforcoGeotecnia={setEsforcoGeotecnia}
                 entradasGeotecnia={entradasGeotecnia} mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                 dadosGeotecnia={dadosGeotecnia} setDadosGeotecnia={setDadosGeotecnia}
-                atualizarGeotecnia={atualizarGeotecnia} setAtualizarGeotecnia={setAtualizarGeotecnia}
+                setAtualizarGeotecnia={setAtualizarGeotecnia}
             />
             <Estrutura
                 classeFundacao={classeFundacao}

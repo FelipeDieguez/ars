@@ -2,10 +2,11 @@ import Button from '../../form/Button'
 
 import {listar, cadastrarCamada, editarCamada, removerCamada, calcular} from '../../services/sondagem'
 
-function CalculoAcoes({ entradasGeotecnia, dadosGeotecnia, setAtualizarGeotecnia }) {
+function CalculoAcoes({ entradasGeotecnia, dadosGeotecnia, setDadosGeotecnia }) {
     function mudancasCalculoAcoes() {
-        calcular([entradasGeotecnia, dadosGeotecnia])
-        setAtualizarGeotecnia(1)
+        calcular([entradasGeotecnia, dadosGeotecnia]).then((response) => {
+            setDadosGeotecnia(response["data"])
+        })
     }
     return (
         <>

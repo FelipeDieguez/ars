@@ -22,14 +22,12 @@ const inicialCamadaDados = {
     "nspt": "0"
 }
 
-function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforcoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, mudarEntradasGeotecnia, dadosGeotecnia, setDadosGeotecnia, atualizarGeotecnia, setAtualizarGeotecnia}) {
+function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforcoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, mudarEntradasGeotecnia, dadosGeotecnia, setDadosGeotecnia, setAtualizarGeotecnia}) {
     const [classeSolo, setClasseSolo] = useState("areia")
     const [camadaDados, setCamadaDados] = useState(inicialCamadaDados)
 
     function mudarCamadaDados(name, value) {
         setCamadaDados({ ...camadaDados, [name]: value })
-        setAtualizarGeotecnia(1)
-        console.log(camadaDados)
     }
 
     return (
@@ -66,7 +64,6 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
                             classeFundacao={classeFundacao}
                             metodoGeotecnia={metodoGeotecnia}
                             setMetodoGeotecnia={setMetodoGeotecnia}
-                            mudarEntradasGeotecnia={mudarEntradasGeotecnia}
                         />
                     </div>
                     <div className={styles.steps}>
@@ -92,7 +89,7 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
                             <CalculoAcoes
                                 entradasGeotecnia={entradasGeotecnia}
                                 dadosGeotecnia={dadosGeotecnia}
-                                setAtualizarGeotecnia={setAtualizarGeotecnia}
+                                setDadosGeotecnia={setDadosGeotecnia}
                             />
                         </div>
                     </div>

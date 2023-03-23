@@ -1,13 +1,13 @@
 {
-    "estacas":{
+    "estacas": {
         "compressao": {
-            "aoki-velloso": [{
+            "metodo-1": [{
                 "Lateral": "",
                 "Ponta": "",
                 "C. Rup. (kN)": "",
                 "C. Adm. (kN)": ""
             }],
-            "decourt-quaresma": [{
+            "metodo-2": [{
                 "Lateral": "",
                 "Ponta": "",
                 "C. Rup. (kN)": "",
@@ -17,8 +17,8 @@
     },
     "sapatas": {
         "compressao":{
-            "bulbo tensoes": [{
-                "gsolo": "",
+            "metodo-1": [{
+                "γsolo": "",
                 "Sobrecarga": "",
                 "T. Adm. (kPa)": ""
             }]
@@ -26,12 +26,12 @@
     },
     "tubuloes": {
         "compressao": {
-            "aoki-velloso": [{
+            "metodo-1": [{
                 "Ponta": "",
                 "T. Rup. (kPa)": "",
                 "T. Adm. (kPa)": ""
             }],
-            "decourt-quaresma": [{
+            "metodo-2": [{
                 "Ponta": "",
                 "T. Rup. (kPa)": "",
                 "T. Adm. (kPa)": ""

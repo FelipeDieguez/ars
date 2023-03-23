@@ -19,10 +19,10 @@ const inicialEntradasGeotecnia = {
 
 function FundArs() {
     const [classeFundacao, setClasseFundacao] = useState("estacas")
-    const [metodoGeotecnia, setMetodoGeotecnia] = useState("aoki-velloso")
+    const [metodoGeotecnia, setMetodoGeotecnia] = useState("metodo-1")
     const [esforcoGeotecnia, setEsforcoGeotecnia] = useState("compressao")
     const [entradasGeotecnia, setEntradasGeotecnia] = useState(inicialEntradasGeotecnia)
-    const [dadosGeotecnia, setDadosGeotecnia] = useState([{}])
+    const [dadosGeotecnia, setDadosGeotecnia] = useState({"compressao": {"metodo-1": [{}], "metodo-2": [{}]}})
     const [atualizarGeotecnia, setAtualizarGeotecnia] = useState(0)
 
     function mudarEntradasGeotecnia(name, value) {
@@ -33,12 +33,18 @@ function FundArs() {
     useEffect(() => {
         axios.get('/sondagem')
             .then((response) => {
-                const dados = []
-                response["data"].map((camada, i) => {
-                    const dado = Object.assign(camada, geotecniaDados[classeFundacao][esforcoGeotecnia][metodoGeotecnia][0])
-                    dados.push(dado)
+                const esforcos = {}
+                Object.entries(geotecniaDados[classeFundacao]).map(([esforco, valor]) => {
+                    const metodos = {}
+                    Object.entries(valor).map(([metodo, resultados]) => {
+                        metodos[metodo] = []
+                        response["data"].map((camada, i) => {
+                            metodos[metodo].push(Object.assign(camada, geotecniaDados[classeFundacao][esforco][metodo][0]))
+                        })
+                    })
+                    esforcos[esforco] = metodos
                 })
-                setDadosGeotecnia(dados)
+                setDadosGeotecnia(esforcos)
                 setAtualizarGeotecnia(0)
             })
     }, [classeFundacao, atualizarGeotecnia])

@@ -103,6 +103,8 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
             </nav>
             <section>
                 <ResultadoTabela
+                    metodoGeotecnia={metodoGeotecnia}
+                    esforcoGeotecnia={esforcoGeotecnia}
                     dadosGeotecnia={dadosGeotecnia}
                     mudarCamadaDados={mudarCamadaDados}
                 />

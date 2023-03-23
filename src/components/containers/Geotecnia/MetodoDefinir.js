@@ -18,9 +18,9 @@ function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia }) 
                 <div className={styles.step}>
                     <Radio
                         text="Bulbo de Tensões"
-                        id="bulbo tensoes"
+                        id="metodo-1"
                         name="metodo"
-                        checked={metodoGeotecnia === "bulbo tensoes"}
+                        checked={metodoGeotecnia === "metodo-1"}
                         onChange={mudancasMetodoDefinir}
                     />
                 </div>
@@ -36,18 +36,18 @@ function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia }) 
                 <div className={styles.step}>
                     <Radio
                         text="Aoki-Velloso"
-                        id="aoki-velloso"
+                        id="metodo-1"
                         name="metodo"
-                        checked={metodoGeotecnia === "aoki-velloso"}
+                        checked={metodoGeotecnia === "metodo-1"}
                         onChange={mudancasMetodoDefinir}
                     />
                 </div>
                 <div className={styles.step}>
                     <Radio
                         text="Decourt-Quaresma"
-                        id="decourt-quaresma"
+                        id="metodo-2"
                         name="metodo"
-                        checked={metodoGeotecnia === "decourt-quaresma"}
+                        checked={metodoGeotecnia === "metodo-2"}
                         onChange={mudancasMetodoDefinir}
                     />
                 </div>

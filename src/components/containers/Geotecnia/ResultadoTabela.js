@@ -1,6 +1,6 @@
 import Table from '../../form/Table'
 
-function ResultadoTabela({ dadosGeotecnia, mudarCamadaDados }) {
+function ResultadoTabela({ metodoGeotecnia, esforcoGeotecnia, dadosGeotecnia, mudarCamadaDados }) {
     function mudancasResultadoTabela(ev) {
         const ordem = ev.target.id
         mudarCamadaDados("ordem", ordem)
@@ -8,7 +8,7 @@ function ResultadoTabela({ dadosGeotecnia, mudarCamadaDados }) {
 
     return (
         <>
-            <Table dados={dadosGeotecnia}
+            <Table dados={dadosGeotecnia[esforcoGeotecnia][metodoGeotecnia]}
                     onChange={mudancasResultadoTabela}
             />
         </>

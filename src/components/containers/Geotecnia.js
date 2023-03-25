@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, createContext, useEffect } from 'react'
 
 import Label from '../form/Label'
 
@@ -22,7 +22,7 @@ const inicialCamadaDados = {
     "nspt": "0"
 }
 // criando contexto para compartilhar dados entre componentes
-export const CamadaContext = React.createContext({})
+export const CamadaContext = createContext({})
 
 function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforcoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, mudarEntradasGeotecnia, dadosGeotecnia, setDadosGeotecnia, setAtualizarGeotecnia}) {
     const [classeSolo, setClasseSolo] = useState("areia")
@@ -32,8 +32,12 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
         setCamadaDados({ ...camadaDados, [name]: value })
     }
 
+    useEffect(() => {
+        console.log(camadaDados)
+    }, [camadaDados])
+
     return (
-        <ThemeContext.Provider value={{ 
+        <CamadaContext.Provider value={{ 
             classeSolo,
             camadaDados,
             setCamadaDados,
@@ -118,7 +122,7 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
                     />
                 </section>
             </div>
-        </ThemeContext.Provider>
+        </CamadaContext.Provider>
     )
 }
 

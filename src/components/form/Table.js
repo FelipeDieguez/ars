@@ -1,7 +1,19 @@
-import { useState } from 'react'
 import styles from './Table.module.css'
+import { CamadaContext } from '../containers/Geotecnia'
 
 function Table ({ dados, onChange }) {
+    const { 
+        camadaDados, 
+        mudarCamadaDados,
+        setCamadaDados,
+        setClasseSolo,
+    } = useContext(CamadaContext);
+    const mudar_camada = (ev) => {
+        setCamadaDados((_camadaDados) => {
+            _camadaDados.ordem = +ev.target.id.replace("input-", "");
+            return _camadaDados;
+        });
+    };
 
     const header_default = [
         "#",
@@ -32,19 +44,20 @@ function Table ({ dados, onChange }) {
             </thead>
             <tbody className={styles.tbody}>
                 {dados.map((camada, i) => (
-                    <>
-                        <input type="radio" name="tabela" id={"input-"+(i+1)} onChange={onChange}></input>
-                        <tr className={styles.trBody}>
-                            {header_default.map((h, _i) => {
-                            return camada[h] !== undefined &&
-                                (<td key={"col-"+_i} className={styles.td}>
-                                    <label htmlFor={"input-"+(i+1)}>
-                                        {camada[h]}
-                                    </label>
-                                </td>)
-                            })}
-                        </tr>
-                    </>
+                    <tr className={styles.trBody} key={"row-"+i}>
+                        {header_default.map((h, _i) => {
+                        return camada[h] !== undefined &&
+                            (<td
+                                key={"col-"+_i}
+                                className={`${styles.td} ${camadaDados.ordem === i+1 ? 'check' : ''}`}
+                                onClick={mudar_camada}
+                            >
+                                <label htmlFor={"input-"+(i+1)}>
+                                    {camada[h]}
+                                </label>
+                            </td>)
+                        })}
+                    </tr>
                 ))}
             </tbody>
         </table> 

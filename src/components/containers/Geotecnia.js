@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect } from 'react'
+import { useState, createContext } from 'react'
 
 import Label from '../form/Label'
 
@@ -16,7 +16,6 @@ import ResultadoTabela from './Geotecnia/ResultadoTabela'
 import styles from './Geotecnia.module.css'
 
 const inicialCamadaDados = {
-    "id_sondagem": "1",
     "ordem": "",
     "solo": "Areia",
     "nspt": "0"
@@ -31,10 +30,6 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
     function mudarCamadaDados(name, value) {
         setCamadaDados({ ...camadaDados, [name]: value })
     }
-
-    useEffect(() => {
-        console.log(camadaDados)
-    }, [camadaDados])
 
     return (
         <CamadaContext.Provider value={{ 
@@ -94,7 +89,10 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
                             <div className={styles.step}>
                                 <CalculoEntradas2
                                     classeFundacao={classeFundacao}
+                                    metodoGeotecnia={metodoGeotecnia}
+                                    esforcoGeotecnia={esforcoGeotecnia}
                                     mudarEntradasGeotecnia={mudarEntradasGeotecnia}
+                                    dadosGeotecnia={dadosGeotecnia}
                                 />
                             </div>
                             <div className={styles.step}>

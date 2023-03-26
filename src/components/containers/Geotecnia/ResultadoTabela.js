@@ -1,4 +1,5 @@
 import Table from '../../form/Table'
+import geotecniaCabecalhos from "../../data/geotecniaCabecalhos.json"
 
 function ResultadoTabela({ metodoGeotecnia, esforcoGeotecnia, dadosGeotecnia, mudarCamadaDados }) {
     function mudancasResultadoTabela(ev) {
@@ -9,6 +10,7 @@ function ResultadoTabela({ metodoGeotecnia, esforcoGeotecnia, dadosGeotecnia, mu
     return (
         <>
             <Table dados={dadosGeotecnia[esforcoGeotecnia][metodoGeotecnia]}
+                    cabecalho={geotecniaCabecalhos["cabecalhos"]}
                     onChange={mudancasResultadoTabela}
             />
         </>

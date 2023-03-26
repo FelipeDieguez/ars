@@ -1,0 +1,15 @@
+{
+    "cabecalhos": [
+        "#",
+        "Solo",
+        "Nspt",
+        "Lateral",
+        "Ponta",
+        "C. Rup. (kN)",
+        "C. Adm. (kN)",
+        "γsolo",
+        "Sobrecarga",
+        "T. Rup. (kPa)",
+        "T. Adm. (kPa)"
+    ]
+}

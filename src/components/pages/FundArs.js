@@ -11,10 +11,10 @@ import geotecniaDados from "../data/geotecniaDados.json"
 
 const inicialEntradasGeotecnia = {
     "tipo": "Franki",
-    "dimensao_1": 0,
-    "dimensao_2": 0,
-    "z": 0,
-    "na": 0
+    "dimensao_1": "0",
+    "dimensao_2": "0",
+    "dimensao_3": "0",
+    "dimensao_4": "0"
 }
 
 function FundArs() {

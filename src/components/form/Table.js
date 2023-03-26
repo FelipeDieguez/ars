@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import styles from './Table.module.css'
 import { CamadaContext } from '../containers/Geotecnia'
 
-function Table ({ dados, onChange }) {
+function Table ({ dados, cabecalho, onChange }) {
     const { 
         camadaDados, 
         mudarCamadaDados,
@@ -12,26 +12,12 @@ function Table ({ dados, onChange }) {
     const mudar_camada = (ordem) => {
         setCamadaDados({ ...camadaDados, "ordem": ordem })
     };
-
-    const header_default = [
-        "#",
-        "Solo",
-        "Nspt",
-        "Lateral",
-        "Ponta",
-        "C. Rup. (kN)",
-        "C. Adm. (kN)",
-        "γsolo",
-        "Sobrecarga",
-        "T. Rup. (kPa)",
-        "T. Adm. (kPa)",
-    ]
     return (      
         <table className={styles.table}> 
             <thead className={styles.thead}>
                 <tr className={styles.trHead}>
                     {
-                        header_default.map((h, i) => {
+                        cabecalho.map((h, i) => {
                             return dados[0][h] !== undefined &&
                             (<th className={styles.th} key={'th'+i}>
                                 {h}
@@ -48,7 +34,7 @@ function Table ({ dados, onChange }) {
                         }
                         key={"row-"+i}
                     >
-                        {header_default.map((h, _i) => {
+                        {cabecalho.map((h, _i) => {
                         return camada[h] !== undefined &&
                             (<td
                                 key={"col-"+_i}

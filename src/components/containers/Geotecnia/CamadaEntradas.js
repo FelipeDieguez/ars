@@ -20,7 +20,7 @@ function CamadaEntradas({ classeSolo, mudarCamadaDados }) {
             />
             <LineEdit
                 text="Nspt="
-                type="number"
+                type="text"
                 name="nspt"
                 width="45px"
                 onChange={mudancasCamadaEntradas}

@@ -1,0 +1,8 @@
+.loader {
+    position: fixed;
+    width: 25%;
+    height: 25%;
+    z-index: 1;
+    overflow: visible;
+    background: url(../../img/drill.gif) no-repeat center center;
+}

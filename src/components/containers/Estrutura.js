@@ -1,4 +1,5 @@
 import Label from '../form/Label'
+import Loader from '../form/Loader'
 
 import DefinirClasseFundacao from './Estrutura/DefinirClasseFundacao'
 
@@ -15,6 +16,9 @@ function Estrutura({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setE
                     setEsforcoGeotecnia={setEsforcoGeotecnia}
                     mudarEntradasGeotecnia={mudarEntradasGeotecnia} 
                 />
+                
+            </nav>
+            <nav>
             </nav>
         </div>
     )

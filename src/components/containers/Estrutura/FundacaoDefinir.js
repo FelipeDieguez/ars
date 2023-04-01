@@ -3,8 +3,8 @@ import Tab from '../../form/Tab'
 import fundacaoTipos from "../../data/fundacaoTipos.json"
 import geotecniaMetodos from "../../data/geotecniaMetodos.json"
 
-function DefinirClasseFundacao({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setEsforcoGeotecnia, mudarEntradasGeotecnia }) {
-    function mudarClasseFundacao(ev) {
+function FundacaoDefinir({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setEsforcoGeotecnia, mudarEntradasGeotecnia }) {
+    function mudancasFundacaoDefinir(ev) {
         const tipo_fundacao = ev.target.id
         setClasseFundacao(tipo_fundacao)
         setMetodoGeotecnia(geotecniaMetodos[tipo_fundacao])
@@ -19,24 +19,24 @@ function DefinirClasseFundacao({ classeFundacao, setClasseFundacao, setMetodoGeo
                 id="estacas"
                 name="fundacoes"
                 checked={classeFundacao === "estacas"}
-                onChange={mudarClasseFundacao}
+                onChange={mudancasFundacaoDefinir}
             />
             <Tab 
                 text="SAPATAS"
                 id="sapatas"
                 name="fundacoes"
                 checked={classeFundacao === "sapatas"}
-                onChange={mudarClasseFundacao}
+                onChange={mudancasFundacaoDefinir}
             />
             <Tab 
                 text="TUBULÃO"
                 id="tubuloes"
                 name="fundacoes"
                 checked={classeFundacao === "tubuloes"}
-                onChange={mudarClasseFundacao}
+                onChange={mudancasFundacaoDefinir}
             />
         </>
     )
 }
 
-export default DefinirClasseFundacao
+export default FundacaoDefinir

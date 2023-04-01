@@ -4,7 +4,7 @@ import {listar, cadastrarCamada, editarCamada, removerCamada, calcular} from '..
 
 function CalculoAcoes({ entradasGeotecnia, dadosGeotecnia, setDadosGeotecnia }) {
     function mudancasCalculoAcoes() {
-        calcular([entradasGeotecnia, dadosGeotecnia]).then((response) => {
+        calcular([dadosGeotecnia, entradasGeotecnia]).then((response) => {
             setDadosGeotecnia(response["data"])
         })
     }

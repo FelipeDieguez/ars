@@ -17,17 +17,26 @@ const inicialEntradasGeotecnia = {
     "dimensao_4": "0"
 }
 
+const inicialEntradasEstrutura = {
+    "profundidade": "0"
+}
+
 function FundArs() {
     const [classeFundacao, setClasseFundacao] = useState("estacas")
     const [metodoGeotecnia, setMetodoGeotecnia] = useState("metodo-1")
     const [esforcoGeotecnia, setEsforcoGeotecnia] = useState("compressao")
     const [entradasGeotecnia, setEntradasGeotecnia] = useState(inicialEntradasGeotecnia)
+    const [entradasEstrutura, setEntradasEstrutura] = useState(inicialEntradasEstrutura)
     const [dadosGeotecnia, setDadosGeotecnia] = useState({"compressao": {"metodo-1": [{}], "metodo-2": [{}]}})
     const [atualizarGeotecnia, setAtualizarGeotecnia] = useState(0)
 
     function mudarEntradasGeotecnia(name, value) {
         setEntradasGeotecnia({ ...entradasGeotecnia, [name]: value })
         setAtualizarGeotecnia(1)
+    }
+
+    function mudarEntradasEstrutura(name, value) {
+        setEntradasEstrutura({ ...entradasEstrutura, [name]: value })
     }
 
     useEffect(() => {
@@ -64,7 +73,11 @@ function FundArs() {
                 setClasseFundacao={setClasseFundacao}
                 setMetodoGeotecnia={setMetodoGeotecnia}
                 setEsforcoGeotecnia={setEsforcoGeotecnia}
+                entradasGeotecnia={entradasGeotecnia}
+                entradasEstrutura={entradasEstrutura}
+                dadosGeotecnia={dadosGeotecnia}
                 mudarEntradasGeotecnia={mudarEntradasGeotecnia}
+                mudarEntradasEstrutura={mudarEntradasEstrutura}
             />
         </div>
     )

@@ -19,3 +19,7 @@ export function removerCamada(data) {
 export function calcular(data) {
     return axios.post('/sondagem/calcular', data);
 }
+
+export function memorial(data) {
+  return axios.post('/sondagem/memorial', data);
+}

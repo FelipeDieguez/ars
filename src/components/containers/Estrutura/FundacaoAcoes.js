@@ -6,7 +6,7 @@ import { memorial } from '../../services/sondagem'
 function FundacaoAcoes({ dadosGeotecnia, entradasGeotecnia, entradasEstrutura, mudarEntradasEstrutura }) {
     function mudancasFundacaoAcoes() {
         memorial([dadosGeotecnia, entradasGeotecnia, entradasEstrutura]).then((response) => {
-            console.log(response["data"], typeof(response["data"]))
+            window.open(response["data"])
         })
     }
     return (

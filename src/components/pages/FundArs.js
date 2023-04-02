@@ -8,6 +8,7 @@ import Estrutura from '../containers/Estrutura'
 import styles from './FundArs.module.css'
 
 import geotecniaDados from "../data/geotecniaDados.json"
+import { api } from '../services/api'
 
 const inicialEntradasGeotecnia = {
     "tipo": "Franki",
@@ -35,12 +36,13 @@ function FundArs() {
         setAtualizarGeotecnia(1)
     }
 
-    function mudarEntradasEstrutura(name, value) {
+    function mudarEntradasEstrutura(ev) {
+        const { name, value } = ev.target
         setEntradasEstrutura({ ...entradasEstrutura, [name]: value })
     }
 
     useEffect(() => {
-        axios.get('/sondagem')
+        api.get('/sondagem')
             .then((response) => {
                 const esforcos = {}
                 Object.entries(geotecniaDados[classeFundacao]).map(([esforco, valor]) => {

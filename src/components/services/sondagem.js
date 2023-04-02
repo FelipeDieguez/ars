@@ -1,25 +1,25 @@
-import axios from "axios";
+import { api } from "./api";
 
 export function listar() {
-    return axios.get("/sondagem")
+    return api.get("/sondagem")
 }
 
 export function cadastrarCamada(data) {
-  return axios.post("/sondagem/cadastrar", data);
+  return api.post("/sondagem/cadastrar", data);
 }
 
 export function editarCamada(data) {
-  return axios.post("/sondagem/editar", data);
+  return api.post("/sondagem/editar", data);
 }
 
 export function removerCamada(data) {
-    return axios.post('/sondagem/remover', data);
+    return api.post('/sondagem/remover', data);
 }
 
 export function calcular(data) {
-    return axios.post('/sondagem/calcular', data);
+    return api.post('/sondagem/calcular', data);
 }
 
 export function memorial(data) {
-  return axios.post('/sondagem/memorial', data);
+  return api.post('/sondagem/memorial', data);
 }

@@ -67,6 +67,7 @@ function FundArs() {
                 metodoGeotecnia={metodoGeotecnia} setMetodoGeotecnia={setMetodoGeotecnia}
                 esforcoGeotecnia={esforcoGeotecnia} setEsforcoGeotecnia={setEsforcoGeotecnia}
                 entradasGeotecnia={entradasGeotecnia} mudarEntradasGeotecnia={mudarEntradasGeotecnia}
+                entradasEstrutura={entradasEstrutura}
                 dadosGeotecnia={dadosGeotecnia} setDadosGeotecnia={setDadosGeotecnia}
                 setAtualizarGeotecnia={setAtualizarGeotecnia}
             />

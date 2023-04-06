@@ -1,7 +1,7 @@
 import Table from '../../form/Table'
 import geotecniaCabecalhos from "../../data/geotecniaCabecalhos.json"
 
-function ResultadoTabela({ metodoGeotecnia, esforcoGeotecnia, dadosGeotecnia, mudarCamadaDados }) {
+function ResultadoTabela({ metodoGeotecnia, esforcoGeotecnia, entradasEstrutura, dadosGeotecnia, mudarCamadaDados }) {
     function mudancasResultadoTabela(ev) {
         const ordem = ev.target.id
         mudarCamadaDados("ordem", +ordem.replace("input-", ""))
@@ -11,7 +11,7 @@ function ResultadoTabela({ metodoGeotecnia, esforcoGeotecnia, dadosGeotecnia, mu
         <>
             <Table dados={dadosGeotecnia[esforcoGeotecnia][metodoGeotecnia]}
                     cabecalho={geotecniaCabecalhos["cabecalhos"]}
-                    onChange={mudancasResultadoTabela}
+                    entradasEstrutura={entradasEstrutura}
             />
         </>
     )

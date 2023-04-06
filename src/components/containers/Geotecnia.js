@@ -23,7 +23,7 @@ const inicialCamadaDados = {
 // criando contexto para compartilhar dados entre componentes
 export const CamadaContext = createContext({})
 
-function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforcoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, mudarEntradasGeotecnia, dadosGeotecnia, setDadosGeotecnia, setAtualizarGeotecnia}) {
+function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforcoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, mudarEntradasGeotecnia, entradasEstrutura, dadosGeotecnia, setDadosGeotecnia, setAtualizarGeotecnia}) {
     const [classeSolo, setClasseSolo] = useState("areia")
     const [camadaDados, setCamadaDados] = useState(inicialCamadaDados)
 
@@ -116,6 +116,7 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
                         metodoGeotecnia={metodoGeotecnia}
                         esforcoGeotecnia={esforcoGeotecnia}
                         dadosGeotecnia={dadosGeotecnia}
+                        entradasEstrutura={entradasEstrutura}
                         mudarCamadaDados={mudarCamadaDados}
                     />
                 </section>

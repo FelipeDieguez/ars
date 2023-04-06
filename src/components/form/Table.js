@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import styles from './Table.module.css'
 import { CamadaContext } from '../containers/Geotecnia'
 
-function Table ({ dados, cabecalho, onChange }) {
+function Table ({ dados, cabecalho, entradasEstrutura }) {
     const { 
         camadaDados, 
         mudarCamadaDados,
@@ -30,7 +30,7 @@ function Table ({ dados, cabecalho, onChange }) {
                 {dados.map((camada, i) => (
                     <tr
                         className={
-                            `${styles.trBody} ${camadaDados.ordem === i+1 ? styles.check : ''}`
+                            `${styles.trBody} ${camadaDados.ordem === i+1 ? styles.check : ''} ${parseInt(entradasEstrutura.profundidade) === i+1 ? styles.prof : ''}`
                         }
                         key={"row-"+i}
                     >

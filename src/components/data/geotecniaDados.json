@@ -2,14 +2,14 @@
     "estacas": {
         "compressao": {
             "metodo-1": [{
-                "Lateral": "",
-                "Ponta": "",
+                "Resistência Lateral": "",
+                "Resistência Ponta": "",
                 "C. Rup. (kN)": "",
                 "C. Adm. (kN)": ""
             }],
             "metodo-2": [{
-                "Lateral": "",
-                "Ponta": "",
+                "Resistência Lateral": "",
+                "Resistência Ponta": "",
                 "C. Rup. (kN)": "",
                 "C. Adm. (kN)": ""
             }]
@@ -27,12 +27,12 @@
     "tubuloes": {
         "compressao": {
             "metodo-1": [{
-                "Ponta": "",
+                "Resistência Ponta": "",
                 "T. Rup. (kPa)": "",
                 "T. Adm. (kPa)": ""
             }],
             "metodo-2": [{
-                "Ponta": "",
+                "Resistência Ponta": "",
                 "T. Rup. (kPa)": "",
                 "T. Adm. (kPa)": ""
             }]

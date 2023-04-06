@@ -1,7 +1,7 @@
 import { api } from "./api";
 
 export function listar() {
-    return api.get("/sondagem")
+  return api.get("/sondagem")
 }
 
 export function cadastrarCamada(data) {
@@ -13,11 +13,11 @@ export function editarCamada(data) {
 }
 
 export function removerCamada(data) {
-    return api.post('/sondagem/remover', data);
+  return api.post('/sondagem/remover', data);
 }
 
 export function calcular(data) {
-    return api.post('/sondagem/calcular', data);
+  return api.post('/sondagem/calcular', data);
 }
 
 export function memorial(data) {

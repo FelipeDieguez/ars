@@ -2,7 +2,7 @@ import styles from './LineEdit.module.css'
 
 function LineEdit ({text, type, name, width, onChange}) {
     return (
-        <> 
+        <div> 
             <label htmlFor={name} className={styles.lineEdit}>{text}</label>
             <input
                 min="0"
@@ -23,7 +23,7 @@ function LineEdit ({text, type, name, width, onChange}) {
                 onChange={onChange}
                 className={styles.lineEditInput}
             />
-        </>
+        </div>
     )
 }
 

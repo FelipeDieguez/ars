@@ -53,3 +53,12 @@
 .prof {
     font-weight: bold;
 }
+
+@media (max-width: 400px) {
+    .th{
+        font-size: 10px;
+    }
+    .td label {
+        font-size: 10px;
+    }
+}

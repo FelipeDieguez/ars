@@ -12,3 +12,9 @@ nav {
     flex-direction: row;
     margin: 0px 10px 0px 10px;
 }
+
+@media (max-width: 1400px) {
+    .grid{
+        width: 100%;
+    }
+}

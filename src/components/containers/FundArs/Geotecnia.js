@@ -1,6 +1,6 @@
 import { useState, createContext } from 'react'
 
-import Label from '../form/Label'
+import Label from '../../form/Label'
 
 import CamadaDefinir from './Geotecnia/CamadaDefinir'
 import CamadaEntradas from './Geotecnia/CamadaEntradas'

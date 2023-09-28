@@ -1,12 +1,18 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
-import FundArs from './components/pages/FundArs'
+import GerenciadorProjetos from './components/pages/GerenciadorProjetos'
 
 function App() {
+  const [dadosProjetos, setDadosProjetos] = useState({"nome": ""})
+
   return (
     <Router>
         <Routes>
-          <Route path='/' element={<FundArs/>} />
+          <Route path='/' element={
+            <GerenciadorProjetos
+              dadosProjetos={dadosProjetos}
+            />} />
         </Routes>
     </Router>
   )

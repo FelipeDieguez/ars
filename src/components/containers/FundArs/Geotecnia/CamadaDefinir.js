@@ -1,6 +1,6 @@
-import Radio from '../../form/Radio'
+import Radio from '../../../form/Radio'
 
-import soloTipos from "../../data/soloTipos.json"
+import soloTipos from "../../../data/soloTipos.json"
 
 function CamadaDefinir({ classeSolo, setClasseSolo, mudarCamadaDados }) {
     function mudancasCamadaDefinir(ev) {

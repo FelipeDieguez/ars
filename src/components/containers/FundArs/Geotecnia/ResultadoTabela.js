@@ -1,5 +1,5 @@
-import Table from '../../form/Table'
-import geotecniaCabecalhos from "../../data/geotecniaCabecalhos.json"
+import Table from '../../../form/Table'
+import geotecniaCabecalhos from "../../../data/geotecniaCabecalhos.json"
 
 function ResultadoTabela({ metodoGeotecnia, esforcoGeotecnia, entradasEstrutura, dadosGeotecnia, mudarCamadaDados }) {
     function mudancasResultadoTabela(ev) {

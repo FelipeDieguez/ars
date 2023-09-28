@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: 'https://fundars.mysticker.io'
+    // baseURL: 'https://fundars.mysticker.io'
+    baseURL: 'http://localhost:3100'
 });
 
 // Intercerpetor de requisições

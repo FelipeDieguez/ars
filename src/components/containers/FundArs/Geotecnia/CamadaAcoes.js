@@ -1,6 +1,6 @@
-import {listar, cadastrarCamada, editarCamada, removerCamada, calcular} from '../../services/sondagem'
+import {listar, cadastrarCamada, editarCamada, removerCamada, calcular} from '../../../services/sondagem'
 
-import Button from '../../form/Button'
+import Button from '../../../form/Button'
 
 function CamadaAcoes({ camadaDados, setAtualizarGeotecnia }) {
     function mudancasCamadaAcoes(ev) {

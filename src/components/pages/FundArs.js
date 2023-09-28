@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useTable } from'react-table'
 import axios from 'axios'
 
-import Geotecnia from '../containers/Geotecnia'
-import Estrutura from '../containers/Estrutura'
+import Geotecnia from '../containers/FundArs/Geotecnia'
+import Estrutura from '../containers/FundArs/Estrutura'
 
 import styles from './FundArs.module.css'
 

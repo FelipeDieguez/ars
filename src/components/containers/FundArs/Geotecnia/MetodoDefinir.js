@@ -1,5 +1,5 @@
-import Label from '../../form/Label'
-import Radio from '../../form/Radio'
+import Label from '../../../form/Label'
+import Radio from '../../../form/Radio'
 
 import styles from '../Geotecnia.module.css'
 

@@ -1,5 +1,5 @@
-import Label from '../form/Label'
-import Loader from '../form/Loader'
+import Label from '../../form/Label'
+import Loader from '../../form/Loader'
 
 import FundacaoDefinir from './Estrutura/FundacaoDefinir'
 import FundacaoAcoes from './Estrutura/FundacaoAcoes'

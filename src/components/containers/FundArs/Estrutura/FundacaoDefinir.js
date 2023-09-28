@@ -1,7 +1,7 @@
-import Tab from '../../form/Tab'
+import Tab from '../../../form/Tab'
 
-import fundacaoTipos from "../../data/fundacaoTipos.json"
-import geotecniaMetodos from "../../data/geotecniaMetodos.json"
+import fundacaoTipos from "../../../data/fundacaoTipos.json"
+import geotecniaMetodos from "../../../data/geotecniaMetodos.json"
 
 function FundacaoDefinir({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setEsforcoGeotecnia, mudarEntradasGeotecnia }) {
     function mudancasFundacaoDefinir(ev) {

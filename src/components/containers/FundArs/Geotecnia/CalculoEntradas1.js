@@ -1,6 +1,6 @@
-import LineEdit from '../../form/LineEdit'
+import LineEdit from '../../../form/LineEdit'
 
-import fundacaoGeometrias from "../../data/fundacaoGeometrias.json"
+import fundacaoGeometrias from "../../../data/fundacaoGeometrias.json"
 
 function CalculoEntradas1({ entradasGeotecnia, mudarEntradasGeotecnia }) {      
     function mudancasCalculoEntradas1(ev) {

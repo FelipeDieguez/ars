@@ -1,7 +1,7 @@
-import LineEdit from '../../form/LineEdit'
-import Select from '../../form/Select'
+import LineEdit from '../../../form/LineEdit'
+import Select from '../../../form/Select'
 
-import soloTipos from "../../data/soloTipos.json"
+import soloTipos from "../../../data/soloTipos.json"
 
 function CamadaEntradas({ classeSolo, mudarCamadaDados }) {
     function mudancasCamadaEntradas(ev) {

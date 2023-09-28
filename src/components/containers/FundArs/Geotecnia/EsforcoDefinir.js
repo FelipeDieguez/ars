@@ -1,4 +1,4 @@
-import Tab from '../../form/Tab'
+import Tab from '../../../form/Tab'
 
 function EsforcoDefinir({ esforcoGeotecnia, setEsforcoGeotecnia} ) {
     function mudancasEsforcoDefinir(ev) {

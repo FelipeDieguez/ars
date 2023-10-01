@@ -1,18 +1,28 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-import GerenciadorProjetos from './components/pages/GerenciadorProjetos'
+import FundArs from './components/pages/FundArs'
+import ProjectManager from './components/pages/ProjectManager'
 
 function App() {
-  const [dadosProjetos, setDadosProjetos] = useState({"nome": ""})
+  const [projectInputs, setProjectInputs] = useState({"selected_name": "", "name": ""})
+
+  function updateProjectInputs(key, value) {
+    setProjectInputs({ ...projectInputs, [key]: value })
+  }
 
   return (
     <Router>
         <Routes>
           <Route path='/' element={
-            <GerenciadorProjetos
-              dadosProjetos={dadosProjetos}
-            />} />
+            <ProjectManager
+              projectInputs={projectInputs}
+              updateProjectInputs={updateProjectInputs}
+            />
+          }/>
+          <Route path='/fundars' element={
+            <FundArs/>
+          }/>
         </Routes>
     </Router>
   )

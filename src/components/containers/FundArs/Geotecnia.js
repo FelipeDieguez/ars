@@ -39,7 +39,7 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
             setClasseSolo,
         }}>
             <div className={styles.grid}>
-                <header>
+                <header className={styles.header}>
                     <strong> <Label text="GEOTECNIA" /> </strong>
                     <div className={styles.stepsContainer}>
                         <div className={styles.steps}>

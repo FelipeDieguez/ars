@@ -5,7 +5,7 @@ import FundArs from './components/pages/FundArs'
 import ProjectManager from './components/pages/ProjectManager'
 
 function App() {
-  const [projectInputs, setProjectInputs] = useState({"selected_name": "", "name": ""})
+  const [projectInputs, setProjectInputs] = useState({'selected_name': '', 'name': ''})
 
   function updateProjectInputs(key, value) {
     setProjectInputs({ ...projectInputs, [key]: value })

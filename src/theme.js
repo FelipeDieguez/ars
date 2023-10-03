@@ -2,8 +2,11 @@ import { extendTheme } from "@chakra-ui/react";
 
 const theme = {
     colors: {
+        primary:'blue',
+        second: 'red',
         white: '#ffffff',
-        gray: '#F9F9F9'
+        gray: '#F9F9F9',
+        border: '#ffffff'
     },
     fonts: {
         title: 'Open Sans, sans-serif',
@@ -13,6 +16,12 @@ const theme = {
         sm: '10px',
         md: '15px',
         lg: '20px'
+    },
+    borderWidths: {
+        none: '0px',
+        sm: '1px',
+        md: '2px',
+        lg: '5px'
     }
 }
 

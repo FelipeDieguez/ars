@@ -8,16 +8,25 @@ import LineEditText from '../form/LineEditText'
 import styles from './ProjectManager.module.css';
 
 import { api } from '../services/api'
-import { Checkbox, Heading, IconButton, Input, Tooltip, useSafeLayoutEffect } from '@chakra-ui/react'
+import { Checkbox, Heading, IconButton, Input, InputGroup, InputLeftAddon, Tooltip, useSafeLayoutEffect } from '@chakra-ui/react'
 import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, AlertDialogCloseButton} from '@chakra-ui/react'
-import { AddIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, ExternalLinkIcon } from '@chakra-ui/icons'
+import { AddIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, ExternalLinkIcon, SearchIcon } from '@chakra-ui/icons'
 
 function ProjectManager({ projectInputs, updateProjectInputs }) {
     const navigate = useNavigate()
     const [projects, setProjects] = useState([])
+    const [filteredProjects, setFilteredProjects] = useState([])
     const [updateProjects, setUpdateProjects] = useState(0)
     const [formOpen, setFormOpen] = useState('')
+    const [searchTerm, setSearchTerm] = useState('')
     const [warningMessage, setWarningMessage] = useState(false)
+    const [projectExistsWarning, setProjectExistsWarning] = useState(false);
+
+    function onSearchInputChange(ev) {
+        const value = ev.target.value
+        setSearchTerm(value)
+        setUpdateProjects(1)
+    }
 
     function onProjectInputChange(ev) {
         const value = ev.target.value
@@ -25,7 +34,8 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
     }
 
     function onOpenProject(ev) {
-        if (projectInputs["selected_name"] !== '') {
+        if (projectInputs['selected_name'] !== '') {
+            updateProjectInputs('selected_name', '')
             navigate('/fundars')
         }
         else {
@@ -36,25 +46,33 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
     function onProjectAction(action) {
         const options = {
             'register': () => {
-                projectRegister(projectInputs)
-                setFormOpen('')
-            },
-            'edit': () => {
-                if (projectInputs['selected_name'] !== '') {
-                    projectEdit(projectInputs)
+                if (projects.some(project => project.name === projectInputs.name)) {
+                    setProjectExistsWarning(true)
+                } else {
+                    projectRegister(projectInputs)
                     setFormOpen('')
                 }
-                else {
+            },
+            'edit': () => {
+                if (projectInputs['selected_name'] === '') {
                     setWarningMessage(true)
+                }
+                else if (projects.some(project => project.name === projectInputs.name)) {
+                    setProjectExistsWarning(true)
+                }
+                else {
+                    projectEdit(projectInputs)
+                    updateProjectInputs('selected_name', '')
                     setFormOpen('')
                 }
             },
             'remove': () => {
-                if (projectInputs['selected_name'] !== '') {
-                    projectRemove(projectInputs)
+                if (projectInputs['selected_name'] === '') {
+                    setWarningMessage(true)
                 }
                 else {
-                    setWarningMessage(true)
+                    projectRemove(projectInputs)
+                    updateProjectInputs('selected_name', '')
                 }
             }
         }
@@ -71,6 +89,10 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
         api.get('/projetos')
             .then((response) => {
                 setProjects(response['data'])
+                const filter = response['data'].filter(project =>
+                    project.name.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+                setFilteredProjects(filter)
                 setUpdateProjects(0)
             })
     }, [updateProjects])
@@ -82,6 +104,7 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                     <Heading fontFamily='title' fontSize='lg'>GERENCIADOR DE PROJETOS</Heading>
                 </header>
                 <div className={styles.menu}>
+                    
                     <Tooltip hasArrow label='Abrir Projeto' bg='gray' color='black' fontSize='md'>
                         <IconButton
                             icon={<ExternalLinkIcon />}
@@ -127,7 +150,7 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                         />
                     </Tooltip>
                     {formOpen !== '' && (
-                        <div className={styles.menu}>
+                        <>
                             <Input
                                 type='text'
                                 placeholder='Digite o nome do projeto'
@@ -141,7 +164,7 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                                 icon={<CloseIcon />}
                                 onClick={() => setFormOpen('')}
                             />
-                        </div>
+                        </>
                     )}
                     {warningMessage && (
                         <div className={styles.page}>
@@ -149,7 +172,7 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                             >
                                 <AlertDialogOverlay>
                                     <AlertDialogContent>
-                                            <AlertDialogHeader>Nenhum Projeto Selecionado!</AlertDialogHeader>
+                                            <AlertDialogHeader>Nenhum projeto selecionado</AlertDialogHeader>
                                             <AlertDialogCloseButton onClick={() => setWarningMessage(false)}/>
                                             <AlertDialogBody>
                                                 Para executar essa função, selecione um projeto.
@@ -158,7 +181,33 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                                 </AlertDialogOverlay>
                             </AlertDialog>
                         </div>
-                    )}  
+                    )}
+                    {projectExistsWarning && (
+                        <div className={styles.page}>
+                            <AlertDialog isOpen={projectExistsWarning}>
+                                <AlertDialogOverlay>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>Projeto já existe</AlertDialogHeader>
+                                        <AlertDialogCloseButton onClick={() => setProjectExistsWarning(false)}/>
+                                        <AlertDialogBody>
+                                            O projeto com esse nome já existe. Escolha um nome diferente.
+                                        </AlertDialogBody>
+                                    </AlertDialogContent>
+                                </AlertDialogOverlay>
+                            </AlertDialog>
+                        </div>
+                    )}
+                </div>
+                <div className={styles.menu}>
+                    <InputGroup size='md'>
+                        <InputLeftAddon children={<SearchIcon/>} />
+                        <Input
+                            type='text'
+                            placeholder='Buscar projeto'
+                            value={searchTerm}
+                            onChange={onSearchInputChange}
+                        />
+                    </InputGroup>
                 </div>
                 <div className={styles.section}>
                     <table className={styles.table}>
@@ -168,7 +217,7 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {projects.map((project, i) => {
+                            {filteredProjects.map((project, i) => {
                                 return(
                                     <tr 
                                         className={

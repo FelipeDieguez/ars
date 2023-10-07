@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import FundArs from './components/pages/FundArs'
 import ProjectManager from './components/pages/ProjectManager'
+import ParametersManager from './components/pages/ParametersManager'
 
 function App() {
   const [projectInputs, setProjectInputs] = useState({'selected_name': '', 'name': ''})
@@ -22,6 +23,9 @@ function App() {
           }/>
           <Route path='/fundars' element={
             <FundArs/>
+          }/>
+          <Route path='/parametros' element={
+            <ParametersManager/>
           }/>
         </Routes>
     </Router>

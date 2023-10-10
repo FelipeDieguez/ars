@@ -10,7 +10,7 @@ import styles from './ProjectManager.module.css';
 import { api } from '../services/api'
 import { Checkbox, Heading, IconButton, Input, InputGroup, InputLeftAddon, Tooltip, useSafeLayoutEffect } from '@chakra-ui/react'
 import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, AlertDialogCloseButton} from '@chakra-ui/react'
-import { AddIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, ExternalLinkIcon, SearchIcon } from '@chakra-ui/icons'
+import { AddIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, ExternalLinkIcon, SearchIcon, SettingsIcon } from '@chakra-ui/icons'
 
 function ProjectManager({ projectInputs, updateProjectInputs }) {
     const navigate = useNavigate()
@@ -84,6 +84,9 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
         setUpdateProjects(1)
     }
 
+    function onOpenParameters() {
+        navigate('/parametros')
+    }
 
     useEffect(() => {
         api.get('/projetos')
@@ -104,51 +107,65 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                     <Heading fontFamily='title' fontSize='lg'>GERENCIADOR DE PROJETOS</Heading>
                 </header>
                 <div className={styles.menu}>
-                    
-                    <Tooltip hasArrow label='Abrir Projeto' bg='gray' color='black' fontSize='md'>
-                        <IconButton
-                            icon={<ExternalLinkIcon />}
-                            borderWidth='sm'
-                            borderRadius='none'
-                            borderColor='border'
-                            variant='solid'
-                            colorScheme='blue'
-                            onClick={onOpenProject}
-                        />
-                    </Tooltip>
-                    <Tooltip hasArrow label='Criar' bg='gray' color='black' fontSize='md'>
-                        <IconButton
-                            icon={<AddIcon />}
-                            borderWidth='sm'
-                            borderRadius='none'
-                            borderColor='border'
-                            variant='solid'
-                            colorScheme='blue'
-                            onClick={() => setFormOpen('register')}
-                        />
-                    </Tooltip>
-                    <Tooltip hasArrow label='Editar' bg='gray' color='black' fontSize='md'>
-                        <IconButton
-                            icon={<EditIcon />}
-                            borderWidth='sm'
-                            borderRadius='none'
-                            borderColor='border'
-                            variant='solid'
-                            colorScheme='blue'
-                            onClick={() => setFormOpen('edit')}
-                        />
-                    </Tooltip>
-                    <Tooltip hasArrow label='Remover' bg='gray' color='black' fontSize='md'>
-                        <IconButton
-                            icon={<DeleteIcon />}
-                            borderWidth='sm'
-                            borderRadius='none'
-                            borderColor='border'
-                            variant='solid'
-                            colorScheme='blue'
-                            onClick={() => onProjectAction('remove')}
-                        />
-                    </Tooltip>
+                    <div className={styles.leftMenu}>
+                        <Tooltip hasArrow label='Abrir Projeto' bg='gray' color='black' fontSize='md'>
+                            <IconButton
+                                icon={<ExternalLinkIcon />}
+                                borderWidth='sm'
+                                borderRadius='none'
+                                borderColor='border'
+                                variant='solid'
+                                colorScheme='blue'
+                                onClick={onOpenProject}
+                            />
+                        </Tooltip>
+                        <Tooltip hasArrow label='Criar' bg='gray' color='black' fontSize='md'>
+                            <IconButton
+                                icon={<AddIcon />}
+                                borderWidth='sm'
+                                borderRadius='none'
+                                borderColor='border'
+                                variant='solid'
+                                colorScheme='blue'
+                                onClick={() => setFormOpen('register')}
+                            />
+                        </Tooltip>
+                        <Tooltip hasArrow label='Editar' bg='gray' color='black' fontSize='md'>
+                            <IconButton
+                                icon={<EditIcon />}
+                                borderWidth='sm'
+                                borderRadius='none'
+                                borderColor='border'
+                                variant='solid'
+                                colorScheme='blue'
+                                onClick={() => setFormOpen('edit')}
+                            />
+                        </Tooltip>
+                        <Tooltip hasArrow label='Remover' bg='gray' color='black' fontSize='md'>
+                            <IconButton
+                                icon={<DeleteIcon />}
+                                borderWidth='sm'
+                                borderRadius='none'
+                                borderColor='border'
+                                variant='solid'
+                                colorScheme='blue'
+                                onClick={() => onProjectAction('remove')}
+                            />
+                        </Tooltip>
+                    </div>
+                    <div className={styles.rigthMenu}>
+                        <Tooltip hasArrow label='Configurações' bg='gray' color='black' fontSize='md'>
+                            <IconButton
+                                icon={<SettingsIcon />}
+                                borderWidth='sm'
+                                borderRadius='none'
+                                borderColor='border'
+                                variant='solid'
+                                colorScheme='blue'
+                                onClick={() => onOpenParameters()}
+                            />
+                        </Tooltip>
+                    </div>
                     {formOpen !== '' && (
                         <>
                             <Input

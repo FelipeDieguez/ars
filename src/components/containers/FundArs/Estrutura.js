@@ -15,10 +15,6 @@ function Estrutura({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setE
         navigate('/')
     }
 
-    function onParametersManager() {
-        navigate('/parametros')
-    }
-
     return (
         <div className={styles.grid}>
             <nav>
@@ -39,7 +35,6 @@ function Estrutura({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setE
                 />
             </header>
             <Button onClick={onProjectManager}>GERENCIADOR DE PROJETOS</Button>
-            <Button onClick={onParametersManager}>GERENCIADOR DE PARÂMETROS</Button>
         </div>
     )
 }

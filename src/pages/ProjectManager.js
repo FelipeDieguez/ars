@@ -5,7 +5,7 @@ import { projectRegister, projectEdit, projectRemove } from './project-manager/u
 import styles from './ProjectManager.module.css';
 
 import { api } from '../utils/services/api'
-import { Checkbox, Heading, IconButton, Input, InputGroup, InputLeftAddon, Tooltip, useSafeLayoutEffect } from '@chakra-ui/react'
+import { Checkbox, Heading, IconButton, Input, InputGroup, InputLeftAddon, Table, TableContainer, Tbody, Td, Th, Thead, Tooltip, Tr, useSafeLayoutEffect } from '@chakra-ui/react'
 import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, AlertDialogCloseButton} from '@chakra-ui/react'
 import { AddIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, ExternalLinkIcon, SearchIcon, SettingsIcon } from '@chakra-ui/icons'
 
@@ -224,33 +224,45 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                     </InputGroup>
                 </div>
                 <div className={styles.section}>
-                    <table className={styles.table}>
-                        <thead className={styles.thead}>
-                            <tr className={styles.tr}>
-                                <th className={styles.th}>NOME</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredProjects.map((project, i) => {
-                                return(
-                                    <tr 
-                                        className={
-                                            projectInputs['selected_name'] === project['name'] ? styles.selected : styles.trBody
-                                        }   
-                                        key={'row-'+i}
+                    <TableContainer>
+                        <Table variant='striped' colorScheme='gray'>
+                            <Thead>
+                                <Tr>
+                                    <Th display='flex'
+                                        justifyContent='center'
+                                        alignItems='center'
+                                        fontSize='md'
+                                        border='2px'
                                     >
-                                        <td
-                                            key={'col-1'}
-                                            className={styles.td}
-                                            onClick={() => updateProjectInputs('selected_name', project['name'])}
+                                        PROJETOS
+                                    </Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                                {filteredProjects.map((project, i) => {
+                                    return(
+                                        <Tr background={projectInputs['selected_name'] === project['name'] ? 'selected' : 'white'}
+                                            cursor='pointer'
+                                            border='1px'
+                                            h='25px'
                                         >
-                                            <label>{project['name']}</label>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                                            <Td onClick={() => updateProjectInputs('selected_name', project['name'])} 
+                                            borderBottom='0px'
+                                            display='flex'
+                                            justifyContent='center'
+                                            alignItems='center'
+                                            fontSize='md'
+                                            padding='0px'
+                                            w='100%'
+                                            >
+                                                {project['name']}
+                                            </Td>
+                                        </Tr>
+                                    )
+                                })}
+                            </Tbody>
+                        </Table>
+                    </TableContainer>
                 </div>
             </div>
         </div>

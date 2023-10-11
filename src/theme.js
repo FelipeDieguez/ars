@@ -6,7 +6,8 @@ const theme = {
         second: 'red',
         white: '#ffffff',
         gray: '#F9F9F9',
-        border: '#ffffff'
+        border: '#ffffff',
+        selected: '#d9d9d9'
     },
     fonts: {
         title: 'Open Sans, sans-serif',

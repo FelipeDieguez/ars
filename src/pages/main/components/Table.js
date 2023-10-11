@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styles from './Table.module.css'
-import { CamadaContext } from '../containers/FundArs/Geotecnia'
+import { CamadaContext } from '../containers/Geotechnics'
 
 function Table ({ dados, cabecalho, entradasEstrutura }) {
     const { 

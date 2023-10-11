@@ -1,14 +1,11 @@
-import Label from '../../form/Label'
-import Loader from '../../form/Loader'
+import FundacaoDefinir from './Structure/FundacaoDefinir'
+import FundacaoAcoes from './Structure/FundacaoAcoes'
 
-import FundacaoDefinir from './Estrutura/FundacaoDefinir'
-import FundacaoAcoes from './Estrutura/FundacaoAcoes'
-
-import styles from './Estrutura.module.css'
+import styles from './Structure.module.css'
 import { Button } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
-function Estrutura({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, entradasEstrutura, dadosGeotecnia, mudarEntradasGeotecnia, mudarEntradasEstrutura }) {
+function Structure({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, entradasEstrutura, dadosGeotecnia, mudarEntradasGeotecnia, mudarEntradasEstrutura }) {
     const navigate = useNavigate()
     
     function onProjectManager() {
@@ -39,4 +36,4 @@ function Estrutura({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setE
     )
 }
 
-export default Estrutura
+export default Structure

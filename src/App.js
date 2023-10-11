@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { useState } from 'react'
 
-import FundArs from './components/pages/FundArs'
-import ProjectManager from './components/pages/ProjectManager'
-import ParametersManager from './components/pages/ParametersManager'
+import Main from './pages/Main'
+import ProjectManager from './pages/ProjectManager'
+import ParametersManager from './pages/ParametersManager'
 
 function App() {
   const [projectInputs, setProjectInputs] = useState({'selected_name': '', 'name': ''})
@@ -21,10 +21,10 @@ function App() {
               updateProjectInputs={updateProjectInputs}
             />
           }/>
-          <Route path='/fundars' element={
-            <FundArs/>
+          <Route path='/main' element={
+            <Main/>
           }/>
-          <Route path='/parametros' element={
+          <Route path='/parameters' element={
             <ParametersManager/>
           }/>
         </Routes>

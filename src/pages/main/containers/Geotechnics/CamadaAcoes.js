@@ -1,22 +1,22 @@
-import {listar, cadastrarCamada, editarCamada, removerCamada, calcular} from '../../../services/sondagem'
+import { layerRegister, layerEdit, layerRemove } from '../../utils/services/investigation'
 
-import Button from '../../../form/Button'
+import Button from '../../components/Button'
 
 function CamadaAcoes({ camadaDados, setAtualizarGeotecnia }) {
     function mudancasCamadaAcoes(ev) {
         const acao = ev.target.name
         const opcoes = {
             "cadastrar": () => {
-                cadastrarCamada(camadaDados)
+                layerRegister(camadaDados)
             },
             "editar": () => {
                 if (camadaDados["ordem"] !== "") {
-                    editarCamada(camadaDados)
+                    layerEdit(camadaDados)
                 }
             },
             "remover": () => {
                 if (camadaDados["ordem"] !== "") {
-                    removerCamada(camadaDados)
+                    layerRemove(camadaDados)
                 }
             }
         }

@@ -1,12 +1,12 @@
-import Radio from '../../../form/Radio'
+import Radio from '../../components/Radio'
 
-import soloTipos from "../../../data/soloTipos.json"
+import soilTypes from "../../utils/data/soilTypes.json"
 
 function CamadaDefinir({ classeSolo, setClasseSolo, mudarCamadaDados }) {
     function mudancasCamadaDefinir(ev) {
         const classe_solo = ev.target.id
         setClasseSolo(classe_solo)
-        mudarCamadaDados("solo", soloTipos[classe_solo][0])
+        mudarCamadaDados("solo", soilTypes[classe_solo][0])
     }
     
     return (

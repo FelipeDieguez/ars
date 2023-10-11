@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import { useTable } from'react-table'
 import axios from 'axios'
 
-import Geotecnia from '../containers/FundArs/Geotecnia'
-import Estrutura from '../containers/FundArs/Estrutura'
+import Geotechnics from './main/containers/Geotechnics'
+import Structure from './main/containers/Structure'
 
-import styles from './FundArs.module.css'
+import styles from './Main.module.css'
 
-import geotecniaDados from "../data/geotecniaDados.json"
-import { api } from '../services/api'
+import geotechnicsDatas from "./main/utils/data/geotechnicsDatas.json"
+import { api } from '../utils/services/api'
 
 const inicialEntradasGeotecnia = {
     "tipo": "Franki",
@@ -22,7 +22,7 @@ const inicialEntradasEstrutura = {
     "profundidade": "0"
 }
 
-function FundArs() {
+function Main() {
     const [classeFundacao, setClasseFundacao] = useState("estacas")
     const [metodoGeotecnia, setMetodoGeotecnia] = useState("metodo-1")
     const [esforcoGeotecnia, setEsforcoGeotecnia] = useState("compressao")
@@ -42,15 +42,15 @@ function FundArs() {
     }
 
     useEffect(() => {
-        api.get('/sondagem')
+        api.get('/investigation')
             .then((response) => {
                 const esforcos = {}
-                Object.entries(geotecniaDados[classeFundacao]).map(([esforco, valor]) => {
+                Object.entries(geotechnicsDatas[classeFundacao]).map(([esforco, valor]) => {
                     const metodos = {}
                     Object.entries(valor).map(([metodo, resultados]) => {
                         metodos[metodo] = []
                         response["data"].map((camada, i) => {
-                            metodos[metodo].push(Object.assign(camada, geotecniaDados[classeFundacao][esforco][metodo][0]))
+                            metodos[metodo].push(Object.assign(camada, geotechnicsDatas[classeFundacao][esforco][metodo][0]))
                         })
                     })
                     esforcos[esforco] = metodos
@@ -62,7 +62,7 @@ function FundArs() {
 
     return (
         <div className={styles.page}>
-            <Geotecnia
+            <Geotechnics
                 classeFundacao={classeFundacao}
                 metodoGeotecnia={metodoGeotecnia} setMetodoGeotecnia={setMetodoGeotecnia}
                 esforcoGeotecnia={esforcoGeotecnia} setEsforcoGeotecnia={setEsforcoGeotecnia}
@@ -71,7 +71,7 @@ function FundArs() {
                 dadosGeotecnia={dadosGeotecnia} setDadosGeotecnia={setDadosGeotecnia}
                 setAtualizarGeotecnia={setAtualizarGeotecnia}
             />
-            <Estrutura
+            <Structure
                 classeFundacao={classeFundacao}
                 setClasseFundacao={setClasseFundacao}
                 setMetodoGeotecnia={setMetodoGeotecnia}
@@ -86,4 +86,4 @@ function FundArs() {
     )
 }
 
-export default FundArs
+export default Main

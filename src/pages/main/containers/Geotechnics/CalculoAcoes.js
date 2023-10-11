@@ -1,10 +1,10 @@
-import Button from '../../../form/Button'
+import Button from '../../components/Button'
 
-import {listar, cadastrarCamada, editarCamada, removerCamada, calcular} from '../../../services/sondagem'
+import { calculate } from '../../utils/services/investigation'
 
 function CalculoAcoes({ entradasGeotecnia, dadosGeotecnia, setDadosGeotecnia }) {
     function mudancasCalculoAcoes() {
-        calcular([dadosGeotecnia, entradasGeotecnia]).then((response) => {
+        calculate([dadosGeotecnia, entradasGeotecnia]).then((response) => {
             setDadosGeotecnia(response["data"])
         })
     }
@@ -12,7 +12,7 @@ function CalculoAcoes({ entradasGeotecnia, dadosGeotecnia, setDadosGeotecnia }) 
         <>
             <Button
                 text="Calcular"
-                name="calcular"
+                name="calculate"
                 width="80px"
                 onClick={mudancasCalculoAcoes}
             />

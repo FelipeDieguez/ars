@@ -1,7 +1,7 @@
-import Label from '../../../form/Label'
-import Radio from '../../../form/Radio'
+import Label from '../../components/Label'
+import Radio from '../../components/Radio'
 
-import styles from '../Geotecnia.module.css'
+import styles from '../Geotechnics.module.css'
 
 function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia }) {
     function mudancasMetodoDefinir(ev) {

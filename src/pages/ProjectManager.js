@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { projectRegister, projectEdit, projectRemove } from '../services/projetos'
-
-import Button from '../form/Button'
-import LineEditText from '../form/LineEditText'
+import { projectRegister, projectEdit, projectRemove } from './project-manager/utils/services/projects'
 
 import styles from './ProjectManager.module.css';
 
-import { api } from '../services/api'
+import { api } from '../utils/services/api'
 import { Checkbox, Heading, IconButton, Input, InputGroup, InputLeftAddon, Tooltip, useSafeLayoutEffect } from '@chakra-ui/react'
 import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, AlertDialogCloseButton} from '@chakra-ui/react'
 import { AddIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, ExternalLinkIcon, SearchIcon, SettingsIcon } from '@chakra-ui/icons'
@@ -36,7 +33,7 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
     function onOpenProject(ev) {
         if (projectInputs['selected_name'] !== '') {
             updateProjectInputs('selected_name', '')
-            navigate('/fundars')
+            navigate('/main')
         }
         else {
             setWarningMessage(true)
@@ -85,11 +82,11 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
     }
 
     function onOpenParameters() {
-        navigate('/parametros')
+        navigate('/parameters')
     }
 
     useEffect(() => {
-        api.get('/projetos')
+        api.get('/projects')
             .then((response) => {
                 setProjects(response['data'])
                 const filter = response['data'].filter(project =>

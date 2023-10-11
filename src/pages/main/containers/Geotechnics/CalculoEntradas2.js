@@ -1,4 +1,4 @@
-import Select from '../../../form/Select'
+import Select from '../../components/Select'
 
 function CalculoEntradas2({ classeFundacao, metodoGeotecnia, esforcoGeotecnia, mudarEntradasGeotecnia, dadosGeotecnia }) {      
     function mudancasCalculoEntradas2(ev) {

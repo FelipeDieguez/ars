@@ -1,5 +1,5 @@
-import Table from '../../../form/Table'
-import geotecniaCabecalhos from "../../../data/geotecniaCabecalhos.json"
+import Table from '../../components/Table'
+import geotechnicsHeaders from "../../utils/data/geotechnicsHeaders.json"
 
 function ResultadoTabela({ metodoGeotecnia, esforcoGeotecnia, entradasEstrutura, dadosGeotecnia, mudarCamadaDados }) {
     function mudancasResultadoTabela(ev) {
@@ -10,7 +10,7 @@ function ResultadoTabela({ metodoGeotecnia, esforcoGeotecnia, entradasEstrutura,
     return (
         <>
             <Table dados={dadosGeotecnia[esforcoGeotecnia][metodoGeotecnia]}
-                    cabecalho={geotecniaCabecalhos["cabecalhos"]}
+                    cabecalho={geotechnicsHeaders["cabecalhos"]}
                     entradasEstrutura={entradasEstrutura}
             />
         </>

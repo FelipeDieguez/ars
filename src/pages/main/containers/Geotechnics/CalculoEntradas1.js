@@ -1,6 +1,6 @@
-import LineEdit from '../../../form/LineEdit'
+import LineEdit from '../../components/LineEdit'
 
-import fundacaoGeometrias from "../../../data/fundacaoGeometrias.json"
+import foundationGeometries from "../../utils/data/foundationGeometries.json"
 
 function CalculoEntradas1({ entradasGeotecnia, mudarEntradasGeotecnia }) {      
     function mudancasCalculoEntradas1(ev) {
@@ -8,7 +8,7 @@ function CalculoEntradas1({ entradasGeotecnia, mudarEntradasGeotecnia }) {
         mudarEntradasGeotecnia(name, value)
     }
     
-    if (fundacaoGeometrias[entradasGeotecnia["tipo"]] === "estaca circular" || fundacaoGeometrias[entradasGeotecnia["tipo"]] === "sapata circular") {
+    if (foundationGeometries[entradasGeotecnia["tipo"]] === "estaca circular" || foundationGeometries[entradasGeotecnia["tipo"]] === "sapata circular") {
         return (
             <LineEdit
                 text="Diâmetro(m)="
@@ -19,7 +19,7 @@ function CalculoEntradas1({ entradasGeotecnia, mudarEntradasGeotecnia }) {
             />
         )
     }
-    else if (fundacaoGeometrias[entradasGeotecnia["tipo"]] === "estaca retangular" || fundacaoGeometrias[entradasGeotecnia["tipo"]] === "sapata retangular") {
+    else if (foundationGeometries[entradasGeotecnia["tipo"]] === "estaca retangular" || foundationGeometries[entradasGeotecnia["tipo"]] === "sapata retangular") {
         return (
             <>
                 <LineEdit

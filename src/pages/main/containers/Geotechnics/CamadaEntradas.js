@@ -1,7 +1,7 @@
-import LineEdit from '../../../form/LineEdit'
-import Select from '../../../form/Select'
+import LineEdit from '../../components/LineEdit'
+import Select from '../../components/Select'
 
-import soloTipos from "../../../data/soloTipos.json"
+import soilTypes from "../../utils/data/soilTypes.json"
 
 function CamadaEntradas({ classeSolo, mudarCamadaDados }) {
     function mudancasCamadaEntradas(ev) {
@@ -14,7 +14,7 @@ function CamadaEntradas({ classeSolo, mudarCamadaDados }) {
             <Select
                 text="Solo:"
                 name="solo"
-                list={soloTipos[classeSolo]}
+                list={soilTypes[classeSolo]}
                 width="160px"
                 onChange={mudancasCamadaEntradas}
             />

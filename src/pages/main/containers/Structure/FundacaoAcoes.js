@@ -1,7 +1,7 @@
-import Button from '../../../form/Button'
-import Select from '../../../form/Select'
+import Button from '../../components/Button'
+import Select from '../../components/Select'
 
-import { memorial } from '../../../services/sondagem'
+import { memorial } from '../../utils/services/investigation'
 
 function FundacaoAcoes({ dadosGeotecnia, entradasGeotecnia, entradasEstrutura, mudarEntradasEstrutura }) {
     function mudancasFundacaoAcoes() {

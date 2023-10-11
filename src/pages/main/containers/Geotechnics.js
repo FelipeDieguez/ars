@@ -1,19 +1,19 @@
 import { useState, createContext } from 'react'
 
-import Label from '../../form/Label'
+import Label from '../components/Label'
 
-import CamadaDefinir from './Geotecnia/CamadaDefinir'
-import CamadaEntradas from './Geotecnia/CamadaEntradas'
-import CamadaAcoes from './Geotecnia/CamadaAcoes'
-import MetodoDefinir from './Geotecnia/MetodoDefinir'
-import CalculoDefinir from './Geotecnia/CalculoDefinir'
-import CalculoEntradas1 from './Geotecnia/CalculoEntradas1'
-import CalculoEntradas2 from './Geotecnia/CalculoEntradas2'
-import CalculoAcoes from './Geotecnia/CalculoAcoes'
-import EsforcoDefinir from './Geotecnia/EsforcoDefinir'
-import ResultadoTabela from './Geotecnia/ResultadoTabela'
+import CamadaDefinir from './Geotechnics/CamadaDefinir'
+import CamadaEntradas from './Geotechnics/CamadaEntradas'
+import CamadaAcoes from './Geotechnics/CamadaAcoes'
+import MetodoDefinir from './Geotechnics/MetodoDefinir'
+import CalculoDefinir from './Geotechnics/CalculoDefinir'
+import CalculoEntradas1 from './Geotechnics/CalculoEntradas1'
+import CalculoEntradas2 from './Geotechnics/CalculoEntradas2'
+import CalculoAcoes from './Geotechnics/CalculoAcoes'
+import EsforcoDefinir from './Geotechnics/EsforcoDefinir'
+import ResultadoTabela from './Geotechnics/ResultadoTabela'
 
-import styles from './Geotecnia.module.css'
+import styles from './Geotechnics.module.css'
 
 const inicialCamadaDados = {
     "ordem": "",
@@ -23,7 +23,7 @@ const inicialCamadaDados = {
 // criando contexto para compartilhar dados entre componentes
 export const CamadaContext = createContext({})
 
-function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforcoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, mudarEntradasGeotecnia, entradasEstrutura, dadosGeotecnia, setDadosGeotecnia, setAtualizarGeotecnia}) {
+function Geotechnics({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforcoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, mudarEntradasGeotecnia, entradasEstrutura, dadosGeotecnia, setDadosGeotecnia, setAtualizarGeotecnia}) {
     const [classeSolo, setClasseSolo] = useState("areia")
     const [camadaDados, setCamadaDados] = useState(inicialCamadaDados)
 
@@ -125,4 +125,4 @@ function Geotecnia({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforc
     )
 }
 
-export default Geotecnia
+export default Geotechnics

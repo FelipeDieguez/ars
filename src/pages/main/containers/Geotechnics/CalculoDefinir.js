@@ -1,6 +1,6 @@
-import Select from '../../../form/Select'
+import Select from '../../components/Select'
 
-import fundacaoTipos from "../../../data/fundacaoTipos.json"
+import foundationTypes from "../../utils/data/foundationTypes.json"
 
 function CalculoDefinir({ classeFundacao, mudarEntradasGeotecnia }) {
     function mudancasCalculoDefinir(ev) {
@@ -13,7 +13,7 @@ function CalculoDefinir({ classeFundacao, mudarEntradasGeotecnia }) {
             <Select
                 text="Tipo:"
                 name="tipo"
-                list={fundacaoTipos[classeFundacao]}
+                list={foundationTypes[classeFundacao]}
                 width="150px"
                 onChange={mudancasCalculoDefinir}
             />

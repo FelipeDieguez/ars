@@ -2,11 +2,11 @@ import Radio from '../../components/Radio'
 
 import soilTypes from "../../utils/data/soilTypes.json"
 
-function CamadaDefinir({ classeSolo, setClasseSolo, mudarCamadaDados }) {
-    function mudancasCamadaDefinir(ev) {
-        const classe_solo = ev.target.id
-        setClasseSolo(classe_solo)
-        mudarCamadaDados("solo", soilTypes[classe_solo][0])
+function CamadaDefinir({ soilClass, setSoilClass, updateLayerInputs }) {
+    function onSoilClassChange(ev) {
+        const soil_class = ev.target.id
+        setSoilClass(soil_class)
+        updateLayerInputs("solo", soilTypes[soil_class][0])
     }
     
     return (
@@ -15,22 +15,22 @@ function CamadaDefinir({ classeSolo, setClasseSolo, mudarCamadaDados }) {
                 text="Areia"
                 id="areia"
                 name="solos"
-                checked={classeSolo === "areia"}
-                onChange={mudancasCamadaDefinir}
+                checked={soilClass === "areia"}
+                onChange={onSoilClassChange}
             />
             <Radio
                 text="Argila"
                 id="argila"
                 name="solos"
-                checked={classeSolo === "argila"}
-                onChange={mudancasCamadaDefinir}
+                checked={soilClass === "argila"}
+                onChange={onSoilClassChange}
             />
             <Radio
                 text="Silte"
                 id="silte"
                 name="solos"
-                checked={classeSolo === "silte"}
-                onChange={mudancasCamadaDefinir}
+                checked={soilClass === "silte"}
+                onChange={onSoilClassChange}
             />
         </>
     )

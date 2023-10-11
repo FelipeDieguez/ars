@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useTable } from'react-table'
-import axios from 'axios'
 
 import Geotechnics from './main/containers/Geotechnics'
 import Structure from './main/containers/Structure'
 
 import styles from './Main.module.css'
 
-import geotechnicsDatas from "./main/utils/data/geotechnicsDatas.json"
+import dataGeotechnics from "./main/utils/data/dataGeotechnics.json"
 import { api } from '../utils/services/api'
 
-const inicialEntradasGeotecnia = {
+const initialGeotechnicsInputs = {
     "tipo": "Franki",
     "dimensao_1": "0",
     "dimensao_2": "0",
@@ -18,69 +16,69 @@ const inicialEntradasGeotecnia = {
     "dimensao_4": "0"
 }
 
-const inicialEntradasEstrutura = {
+const initialStructureInputs = {
     "profundidade": "0"
 }
 
 function Main() {
-    const [classeFundacao, setClasseFundacao] = useState("estacas")
-    const [metodoGeotecnia, setMetodoGeotecnia] = useState("metodo-1")
-    const [esforcoGeotecnia, setEsforcoGeotecnia] = useState("compressao")
-    const [entradasGeotecnia, setEntradasGeotecnia] = useState(inicialEntradasGeotecnia)
-    const [entradasEstrutura, setEntradasEstrutura] = useState(inicialEntradasEstrutura)
-    const [dadosGeotecnia, setDadosGeotecnia] = useState({"compressao": {"metodo-1": [{}], "metodo-2": [{}]}})
-    const [atualizarGeotecnia, setAtualizarGeotecnia] = useState(0)
+    const [foundationClass, setFoundationClass] = useState("estacas")
+    const [geotechnicsMethod, setGeotechnicsMethod] = useState("metodo-1")
+    const [geotechnicsStress, setGeotechnicsStress] = useState("compressao")
+    const [geotechnicsInputs, setGeotechnicsInputs] = useState(initialGeotechnicsInputs)
+    const [structureInputs, setStructureInputs] = useState(initialStructureInputs)
+    const [geotechnicsData, setGeotechnicsData] = useState({"compressao": {"metodo-1": [{}], "metodo-2": [{}]}})
+    const [updateGeotechnics, setUpdateGeotechnics] = useState(0)
 
-    function mudarEntradasGeotecnia(name, value) {
-        setEntradasGeotecnia({ ...entradasGeotecnia, [name]: value })
-        setAtualizarGeotecnia(1)
+    function updateGeotechnicsInputs(name, value) {
+        setGeotechnicsInputs({ ...geotechnicsInputs, [name]: value })
+        setUpdateGeotechnics(1)
     }
 
-    function mudarEntradasEstrutura(ev) {
+    function updateStructureInputs(ev) {
         const { name, value } = ev.target
-        setEntradasEstrutura({ ...entradasEstrutura, [name]: value })
+        setStructureInputs({ ...structureInputs, [name]: value })
     }
 
     useEffect(() => {
         api.get('/investigation')
             .then((response) => {
-                const esforcos = {}
-                Object.entries(geotechnicsDatas[classeFundacao]).map(([esforco, valor]) => {
-                    const metodos = {}
-                    Object.entries(valor).map(([metodo, resultados]) => {
-                        metodos[metodo] = []
-                        response["data"].map((camada, i) => {
-                            metodos[metodo].push(Object.assign(camada, geotechnicsDatas[classeFundacao][esforco][metodo][0]))
+                const stress_types = {}
+                Object.entries(dataGeotechnics[foundationClass]).map(([stress, value]) => {
+                    const methods = {}
+                    Object.entries(value).map(([method, _]) => {
+                        methods[method] = []
+                        response["data"].map((layer, _) => {
+                            methods[method].push(Object.assign(layer, dataGeotechnics[foundationClass][stress][method][0]))
                         })
                     })
-                    esforcos[esforco] = metodos
+                    stress_types[stress] = methods
                 })
-                setDadosGeotecnia(esforcos)
-                setAtualizarGeotecnia(0)
+                setGeotechnicsData(stress_types)
+                setUpdateGeotechnics(0)
             })
-    }, [classeFundacao, atualizarGeotecnia])
+    }, [foundationClass, updateGeotechnics])
 
     return (
         <div className={styles.page}>
             <Geotechnics
-                classeFundacao={classeFundacao}
-                metodoGeotecnia={metodoGeotecnia} setMetodoGeotecnia={setMetodoGeotecnia}
-                esforcoGeotecnia={esforcoGeotecnia} setEsforcoGeotecnia={setEsforcoGeotecnia}
-                entradasGeotecnia={entradasGeotecnia} mudarEntradasGeotecnia={mudarEntradasGeotecnia}
-                entradasEstrutura={entradasEstrutura}
-                dadosGeotecnia={dadosGeotecnia} setDadosGeotecnia={setDadosGeotecnia}
-                setAtualizarGeotecnia={setAtualizarGeotecnia}
+                foundationClass={foundationClass}
+                geotechnicsMethod={geotechnicsMethod} setGeotechnicsMethod={setGeotechnicsMethod}
+                geotechnicsStress={geotechnicsStress} setGeotechnicsStress={setGeotechnicsStress}
+                geotechnicsInputs={geotechnicsInputs} updateGeotechnicsInputs={updateGeotechnicsInputs}
+                structureInputs={structureInputs}
+                geotechnicsData={geotechnicsData} setGeotechnicsData={setGeotechnicsData}
+                setUpdateGeotechnics={setUpdateGeotechnics}
             />
             <Structure
-                classeFundacao={classeFundacao}
-                setClasseFundacao={setClasseFundacao}
-                setMetodoGeotecnia={setMetodoGeotecnia}
-                setEsforcoGeotecnia={setEsforcoGeotecnia}
-                entradasGeotecnia={entradasGeotecnia}
-                entradasEstrutura={entradasEstrutura}
-                dadosGeotecnia={dadosGeotecnia}
-                mudarEntradasGeotecnia={mudarEntradasGeotecnia}
-                mudarEntradasEstrutura={mudarEntradasEstrutura}
+                foundationClass={foundationClass}
+                setFoundationClass={setFoundationClass}
+                setGeotechnicsMethod={setGeotechnicsMethod}
+                setGeotechnicsStress={setGeotechnicsStress}
+                geotechnicsInputs={geotechnicsInputs}
+                structureInputs={structureInputs}
+                geotechnicsData={geotechnicsData}
+                updateGeotechnicsInputs={updateGeotechnicsInputs}
+                updateStructureInputs={updateStructureInputs}
             />
         </div>
     )

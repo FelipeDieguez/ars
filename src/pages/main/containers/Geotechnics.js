@@ -15,7 +15,7 @@ import ResultadoTabela from './Geotechnics/ResultadoTabela'
 
 import styles from './Geotechnics.module.css'
 
-const inicialCamadaDados = {
+const initialLayerInputs = {
     "ordem": "",
     "solo": "Areia",
     "nspt": "0"
@@ -23,20 +23,20 @@ const inicialCamadaDados = {
 // criando contexto para compartilhar dados entre componentes
 export const CamadaContext = createContext({})
 
-function Geotechnics({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esforcoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, mudarEntradasGeotecnia, entradasEstrutura, dadosGeotecnia, setDadosGeotecnia, setAtualizarGeotecnia}) {
-    const [classeSolo, setClasseSolo] = useState("areia")
-    const [camadaDados, setCamadaDados] = useState(inicialCamadaDados)
+function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod, geotechnicsStress, setGeotechnicsStress, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, setUpdateGeotechnics}) {
+    const [soilClass, setSoilClass] = useState("areia")
+    const [layerInputs, setLayerInputs] = useState(initialLayerInputs)
 
-    function mudarCamadaDados(name, value) {
-        setCamadaDados({ ...camadaDados, [name]: value })
+    function updateLayerInputs(name, value) {
+        setLayerInputs({ ...layerInputs, [name]: value })
     }
 
     return (
         <CamadaContext.Provider value={{ 
-            classeSolo,
-            camadaDados,
-            setCamadaDados,
-            setClasseSolo,
+            soilClass,
+            layerInputs,
+            setLayerInputs,
+            setSoilClass,
         }}>
             <div className={styles.grid}>
                 <header className={styles.header}>
@@ -48,58 +48,58 @@ function Geotechnics({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esfo
                             </div>
                             <div className={styles.step}>
                                 <CamadaDefinir
-                                    classeSolo={classeSolo}
-                                    setClasseSolo={setClasseSolo}
-                                    mudarCamadaDados={mudarCamadaDados} 
+                                    soilClass={soilClass}
+                                    setSoilClass={setSoilClass}
+                                    updateLayerInputs={updateLayerInputs} 
                                 />
                             </div>
                             <div className={styles.step}>
                                 <CamadaEntradas
-                                    classeSolo={classeSolo}
-                                    mudarCamadaDados={mudarCamadaDados}
+                                    soilClass={soilClass}
+                                    updateLayerInputs={updateLayerInputs}
                                 />
                             </div>
                             <div className={styles.step}>
                                 <CamadaAcoes
-                                    camadaDados={camadaDados}
-                                    setAtualizarGeotecnia={setAtualizarGeotecnia}
+                                    layerInputs={layerInputs}
+                                    setUpdateGeotechnics={setUpdateGeotechnics}
                                 />
                             </div>
                         </div>
                         <div className={styles.steps}>
                             <MetodoDefinir
-                                classeFundacao={classeFundacao}
-                                metodoGeotecnia={metodoGeotecnia}
-                                setMetodoGeotecnia={setMetodoGeotecnia}
+                                foundationClass={foundationClass}
+                                geotechnicsMethod={geotechnicsMethod}
+                                setGeotechnicsMethod={setGeotechnicsMethod}
                             />
                         </div>
                         <div className={styles.steps}>
                             <div className={styles.step}>
                                 <CalculoDefinir
-                                    classeFundacao={classeFundacao}
-                                    mudarEntradasGeotecnia={mudarEntradasGeotecnia}
+                                    foundationClass={foundationClass}
+                                    updateGeotechnicsInputs={updateGeotechnicsInputs}
                                 />
                             </div>
                             <div className={styles.step}>
                                 <CalculoEntradas1
-                                    entradasGeotecnia={entradasGeotecnia}
-                                    mudarEntradasGeotecnia={mudarEntradasGeotecnia}
+                                    geotechnicsInputs={geotechnicsInputs}
+                                    updateGeotechnicsInputs={updateGeotechnicsInputs}
                                 />
                             </div>
                             <div className={styles.step}>
                                 <CalculoEntradas2
-                                    classeFundacao={classeFundacao}
-                                    metodoGeotecnia={metodoGeotecnia}
-                                    esforcoGeotecnia={esforcoGeotecnia}
-                                    mudarEntradasGeotecnia={mudarEntradasGeotecnia}
-                                    dadosGeotecnia={dadosGeotecnia}
+                                    foundationClass={foundationClass}
+                                    geotechnicsMethod={geotechnicsMethod}
+                                    geotechnicsStress={geotechnicsStress}
+                                    updateGeotechnicsInputs={updateGeotechnicsInputs}
+                                    geotechnicsData={geotechnicsData}
                                 />
                             </div>
                             <div className={styles.step}>
                                 <CalculoAcoes
-                                    entradasGeotecnia={entradasGeotecnia}
-                                    dadosGeotecnia={dadosGeotecnia}
-                                    setDadosGeotecnia={setDadosGeotecnia}
+                                    geotechnicsInputs={geotechnicsInputs}
+                                    geotechnicsData={geotechnicsData}
+                                    setGeotechnicsData={setGeotechnicsData}
                                 />
                             </div>
                         </div>
@@ -107,17 +107,17 @@ function Geotechnics({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia, esfo
                 </header>
                 <nav>
                     <EsforcoDefinir
-                        esforcoGeotecnia={esforcoGeotecnia}
-                        setEsforcoGeotecnia={setEsforcoGeotecnia}
+                        geotechnicsStress={geotechnicsStress}
+                        setGeotechnicsStress={setGeotechnicsStress}
                     />
                 </nav>
                 <section>
                     <ResultadoTabela
-                        metodoGeotecnia={metodoGeotecnia}
-                        esforcoGeotecnia={esforcoGeotecnia}
-                        dadosGeotecnia={dadosGeotecnia}
-                        entradasEstrutura={entradasEstrutura}
-                        mudarCamadaDados={mudarCamadaDados}
+                        geotechnicsMethod={geotechnicsMethod}
+                        geotechnicsStress={geotechnicsStress}
+                        geotechnicsData={geotechnicsData}
+                        structureInputs={structureInputs}
+                        updateLayerInputs={updateLayerInputs}
                     />
                 </section>
             </div>

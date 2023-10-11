@@ -3,10 +3,10 @@ import Select from '../../components/Select'
 
 import soilTypes from "../../utils/data/soilTypes.json"
 
-function CamadaEntradas({ classeSolo, mudarCamadaDados }) {
-    function mudancasCamadaEntradas(ev) {
+function CamadaEntradas({ soilClass, updateLayerInputs }) {
+    function onLayerInputsChange(ev) {
         const { name, value } = ev.target
-        mudarCamadaDados(name, value)
+        updateLayerInputs(name, value)
     }
 
     return (
@@ -14,16 +14,16 @@ function CamadaEntradas({ classeSolo, mudarCamadaDados }) {
             <Select
                 text="Solo:"
                 name="solo"
-                list={soilTypes[classeSolo]}
+                list={soilTypes[soilClass]}
                 width="160px"
-                onChange={mudancasCamadaEntradas}
+                onChange={onLayerInputsChange}
             />
             <LineEdit
                 text="Nspt="
                 type="text"
                 name="nspt"
                 width="45px"
-                onChange={mudancasCamadaEntradas}
+                onChange={onLayerInputsChange}
             />
         </>
     )

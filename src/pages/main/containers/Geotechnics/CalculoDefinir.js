@@ -2,10 +2,10 @@ import Select from '../../components/Select'
 
 import foundationTypes from "../../utils/data/foundationTypes.json"
 
-function CalculoDefinir({ classeFundacao, mudarEntradasGeotecnia }) {
-    function mudancasCalculoDefinir(ev) {
+function CalculoDefinir({ foundationClass, updateGeotechnicsInputs }) {
+    function onGeotechnicsInputsChange(ev) {
         const { name, value } = ev.target
-        mudarEntradasGeotecnia(name, value)
+        updateGeotechnicsInputs(name, value)
     }
 
     return (
@@ -13,9 +13,9 @@ function CalculoDefinir({ classeFundacao, mudarEntradasGeotecnia }) {
             <Select
                 text="Tipo:"
                 name="tipo"
-                list={foundationTypes[classeFundacao]}
+                list={foundationTypes[foundationClass]}
                 width="150px"
-                onChange={mudancasCalculoDefinir}
+                onChange={onGeotechnicsInputsChange}
             />
         </>
     )

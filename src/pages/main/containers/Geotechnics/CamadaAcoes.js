@@ -2,51 +2,51 @@ import { layerRegister, layerEdit, layerRemove } from '../../utils/services/inve
 
 import Button from '../../components/Button'
 
-function CamadaAcoes({ camadaDados, setAtualizarGeotecnia }) {
-    function mudancasCamadaAcoes(ev) {
-        const acao = ev.target.name
-        const opcoes = {
-            "cadastrar": () => {
-                layerRegister(camadaDados)
+function CamadaAcoes({ layerInputs, setUpdateGeotechnics }) {
+    function onLayerActions(ev) {
+        const action = ev.target.name
+        const options = {
+            "register": () => {
+                layerRegister(layerInputs)
             },
-            "editar": () => {
-                if (camadaDados["ordem"] !== "") {
-                    layerEdit(camadaDados)
+            "edit": () => {
+                if (layerInputs["ordem"] !== "") {
+                    layerEdit(layerInputs)
                 }
             },
-            "remover": () => {
-                if (camadaDados["ordem"] !== "") {
-                    layerRemove(camadaDados)
+            "remove": () => {
+                if (layerInputs["ordem"] !== "") {
+                    layerRemove(layerInputs)
                 }
             }
         }
-        for (const [key, value] of Object.entries(opcoes)) {
-            if (acao === key) {
+        for (const [key, value] of Object.entries(options)) {
+            if (action === key) {
                 value()
             }
         }
-        setAtualizarGeotecnia(1)
+        setUpdateGeotechnics(1)
     }
 
     return (
         <>
             <Button
                 text="Cadastrar"
-                name="cadastrar"
+                name="register"
                 width="100px"
-                onClick={mudancasCamadaAcoes}
+                onClick={onLayerActions}
             />
             <Button
                 text="Editar"
-                name="editar"
+                name="edit"
                 width="70px"
-                onClick={mudancasCamadaAcoes}
+                onClick={onLayerActions}
             />
             <Button
                 text="Remover"
-                name="remover"
+                name="remove"
                 width="100px"
-                onClick={mudancasCamadaAcoes}
+                onClick={onLayerActions}
             />
         </>
     )

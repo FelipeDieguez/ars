@@ -3,13 +3,13 @@ import Radio from '../../components/Radio'
 
 import styles from '../Geotechnics.module.css'
 
-function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia }) {
-    function mudancasMetodoDefinir(ev) {
-        const metodo = ev.target.id
-        setMetodoGeotecnia(metodo)
+function MetodoDefinir({ foundationClass, geotechnicsMethod, setGeotechnicsMethod }) {
+    function onGeotechnicsMethodChange(ev) {
+        const method = ev.target.id
+        setGeotechnicsMethod(method)
     }
 
-    if (classeFundacao === "sapatas") {
+    if (foundationClass === "sapatas") {
         return (
             <>
                 <div className={styles.step}>
@@ -20,8 +20,8 @@ function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia }) 
                         text="Bulbo de Tensões"
                         id="metodo-1"
                         name="metodo"
-                        checked={metodoGeotecnia === "metodo-1"}
-                        onChange={mudancasMetodoDefinir}
+                        checked={geotechnicsMethod === "metodo-1"}
+                        onChange={onGeotechnicsMethodChange}
                     />
                 </div>
             </>
@@ -38,8 +38,8 @@ function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia }) 
                         text="Aoki-Velloso"
                         id="metodo-1"
                         name="metodo"
-                        checked={metodoGeotecnia === "metodo-1"}
-                        onChange={mudancasMetodoDefinir}
+                        checked={geotechnicsMethod === "metodo-1"}
+                        onChange={onGeotechnicsMethodChange}
                     />
                 </div>
                 <div className={styles.step}>
@@ -47,8 +47,8 @@ function MetodoDefinir({ classeFundacao, metodoGeotecnia, setMetodoGeotecnia }) 
                         text="Decourt-Quaresma"
                         id="metodo-2"
                         name="metodo"
-                        checked={metodoGeotecnia === "metodo-2"}
-                        onChange={mudancasMetodoDefinir}
+                        checked={geotechnicsMethod === "metodo-2"}
+                        onChange={onGeotechnicsMethodChange}
                     />
                 </div>
             </>

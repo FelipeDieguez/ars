@@ -5,10 +5,10 @@ import styles from './Structure.module.css'
 import { Button } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
-function Structure({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setEsforcoGeotecnia, entradasGeotecnia, entradasEstrutura, dadosGeotecnia, mudarEntradasGeotecnia, mudarEntradasEstrutura }) {
+function Structure({ foundationClass, setFoundationClass, setGeotechnicsMethod, setGeotechnicsStress, geotechnicsInputs, structureInputs, geotechnicsData, updateGeotechnicsInputs, updateStructureInputs }) {
     const navigate = useNavigate()
     
-    function onProjectManager() {
+    function onOpenProjectManager() {
         navigate('/')
     }
 
@@ -16,22 +16,22 @@ function Structure({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setE
         <div className={styles.grid}>
             <nav>
                 <FundacaoDefinir
-                    classeFundacao={classeFundacao}
-                    setClasseFundacao={setClasseFundacao}
-                    setMetodoGeotecnia={setMetodoGeotecnia}
-                    setEsforcoGeotecnia={setEsforcoGeotecnia}
-                    mudarEntradasGeotecnia={mudarEntradasGeotecnia} 
+                    foundationClass={foundationClass}
+                    setFoundationClass={setFoundationClass}
+                    setGeotechnicsMethod={setGeotechnicsMethod}
+                    setGeotechnicsStress={setGeotechnicsStress}
+                    updateGeotechnicsInputs={updateGeotechnicsInputs} 
                 />
             </nav>
             <header>
                 <FundacaoAcoes
-                        dadosGeotecnia={dadosGeotecnia}
-                        entradasGeotecnia={entradasGeotecnia}
-                        entradasEstrutura={entradasEstrutura}
-                        mudarEntradasEstrutura={mudarEntradasEstrutura}
+                        geotechnicsData={geotechnicsData}
+                        geotechnicsInputs={geotechnicsInputs}
+                        structureInputs={structureInputs}
+                        updateStructureInputs={updateStructureInputs}
                 />
             </header>
-            <Button onClick={onProjectManager}>GERENCIADOR DE PROJETOS</Button>
+            <Button onClick={onOpenProjectManager}>GERENCIADOR DE PROJETOS</Button>
         </div>
     )
 }

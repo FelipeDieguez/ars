@@ -2,24 +2,24 @@ import LineEdit from '../../components/LineEdit'
 
 import foundationGeometries from "../../utils/data/foundationGeometries.json"
 
-function CalculoEntradas1({ entradasGeotecnia, mudarEntradasGeotecnia }) {      
-    function mudancasCalculoEntradas1(ev) {
+function CalculoEntradas1({ geotechnicsInputs, updateGeotechnicsInputs }) {      
+    function onGeotechnicsInputsChange(ev) {
         const { name, value } = ev.target
-        mudarEntradasGeotecnia(name, value)
+        updateGeotechnicsInputs(name, value)
     }
     
-    if (foundationGeometries[entradasGeotecnia["tipo"]] === "estaca circular" || foundationGeometries[entradasGeotecnia["tipo"]] === "sapata circular") {
+    if (foundationGeometries[geotechnicsInputs["tipo"]] === "estaca circular" || foundationGeometries[geotechnicsInputs["tipo"]] === "sapata circular") {
         return (
             <LineEdit
                 text="Diâmetro(m)="
                 type="number"
                 name="dimensao_1"
                 width="45px"
-                onChange={mudancasCalculoEntradas1}
+                onChange={onGeotechnicsInputsChange}
             />
         )
     }
-    else if (foundationGeometries[entradasGeotecnia["tipo"]] === "estaca retangular" || foundationGeometries[entradasGeotecnia["tipo"]] === "sapata retangular") {
+    else if (foundationGeometries[geotechnicsInputs["tipo"]] === "estaca retangular" || foundationGeometries[geotechnicsInputs["tipo"]] === "sapata retangular") {
         return (
             <>
                 <LineEdit
@@ -27,14 +27,14 @@ function CalculoEntradas1({ entradasGeotecnia, mudarEntradasGeotecnia }) {
                     type="number"
                     name="dimensao_1"
                     width="45px"
-                    onChange={mudancasCalculoEntradas1}
+                    onChange={onGeotechnicsInputsChange}
                 />
                 <LineEdit
                     text="B(m)="
                     type="number"
                     name="dimensao_2"
                     width="45px"
-                    onChange={mudancasCalculoEntradas1}
+                    onChange={onGeotechnicsInputsChange}
                 />
             </>
         )
@@ -47,14 +47,14 @@ function CalculoEntradas1({ entradasGeotecnia, mudarEntradasGeotecnia }) {
                     type="number"
                     name="dimensao_1"
                     width="45px"
-                    onChange={mudancasCalculoEntradas1}
+                    onChange={onGeotechnicsInputsChange}
                 />
                 <LineEdit
                     text="Db(m)="
                     type="number"
                     name="dimensao_2"
                     width="45px"
-                    onChange={mudancasCalculoEntradas1}
+                    onChange={onGeotechnicsInputsChange}
                 />
             </>
         )

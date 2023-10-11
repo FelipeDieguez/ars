@@ -3,9 +3,9 @@ import Select from '../../components/Select'
 
 import { memorial } from '../../utils/services/investigation'
 
-function FundacaoAcoes({ dadosGeotecnia, entradasGeotecnia, entradasEstrutura, mudarEntradasEstrutura }) {
-    function mudancasFundacaoAcoes() {
-        memorial([dadosGeotecnia, entradasGeotecnia, entradasEstrutura]).then((response) => {
+function FundacaoAcoes({ geotechnicsData, geotechnicsInputs, structureInputs, updateStructureInputs }) {
+    function onGenerateMemorial() {
+        memorial([geotechnicsData, geotechnicsInputs, structureInputs]).then((response) => {
             window.open(response["data"])
         })
     }
@@ -14,15 +14,15 @@ function FundacaoAcoes({ dadosGeotecnia, entradasGeotecnia, entradasEstrutura, m
             <Select
                 text="Profundidade (m)="
                 name="profundidade"
-                list={[...Array(dadosGeotecnia["compressao"]["metodo-1"].length+1).keys()]}
+                list={[...Array(geotechnicsData["compressao"]["metodo-1"].length+1).keys()]}
                 width="45px"
-                onChange={mudarEntradasEstrutura}
+                onChange={updateStructureInputs}
                 />
             <Button
                 text="Gerar Memorial"
                 name="memorial"
                 width="150px"
-                onClick={mudancasFundacaoAcoes}
+                onClick={onGenerateMemorial}
             />
         </>
     )

@@ -1,9 +1,9 @@
 import Tab from '../../components/Tab'
 
-function EsforcoDefinir({ esforcoGeotecnia, setEsforcoGeotecnia} ) {
-    function mudancasEsforcoDefinir(ev) {
-        const esforco = ev.target.id
-        setEsforcoGeotecnia(esforco)
+function EsforcoDefinir({ geotechnicsStress, setGeotechnicsStress} ) {
+    function onGeotechnicsStressChange(ev) {
+        const stress = ev.target.id
+        setGeotechnicsStress(stress)
     }
 
     return (
@@ -12,16 +12,16 @@ function EsforcoDefinir({ esforcoGeotecnia, setEsforcoGeotecnia} ) {
                 text="Compressão"
                 id="compressao"
                 name="tabelas"
-                checked={esforcoGeotecnia === "compressao"}
-                onChange={mudancasEsforcoDefinir}
+                checked={geotechnicsStress === "compressao"}
+                onChange={onGeotechnicsStressChange}
             />
             {/* Adicionar Tração!
                 <Tab 
                     text="Tração"
                     id="tracao"
                     name="tabelas"
-                    checked={esforcoGeotecnia === "tracao"}
-                    onChange={mudancasEsforcoDefinir}
+                    checked={geotechnicsStress === "tracao"}
+                    onChange={onGeotechnicsStressChange}
                 />
             */}
         </>

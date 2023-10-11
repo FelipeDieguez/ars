@@ -3,37 +3,37 @@ import Tab from '../../components/Tab'
 import foundationTypes from "../../utils/data/foundationTypes.json"
 import geotechnicsMethods from "../../utils/data/geotechnicsMethods.json"
 
-function FundacaoDefinir({ classeFundacao, setClasseFundacao, setMetodoGeotecnia, setEsforcoGeotecnia, mudarEntradasGeotecnia }) {
-    function mudancasFundacaoDefinir(ev) {
-        const tipo_fundacao = ev.target.id
-        setClasseFundacao(tipo_fundacao)
-        setMetodoGeotecnia(geotechnicsMethods[tipo_fundacao])
-        setEsforcoGeotecnia("compressao")
-        mudarEntradasGeotecnia("tipo", foundationTypes[tipo_fundacao][0])
+function FundacaoDefinir({ foundationClass, setFoundationClass, setGeotechnicsMethod, setGeotechnicsStress, updateGeotechnicsInputs }) {
+    function onFoundationClassChange(ev) {
+        const foundation_type = ev.target.id
+        setFoundationClass(foundation_type)
+        setGeotechnicsMethod(geotechnicsMethods[foundation_type])
+        setGeotechnicsStress("compressao")
+        updateGeotechnicsInputs("tipo", foundationTypes[foundation_type][0])
     }
 
     return (
         <>
-            <Tab 
+            <Tab
                 text="ESTACAS"
                 id="estacas"
                 name="fundacoes"
-                checked={classeFundacao === "estacas"}
-                onChange={mudancasFundacaoDefinir}
+                checked={foundationClass === "estacas"}
+                onChange={onFoundationClassChange}
             />
             <Tab 
                 text="SAPATAS"
                 id="sapatas"
                 name="fundacoes"
-                checked={classeFundacao === "sapatas"}
-                onChange={mudancasFundacaoDefinir}
+                checked={foundationClass === "sapatas"}
+                onChange={onFoundationClassChange}
             />
             <Tab 
                 text="TUBULÃO"
                 id="tubuloes"
                 name="fundacoes"
-                checked={classeFundacao === "tubuloes"}
-                onChange={mudancasFundacaoDefinir}
+                checked={foundationClass === "tubuloes"}
+                onChange={onFoundationClassChange}
             />
         </>
     )

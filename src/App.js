@@ -22,7 +22,9 @@ function App() {
             />
           }/>
           <Route path='/main' element={
-            <Main/>
+            <Main
+              projectInputs={projectInputs}
+            />
           }/>
           <Route path='/parameters' element={
             <ParametersManager/>

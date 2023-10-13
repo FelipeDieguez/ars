@@ -16,6 +16,7 @@ import ResultadoTabela from './Geotechnics/ResultadoTabela'
 import styles from './Geotechnics.module.css'
 
 const initialLayerInputs = {
+    "projeto": "",
     "ordem": "",
     "solo": "Areia",
     "nspt": "0"
@@ -23,9 +24,9 @@ const initialLayerInputs = {
 // criando contexto para compartilhar dados entre componentes
 export const CamadaContext = createContext({})
 
-function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod, geotechnicsStress, setGeotechnicsStress, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, setUpdateGeotechnics}) {
+function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod, geotechnicsStress, setGeotechnicsStress, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, setUpdateGeotechnics, projectInputs }) {
     const [soilClass, setSoilClass] = useState("areia")
-    const [layerInputs, setLayerInputs] = useState(initialLayerInputs)
+    const [layerInputs, setLayerInputs] = useState({"projeto": projectInputs["selected_name"], "ordem": "", "solo": "Areia", "nspt": "0"})
 
     function updateLayerInputs(name, value) {
         setLayerInputs({ ...layerInputs, [name]: value })

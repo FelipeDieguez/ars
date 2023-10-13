@@ -20,7 +20,7 @@ const initialStructureInputs = {
     "profundidade": "0"
 }
 
-function Main() {
+function Main({ projectInputs }) {
     const [foundationClass, setFoundationClass] = useState("estacas")
     const [geotechnicsMethod, setGeotechnicsMethod] = useState("metodo-1")
     const [geotechnicsStress, setGeotechnicsStress] = useState("compressao")
@@ -40,8 +40,10 @@ function Main() {
     }
 
     useEffect(() => {
+        console.log('test')
         api.get('/investigation')
             .then((response) => {
+                console.log('cheguei')
                 const stress_types = {}
                 Object.entries(dataGeotechnics[foundationClass]).map(([stress, value]) => {
                     const methods = {}
@@ -68,6 +70,7 @@ function Main() {
                 structureInputs={structureInputs}
                 geotechnicsData={geotechnicsData} setGeotechnicsData={setGeotechnicsData}
                 setUpdateGeotechnics={setUpdateGeotechnics}
+                projectInputs={projectInputs}
             />
             <Structure
                 foundationClass={foundationClass}

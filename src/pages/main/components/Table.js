@@ -1,16 +1,16 @@
 import { useContext } from 'react'
 import styles from './Table.module.css'
-import { CamadaContext } from '../containers/Geotechnics'
+import { LayerContext } from '../containers/Geotechnics'
 
-function Table ({ dados, cabecalho, entradasEstrutura }) {
-    const { 
-        camadaDados, 
-        mudarCamadaDados,
-        setCamadaDados,
-        setClasseSolo,
-    } = useContext(CamadaContext);
+function Table ({ dados, cabecalho, structureInputs }) {
+    const {
+        soilClass,
+        layerInputs,
+        setLayerInputs,
+        setSoilClass
+    } = useContext(LayerContext);
     const mudar_camada = (ordem) => {
-        setCamadaDados({ ...camadaDados, "ordem": ordem })
+        setLayerInputs({ ...layerInputs, "ordem": ordem })
     };
     return (      
         <table className={styles.table}> 
@@ -30,7 +30,7 @@ function Table ({ dados, cabecalho, entradasEstrutura }) {
                 {dados.map((camada, i) => (
                     <tr
                         className={
-                            `${styles.trBody} ${camadaDados.ordem === i+1 ? styles.check : ''} ${parseInt(entradasEstrutura.profundidade) === i+1 ? styles.prof : ''}`
+                            `${styles.trBody} ${layerInputs.ordem === i+1 ? styles.check : ''} ${parseInt(structureInputs.profundidade) === i+1 ? styles.prof : ''}`
                         }
                         key={"row-"+i}
                     >

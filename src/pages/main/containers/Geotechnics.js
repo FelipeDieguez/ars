@@ -22,7 +22,7 @@ const initialLayerInputs = {
     "nspt": "0"
 }
 // criando contexto para compartilhar dados entre componentes
-export const CamadaContext = createContext({})
+export const LayerContext = createContext({})
 
 function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod, geotechnicsStress, setGeotechnicsStress, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, setUpdateGeotechnics, projectInputs }) {
     const [soilClass, setSoilClass] = useState("areia")
@@ -33,11 +33,11 @@ function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod,
     }
 
     return (
-        <CamadaContext.Provider value={{ 
+        <LayerContext.Provider value={{ 
             soilClass,
             layerInputs,
             setLayerInputs,
-            setSoilClass,
+            setSoilClass
         }}>
             <div className={styles.grid}>
                 <header className={styles.header}>
@@ -122,7 +122,7 @@ function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod,
                     />
                 </section>
             </div>
-        </CamadaContext.Provider>
+        </LayerContext.Provider>
     )
 }
 

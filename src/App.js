@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Main from './pages/Main'
 import ProjectManager from './pages/ProjectManager'
@@ -9,7 +9,7 @@ function App() {
   const [projectInputs, setProjectInputs] = useState({'selected_name': '', 'name': ''})
 
   function updateProjectInputs(key, value) {
-    setProjectInputs({ ...projectInputs, [key]: value })
+    setProjectInputs(prevInputs => ({ ...prevInputs, [key]: value }))
   }
 
   return (

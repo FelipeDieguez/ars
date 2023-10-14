@@ -1,7 +1,7 @@
 import { api } from "../../../../utils/services/api";
 
-export function investigationList() {
-  return api.get("/investigation")
+export function investigationList(data) {
+  return api.post("/investigation", data)
 }
 
 export function layerRegister(data) {

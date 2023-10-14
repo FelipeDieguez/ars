@@ -32,7 +32,6 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
 
     function onOpenProject(ev) {
         if (projectInputs['selected_name'] !== '') {
-            updateProjectInputs('selected_name', '')
             navigate('/main')
         }
         else {

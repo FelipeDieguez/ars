@@ -40,10 +40,8 @@ function Main({ projectInputs }) {
     }
 
     useEffect(() => {
-        console.log('test')
-        api.get('/investigation')
+        api.post('/investigation', projectInputs)
             .then((response) => {
-                console.log('cheguei')
                 const stress_types = {}
                 Object.entries(dataGeotechnics[foundationClass]).map(([stress, value]) => {
                     const methods = {}
@@ -58,7 +56,7 @@ function Main({ projectInputs }) {
                 setGeotechnicsData(stress_types)
                 setUpdateGeotechnics(0)
             })
-    }, [foundationClass, updateGeotechnics])
+    }, [ foundationClass, updateGeotechnics])
 
     return (
         <div className={styles.page}>

@@ -148,6 +148,23 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                                 onClick={() => onProjectAction('remove')}
                             />
                         </Tooltip>
+                        {formOpen !== '' && (
+                            <>
+                                <Input
+                                    type='text'
+                                    placeholder='Digite o nome do projeto'
+                                    onChange={onProjectInputChange}
+                                />
+                                <IconButton
+                                    icon={<CheckIcon />}
+                                    onClick={() => onProjectAction(formOpen)}
+                                />
+                                <IconButton
+                                    icon={<CloseIcon />}
+                                    onClick={() => setFormOpen('')}
+                                />
+                            </>
+                        )}
                     </div>
                     <div className={styles.rigthMenu}>
                         <Tooltip hasArrow label='Configurações' bg='gray' color='black' fontSize='md'>
@@ -162,23 +179,6 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
                             />
                         </Tooltip>
                     </div>
-                    {formOpen !== '' && (
-                        <>
-                            <Input
-                                type='text'
-                                placeholder='Digite o nome do projeto'
-                                onChange={onProjectInputChange}
-                            />
-                            <IconButton
-                                icon={<CheckIcon />}
-                                onClick={() => onProjectAction(formOpen)}
-                            />
-                            <IconButton
-                                icon={<CloseIcon />}
-                                onClick={() => setFormOpen('')}
-                            />
-                        </>
-                    )}
                     {warningMessage && (
                         <div className={styles.page}>
                             <AlertDialog isOpen={warningMessage}

@@ -1,4 +1,4 @@
-import { layerRegister, layerEdit, layerRemove } from '../../utils/services/investigation'
+import { layerRegister, layerEdit, layerRemove } from '../../utils/services/geotechnics'
 
 import Button from '../../components/Button'
 

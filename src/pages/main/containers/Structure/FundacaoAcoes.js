@@ -1,7 +1,7 @@
 import Button from '../../components/Button'
 import Select from '../../components/Select'
 
-import { memorial } from '../../utils/services/investigation'
+import { memorial } from '../../utils/services/geotechnics'
 
 function FundacaoAcoes({ geotechnicsData, geotechnicsInputs, structureInputs, updateStructureInputs }) {
     function onGenerateMemorial() {

@@ -12,21 +12,16 @@ import CalculoEntradas2 from './Geotechnics/CalculoEntradas2'
 import CalculoAcoes from './Geotechnics/CalculoAcoes'
 import EsforcoDefinir from './Geotechnics/EsforcoDefinir'
 import ResultadoTabela from './Geotechnics/ResultadoTabela'
+import SondagemAcoes from './Geotechnics/SondagemAcoes'
 
 import styles from './Geotechnics.module.css'
 
-const initialLayerInputs = {
-    "projeto": "",
-    "ordem": "",
-    "solo": "Areia",
-    "nspt": "0"
-}
 // criando contexto para compartilhar dados entre componentes
 export const LayerContext = createContext({})
 
-function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod, geotechnicsStress, setGeotechnicsStress, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, setUpdateGeotechnics, projectInputs }) {
+function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod, geotechnicsStress, setGeotechnicsStress, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, updateGeotechnics, setUpdateGeotechnics, projectInputs }) {
     const [soilClass, setSoilClass] = useState("areia")
-    const [layerInputs, setLayerInputs] = useState({"projeto": projectInputs["selected_name"], "ordem": "", "solo": "Areia", "nspt": "0"})
+    const [layerInputs, setLayerInputs] = useState({"projeto": projectInputs["selected_name"], "sondagem": "", "ordem": "", "solo": "Areia", "nspt": "0"})
 
     function updateLayerInputs(name, value) {
         setLayerInputs({ ...layerInputs, [name]: value })
@@ -121,6 +116,14 @@ function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod,
                         updateLayerInputs={updateLayerInputs}
                     />
                 </section>
+                <footer className={styles.footer}>
+                    <SondagemAcoes
+                        updateGeotechnics={updateGeotechnics}
+                        setUpdateGeotechnics={setUpdateGeotechnics}
+                        layerInputs={layerInputs}
+                        updateLayerInputs={updateLayerInputs}
+                    />
+                </footer>
             </div>
         </LayerContext.Provider>
     )

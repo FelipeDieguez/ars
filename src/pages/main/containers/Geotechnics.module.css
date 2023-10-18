@@ -46,6 +46,14 @@ section {
     flex-grow: 1;
 }
 
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
 @media (max-width: 1400px) {
     .grid{
         width: 100%;
@@ -56,4 +64,12 @@ section {
     .stepsContainer{
         flex-direction: column;
     }
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
 }

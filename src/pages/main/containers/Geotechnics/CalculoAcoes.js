@@ -1,6 +1,6 @@
 import Button from '../../components/Button'
 
-import { calculate } from '../../utils/services/investigation'
+import { calculate } from '../../utils/services/geotechnics'
 
 function CalculoAcoes({ geotechnicsInputs, geotechnicsData, setGeotechnicsData }) {
     function onCalculate() {

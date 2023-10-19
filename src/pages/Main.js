@@ -28,6 +28,7 @@ function Main({ projectInputs }) {
     const [structureInputs, setStructureInputs] = useState(initialStructureInputs)
     const [geotechnicsData, setGeotechnicsData] = useState({"compressao": {"metodo-1": [{}], "metodo-2": [{}]}})
     const [updateGeotechnics, setUpdateGeotechnics] = useState(0)
+    const [layerInputs, setLayerInputs] = useState({"projeto": projectInputs["selected_name"], "sondagem": "", "ordem": "", "solo": "Areia", "nspt": "0"})
 
     function updateGeotechnicsInputs(name, value) {
         setGeotechnicsInputs({ ...geotechnicsInputs, [name]: value })
@@ -39,8 +40,12 @@ function Main({ projectInputs }) {
         setStructureInputs({ ...structureInputs, [name]: value })
     }
 
+    function updateLayerInputs(name, value) {
+        setLayerInputs({ ...layerInputs, [name]: value })
+    }
+
     useEffect(() => {
-        api.post('/layer', projectInputs)
+        api.post('/layer', layerInputs)
             .then((response) => {
                 const stress_types = {}
                 Object.entries(dataGeotechnics[foundationClass]).map(([stress, value]) => {
@@ -68,7 +73,7 @@ function Main({ projectInputs }) {
                 structureInputs={structureInputs}
                 geotechnicsData={geotechnicsData} setGeotechnicsData={setGeotechnicsData}
                 updateGeotechnics={updateGeotechnics} setUpdateGeotechnics={setUpdateGeotechnics}
-                projectInputs={projectInputs}
+                layerInputs={layerInputs} updateLayerInputs={updateLayerInputs}
             />
             <Structure
                 foundationClass={foundationClass}

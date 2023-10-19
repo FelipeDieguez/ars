@@ -4,13 +4,11 @@ import { LayerContext } from '../containers/Geotechnics'
 
 function Table ({ dados, cabecalho, structureInputs }) {
     const {
-        soilClass,
         layerInputs,
-        setLayerInputs,
-        setSoilClass
+        updateLayerInputs,
     } = useContext(LayerContext);
     const mudar_camada = (ordem) => {
-        setLayerInputs({ ...layerInputs, "ordem": ordem })
+        updateLayerInputs("ordem", ordem)
     };
     return (      
         <table className={styles.table}> 

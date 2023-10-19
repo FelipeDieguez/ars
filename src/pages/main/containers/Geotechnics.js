@@ -19,20 +19,13 @@ import styles from './Geotechnics.module.css'
 // criando contexto para compartilhar dados entre componentes
 export const LayerContext = createContext({})
 
-function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod, geotechnicsStress, setGeotechnicsStress, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, updateGeotechnics, setUpdateGeotechnics, projectInputs }) {
+function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod, geotechnicsStress, setGeotechnicsStress, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, updateGeotechnics, setUpdateGeotechnics, layerInputs, updateLayerInputs }) {
     const [soilClass, setSoilClass] = useState("areia")
-    const [layerInputs, setLayerInputs] = useState({"projeto": projectInputs["selected_name"], "sondagem": "", "ordem": "", "solo": "Areia", "nspt": "0"})
-
-    function updateLayerInputs(name, value) {
-        setLayerInputs({ ...layerInputs, [name]: value })
-    }
 
     return (
         <LayerContext.Provider value={{ 
-            soilClass,
             layerInputs,
-            setLayerInputs,
-            setSoilClass
+            updateLayerInputs
         }}>
             <div className={styles.grid}>
                 <header className={styles.header}>

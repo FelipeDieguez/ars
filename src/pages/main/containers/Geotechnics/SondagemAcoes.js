@@ -43,6 +43,7 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
                 }
                 else {
                     soilInvestigationEdit([layerInputs, soilInvestigationName])
+                    updateLayerInputs("sondagem", soilInvestigationName)
                     setFormOpen('')
                 }
             },
@@ -52,6 +53,7 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
                 }
                 else {
                     soilInvestigationRemove(layerInputs)
+                    updateLayerInputs("sondagem", soilInvestigationList[0]['py/tuple'][0])
                 }
             }
         }
@@ -67,11 +69,11 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
         api.post('/soilinvestigation', layerInputs)
             .then((response) => {
                 setSoilInvestigationList(response['data'])
-                updateLayerInputs("sondagem", response['data'][0]['py/tuple'][0])
                 setUpdateSoilInvestigation(0)
+                setUpdateGeotechnics(1)
             })
     }, [ updateSoilInvestigation ])
-    
+
     return (
         <>
             <Select

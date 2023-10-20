@@ -1,5 +1,4 @@
-import LineEdit from '../../components/LineEdit'
-import Select from '../../components/Select'
+import { Select, Stack, Text, Input } from '@chakra-ui/react'
 
 import soilTypes from "../../utils/data/soilTypes.json"
 
@@ -11,20 +10,37 @@ function CamadaEntradas({ soilClass, updateLayerInputs }) {
 
     return (
         <>
-            <Select
-                text="Solo:"
-                name="solo"
-                list={soilTypes[soilClass]}
-                width="160px"
-                onChange={onLayerInputsChange}
-            />
-            <LineEdit
-                text="Nspt="
-                type="text"
-                name="nspt"
-                width="45px"
-                onChange={onLayerInputsChange}
-            />
+            <Stack direction='row'>
+                <Text fontSize='md'>Solo:</Text>
+                <Select
+                    name="solo"
+                    onChange={onLayerInputsChange}
+                    width="180px"
+                    size='xs'
+                    fontSize='md'
+                >
+                    {soilTypes[soilClass].map((element) => (
+                        <option key={element}>{element}</option>
+                    ))}
+                </Select>
+            </Stack>
+            <Stack direction='row'>
+                <Text fontSize='md'>Nspt=</Text>
+                <Input 
+                    name='nspt'
+                    onKeyPress={(event) => {
+                        if (!/[0-9]/.test(event.key)) {
+                            event.preventDefault()}
+                        if (event.target.value > 2) {
+                            event.preventDefault()
+                        }
+                    }}
+                    onChange={onLayerInputsChange}
+                    width='45px'
+                    size='xs'
+                    fontSize='md'
+                />
+            </Stack>
         </>
     )
 }

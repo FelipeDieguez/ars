@@ -1,37 +1,43 @@
-import Radio from '../../components/Radio'
+import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
 
-import soilTypes from "../../utils/data/soilTypes.json"
+import soilTypes from '../../utils/data/soilTypes.json'
 
 function CamadaDefinir({ soilClass, setSoilClass, updateLayerInputs }) {
     function onSoilClassChange(ev) {
-        const soil_class = ev.target.id
-        setSoilClass(soil_class)
-        updateLayerInputs("solo", soilTypes[soil_class][0])
+        setSoilClass(ev)
+        updateLayerInputs('solo', soilTypes[ev][0])
     }
     
     return (
         <>
-            <Radio
-                text="Areia"
-                id="areia"
-                name="solos"
-                checked={soilClass === "areia"}
-                onChange={onSoilClassChange}
-            />
-            <Radio
-                text="Argila"
-                id="argila"
-                name="solos"
-                checked={soilClass === "argila"}
-                onChange={onSoilClassChange}
-            />
-            <Radio
-                text="Silte"
-                id="silte"
-                name="solos"
-                checked={soilClass === "silte"}
-                onChange={onSoilClassChange}
-            />
+            <RadioGroup onChange={onSoilClassChange} value={soilClass}>
+                <Stack direction='row' spacing='65px'>
+                    <Radio
+                        value='areia'
+                        color='black'
+                        colorScheme='blue'
+                        fontSize='md'
+                    >
+                        Areia
+                    </Radio>
+                    <Radio
+                        value='argila'
+                        color='black'
+                        colorScheme='blue'
+                        fontSize='md'
+                    >
+                        Argila
+                    </Radio>
+                    <Radio
+                        value='silte'
+                        color='black'
+                        colorScheme='blue'
+                        fontSize='md'
+                    >
+                        Silte
+                    </Radio>
+                </Stack>
+            </RadioGroup>
         </>
     )
 }

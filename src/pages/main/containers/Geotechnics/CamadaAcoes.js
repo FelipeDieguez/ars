@@ -1,10 +1,10 @@
+import { Button } from '@chakra-ui/react'
 import { layerRegister, layerEdit, layerRemove } from '../../utils/services/geotechnics'
-
-import Button from '../../components/Button'
 
 function CamadaAcoes({ layerInputs, setUpdateGeotechnics }) {
     function onLayerActions(ev) {
         const action = ev.target.name
+        console.log(action, ev)
         const options = {
             "register": () => {
                 layerRegister(layerInputs)
@@ -31,23 +31,35 @@ function CamadaAcoes({ layerInputs, setUpdateGeotechnics }) {
     return (
         <>
             <Button
-                text="Cadastrar"
                 name="register"
                 width="100px"
                 onClick={onLayerActions}
-            />
+                colorScheme='blue'
+                size='sm'
+                fontSize='md'
+            >
+                Cadastrar
+            </Button>
             <Button
-                text="Editar"
                 name="edit"
                 width="70px"
                 onClick={onLayerActions}
-            />
+                colorScheme='blue'
+                size='sm'
+                fontSize='md'
+            >
+                Editar
+            </Button>
             <Button
-                text="Remover"
                 name="remove"
                 width="100px"
                 onClick={onLayerActions}
-            />
+                colorScheme='blue'
+                size='sm'
+                fontSize='md'
+            >
+                Remover
+            </Button>
         </>
     )
 }

@@ -1,5 +1,4 @@
-import Select from '../../components/Select'
-
+import { Select, Stack, Text } from "@chakra-ui/react"
 import foundationTypes from "../../utils/data/foundationTypes.json"
 
 function CalculoDefinir({ foundationClass, updateGeotechnicsInputs }) {
@@ -10,13 +9,20 @@ function CalculoDefinir({ foundationClass, updateGeotechnicsInputs }) {
 
     return (
         <>
-            <Select
-                text="Tipo:"
-                name="tipo"
-                list={foundationTypes[foundationClass]}
-                width="150px"
-                onChange={onGeotechnicsInputsChange}
-            />
+            <Stack direction='row'>
+                <Text fontSize='md'>Tipo:</Text>
+                <Select
+                    name="tipo"
+                    onChange={onGeotechnicsInputsChange}
+                    width="200px"
+                    size='xs'
+                    fontSize='md'
+                >
+                    {foundationTypes[foundationClass].map((element) => (
+                        <option key={element}>{element}</option>
+                    ))}
+                </Select>
+            </Stack>
         </>
     )
 }

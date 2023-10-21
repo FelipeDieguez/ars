@@ -31,7 +31,7 @@ function CamadaEntradas({ soilClass, updateLayerInputs }) {
                     onKeyPress={(event) => {
                         if (!/[0-9]/.test(event.key)) {
                             event.preventDefault()}
-                        if (event.target.value > 2) {
+                        if (event.target.value.toString().length > 1) {
                             event.preventDefault()
                         }
                     }}

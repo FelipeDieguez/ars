@@ -1,4 +1,4 @@
-import Select from '../../components/Select'
+import { Select, Stack, Text } from "@chakra-ui/react"
 
 function CalculoEntradas2({ foundationClass, geotechnicsMethod, geotechnicsStress, updateGeotechnicsInputs, geotechnicsData }) {      
     function onGeotechnicsInputsChange(ev) {
@@ -9,33 +9,54 @@ function CalculoEntradas2({ foundationClass, geotechnicsMethod, geotechnicsStres
     if (foundationClass === "sapatas") {
         return (
             <>
-                <Select
-                    text="Prof.+"
-                    name="dimensao_3"
-                    list={[0.0, 0.1 , 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]}
-                    width="45px"
-                    onChange={onGeotechnicsInputsChange}
-                />
-                <Select
-                        text="N.A.(m)="
-                        name="dimensao_4"
-                        list={[...Array(geotechnicsData[geotechnicsStress][geotechnicsMethod].length+2).keys()]}
-                        width="50px"
+                <Stack direction='row'>
+                    <Text fontSize='md'>Prof.+</Text>
+                    <Select
+                        name="dimensao_3"
                         onChange={onGeotechnicsInputsChange}
-                />
+                        width="65px"
+                        size='xs'
+                        fontSize='md'
+                    >
+                        {[0.0, 0.1 , 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9].map((element) => (
+                            <option key={element}>{element}</option>
+                        ))}
+                    </Select>
+                </Stack>
+                <Stack direction='row'>
+                    <Text fontSize='md'>N.A.(m)=</Text>
+                    <Select
+                        name="dimensao_4"
+                        onChange={onGeotechnicsInputsChange}
+                        width="55px"
+                        size='xs'
+                        fontSize='md'
+                    >
+                        {[...Array(geotechnicsData[geotechnicsStress][geotechnicsMethod].length+2).keys()].map((element) => (
+                            <option key={element}>{element}</option>
+                        ))}
+                    </Select>
+                </Stack>
             </>
         )
     }
     else {
         return (
             <>
-                <Select
-                    text="C.A.(m)="
-                    name="dimensao_3"
-                    list={[...Array(geotechnicsData[geotechnicsStress][geotechnicsMethod].length).keys()]}
-                    width="45px"
-                    onChange={onGeotechnicsInputsChange}
-                />
+                <Stack direction='row'>
+                    <Text fontSize='md'>C.A.(m)=</Text>
+                    <Select
+                        name="dimensao_3"
+                        onChange={onGeotechnicsInputsChange}
+                        width="55px"
+                        size='xs'
+                        fontSize='md'
+                    >
+                        {[...Array(geotechnicsData[geotechnicsStress][geotechnicsMethod].length).keys()].map((element) => (
+                            <option key={element}>{element}</option>
+                        ))}
+                    </Select>
+                </Stack>
             </>
         )
     }

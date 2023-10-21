@@ -1,4 +1,4 @@
-import Button from '../../components/Button'
+import { Button } from '@chakra-ui/react'
 
 import { calculate } from '../../utils/services/geotechnics'
 
@@ -11,11 +11,15 @@ function CalculoAcoes({ geotechnicsInputs, geotechnicsData, setGeotechnicsData }
     return (
         <>
             <Button
-                text="Calcular"
                 name="calculate"
-                width="80px"
+                width="240px"
                 onClick={onCalculate}
-            />
+                colorScheme='blue'
+                size='sm'
+                fontSize='md'
+            >
+                Calcular
+            </Button>
         </>
     )
 }

@@ -1,4 +1,4 @@
-import LineEdit from '../../components/LineEdit'
+import { Stack, Text, Input } from '@chakra-ui/react'
 
 import foundationGeometries from "../../utils/data/foundationGeometries.json"
 
@@ -10,52 +10,92 @@ function CalculoEntradas1({ geotechnicsInputs, updateGeotechnicsInputs }) {
     
     if (foundationGeometries[geotechnicsInputs["tipo"]] === "estaca circular" || foundationGeometries[geotechnicsInputs["tipo"]] === "sapata circular") {
         return (
-            <LineEdit
-                text="Diâmetro(m)="
-                type="number"
-                name="dimensao_1"
-                width="45px"
-                onChange={onGeotechnicsInputsChange}
-            />
+            <Stack direction='row'>
+                <Text fontSize='md'>Diâmetro(m)=</Text>
+                <Input
+                    name='dimensao_1'
+                    onKeyPress={(event) => {
+                        if (!/[0-9.]/.test(event.key)) {
+                            event.preventDefault()}
+                        }
+                    }
+                    onChange={onGeotechnicsInputsChange}
+                    width='50px'
+                    size='xs'
+                    fontSize='md'
+                />
+            </Stack>
         )
     }
     else if (foundationGeometries[geotechnicsInputs["tipo"]] === "estaca retangular" || foundationGeometries[geotechnicsInputs["tipo"]] === "sapata retangular") {
         return (
             <>
-                <LineEdit
-                    text="L(m)="
-                    type="number"
-                    name="dimensao_1"
-                    width="45px"
-                    onChange={onGeotechnicsInputsChange}
-                />
-                <LineEdit
-                    text="B(m)="
-                    type="number"
-                    name="dimensao_2"
-                    width="45px"
-                    onChange={onGeotechnicsInputsChange}
-                />
+                <Stack direction='row'>
+                    <Text fontSize='md'>L(m)=</Text>
+                    <Input
+                        name='dimensao_1'
+                        onKeyPress={(event) => {
+                            if (!/[0-9.]/.test(event.key)) {
+                                event.preventDefault()}
+                            }
+                        }
+                        onChange={onGeotechnicsInputsChange}
+                        width='50px'
+                        size='xs'
+                        fontSize='md'
+                    />
+                </Stack>
+                <Stack direction='row'>
+                    <Text fontSize='md'>B(m)=</Text>
+                    <Input
+                        name='dimensao_2'
+                        onKeyPress={(event) => {
+                            if (!/[0-9.]/.test(event.key)) {
+                                event.preventDefault()}
+                            }
+                        }
+                        onChange={onGeotechnicsInputsChange}
+                        width='50px'
+                        size='xs'
+                        fontSize='md'
+                    />
+                </Stack>
             </>
         )
     }
     else {
         return (
             <>
-                <LineEdit
-                    text="Df(m)="
-                    type="number"
-                    name="dimensao_1"
-                    width="45px"
-                    onChange={onGeotechnicsInputsChange}
-                />
-                <LineEdit
-                    text="Db(m)="
-                    type="number"
-                    name="dimensao_2"
-                    width="45px"
-                    onChange={onGeotechnicsInputsChange}
-                />
+                <Stack direction='row'>
+                    <Text fontSize='md'>Df(m)=</Text>
+                    <Input
+                        name='dimensao_2'
+                        onKeyPress={(event) => {
+                            if (!/[0-9.]/.test(event.key)) {
+                                event.preventDefault()}
+                            }
+                        }
+                        onChange={onGeotechnicsInputsChange}
+                        width='50px'
+                        size='xs'
+                        fontSize='md'
+                    />
+                </Stack>
+                <Stack direction='row'>
+                    <Text fontSize='md'>Db(m)=</Text>
+                    <Input
+                        name='dimensao_2'
+                        onKeyPress={(event) => {
+                            if (!/[0-9.]/.test(event.key)) {
+                                event.preventDefault()}
+                            }
+                        }
+                        onChange={onGeotechnicsInputsChange}
+                        width='50px'
+                        size='xs'
+                        fontSize='md'
+                    />
+                </Stack>
             </>
         )
     }

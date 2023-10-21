@@ -43,4 +43,3 @@ function CamadaDefinir({ soilClass, setSoilClass, updateLayerInputs }) {
 }
 
 export default CamadaDefinir
-

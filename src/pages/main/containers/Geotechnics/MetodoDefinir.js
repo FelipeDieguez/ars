@@ -1,13 +1,9 @@
 import Label from '../../components/Label'
-import Radio from '../../components/Radio'
+import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
 
 import styles from '../Geotechnics.module.css'
 
 function MetodoDefinir({ foundationClass, geotechnicsMethod, setGeotechnicsMethod }) {
-    function onGeotechnicsMethodChange(ev) {
-        const method = ev.target.id
-        setGeotechnicsMethod(method)
-    }
 
     if (foundationClass === "sapatas") {
         return (
@@ -16,13 +12,19 @@ function MetodoDefinir({ foundationClass, geotechnicsMethod, setGeotechnicsMetho
                     <Label text="MÉTODOS:" />
                 </div>
                 <div className={styles.step}>
-                    <Radio
-                        text="Bulbo de Tensões"
-                        id="metodo-1"
-                        name="metodo"
-                        checked={geotechnicsMethod === "metodo-1"}
-                        onChange={onGeotechnicsMethodChange}
-                    />
+                    <RadioGroup
+                        onChange={setGeotechnicsMethod}
+                        value={geotechnicsMethod}
+                    >
+                        <Radio
+                            value='metodo-1'
+                            color='black'
+                            colorScheme='blue'
+                            fontSize='md'
+                        >
+                            Bulbo de Tensões
+                        </Radio>
+                    </RadioGroup>
                 </div>
             </>
         )
@@ -33,24 +35,29 @@ function MetodoDefinir({ foundationClass, geotechnicsMethod, setGeotechnicsMetho
                 <div className={styles.step}>
                     <Label text="MÉTODOS:" />
                 </div>
-                <div className={styles.step}>
-                    <Radio
-                        text="Aoki-Velloso"
-                        id="metodo-1"
-                        name="metodo"
-                        checked={geotechnicsMethod === "metodo-1"}
-                        onChange={onGeotechnicsMethodChange}
-                    />
-                </div>
-                <div className={styles.step}>
-                    <Radio
-                        text="Decourt-Quaresma"
-                        id="metodo-2"
-                        name="metodo"
-                        checked={geotechnicsMethod === "metodo-2"}
-                        onChange={onGeotechnicsMethodChange}
-                    />
-                </div>
+                <RadioGroup
+                    onChange={setGeotechnicsMethod}
+                    value={geotechnicsMethod}
+                >
+                    <Stack direction='column'>
+                        <Radio
+                            value='metodo-1'
+                            color='black'
+                            colorScheme='blue'
+                            fontSize='md'
+                        >
+                            Aoki-Velloso
+                        </Radio>
+                        <Radio
+                            value='metodo-2'
+                            color='black'
+                            colorScheme='blue'
+                            fontSize='md'
+                        >
+                            Decourt-Quaresma
+                        </Radio>
+                    </Stack>
+                </RadioGroup>
             </>
         )
     }

@@ -44,7 +44,8 @@ function ProjectManager({ projectInputs, updateProjectInputs }) {
             'register': () => {
                 if (projects.some(project => project.name === projectInputs.name)) {
                     setProjectExistsWarning(true)
-                } else {
+                }
+                else {
                     projectRegister(projectInputs)
                     setFormOpen('')
                 }

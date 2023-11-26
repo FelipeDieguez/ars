@@ -6,16 +6,45 @@ import styles from './ParametersManager.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import { api } from '../utils/services/api'
+import parametersMethods from './parameters-manager/utils/data/parametersMethods.json'
+import { parameterDuplicate, parameterEdit, parameterRemove } from './parameters-manager/utils/services/parameters'
+
 function ParametersManager() {
     const navigate = useNavigate()
+    const [methods, setMethods] = useState(Object.keys(parametersMethods))
+    const [methodInput, setMethodInput] = useState({'selected_method': 'Aoki-Velloso', 'method': '', 'parameters': parametersMethods['Aoki-Velloso']})
+    const [formOpen, setFormOpen] = useState('')
+    
     const [updateParamaters, setUpdateParameters] = useState(0)
+    const [projectExistsWarning, setProjectExistsWarning] = useState(false);
+
+    function onMethodChange(ev) {
+        const value = ev.target.value
+        setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: value }))
+        if (value === "Aoki-Velloso" || value === "Decourt-Quaresma") {
+            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods[value] }))
+        }
+    }
+
+    function onMethodInputChange(ev) {
+        const value = ev.target.value
+        setMethodInput(prevInputs => ({ ...prevInputs, ['method']: value }))
+    }
 
     function onParametersAction(action) {
         const options = {
             'duplicate': () => {
-                return
+                if (methods.some(methodName => methodName === methodInput.method)) {
+                    setProjectExistsWarning(true)
+                }
+                else {
+                    parameterDuplicate(methodInput)
+                    setMethodInput(prevInputs => ({ ...prevInputs, ['method']: '' }))
+                    setFormOpen('')
+                }
             },
-            'rename': () => {
+            'edit': () => {
                 return
             },
             'remove': () => {
@@ -39,6 +68,13 @@ function ParametersManager() {
     }
 
     useEffect(() => {
+        api.get('/parameters')
+            .then((response) => {
+                const custom_methods = response['data']
+                const new_methods_list = Object.keys(parametersMethods).concat(custom_methods)
+                setMethods(new_methods_list)
+                setUpdateParameters(0)
+            })
         return
     }, [updateParamaters])
 
@@ -46,7 +82,15 @@ function ParametersManager() {
         <div className={styles.page}>
             <div className={styles.menu}>
                 <div className={styles.leftMenu}>
-                    <Select variant='outline' w='300px'/>
+                    <Select 
+                        onChange={onMethodChange}
+                        variant='outline'
+                        w='300px'
+                    >
+                        {methods.map((method) => (
+                            <option key={method}>{method}</option>
+                        ))}
+                    </Select>
                     <Tooltip hasArrow label='Duplicar' bg='gray' color='black' fontSize='md'>
                         <IconButton
                             icon={<CopyIcon />}
@@ -55,7 +99,8 @@ function ParametersManager() {
                             borderColor='border'
                             variant='solid'
                             colorScheme='blue'
-                            onClick={() => {onParametersAction('duplicate')}}
+                            onClick={() => {setFormOpen('duplicate')}}
+                            isDisabled={methodInput['selected_method'] !== "Aoki-Velloso" && methodInput['selected_method'] !== "Decourt-Quaresma"}
                         />
                     </Tooltip>
                     <Tooltip hasArrow label='Renomear' bg='gray' color='black' fontSize='md'>
@@ -66,7 +111,8 @@ function ParametersManager() {
                             borderColor='border'
                             variant='solid'
                             colorScheme='blue'
-                            onClick={() => {onParametersAction('rename')}}
+                            onClick={() => {setFormOpen('edit')}}
+                            isDisabled={methodInput['selected_method'] === "Aoki-Velloso" || methodInput['selected_method'] === "Decourt-Quaresma"}
                         />
                     </Tooltip>
                     <Tooltip hasArrow label='Remover' bg='gray' color='black' fontSize='md'>
@@ -78,8 +124,41 @@ function ParametersManager() {
                             variant='solid'
                             colorScheme='blue'
                             onClick={() => {onParametersAction('remove')}}
+                            isDisabled={methodInput['selected_method'] === "Aoki-Velloso" || methodInput['selected_method'] === "Decourt-Quaresma"}
                         />
                     </Tooltip>
+                    {formOpen !== '' && (
+                        <>
+                            <Input
+                                type='text'
+                                placeholder='Digite o nome do método'
+                                onChange={onMethodInputChange}
+                            />
+                            <IconButton
+                                icon={<CheckIcon />}
+                                onClick={() => onParametersAction(formOpen)}
+                            />
+                            <IconButton
+                                icon={<CloseIcon />}
+                                onClick={() => setFormOpen('')}
+                            />
+                        </>
+                    )}
+                    {projectExistsWarning && (
+                        <div className={styles.page}>
+                            <AlertDialog isOpen={projectExistsWarning}>
+                                <AlertDialogOverlay>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>Metódo já existe</AlertDialogHeader>
+                                        <AlertDialogCloseButton onClick={() => setProjectExistsWarning(false)}/>
+                                        <AlertDialogBody>
+                                            O método com esse nome já existe. Escolha um nome diferente.
+                                        </AlertDialogBody>
+                                    </AlertDialogContent>
+                                </AlertDialogOverlay>
+                            </AlertDialog>
+                        </div>
+                    )}
                 </div>
                 <div className={styles.rightMenu}>
                     <Tooltip hasArrow label='Salvar' bg='gray' color='black' fontSize='md'>
@@ -108,73 +187,45 @@ function ParametersManager() {
             </div>
             <div className={styles.section}>
                 <Accordion defaultIndex={[0]} allowMultiple w='100%'>
-                    <AccordionItem>
-                        <AccordionButton>
-                            <Box as='span' flex='1' textAlign='left'>
-                                ATRITO LATERAL
-                            </Box>
-                            <AccordionIcon />
-                        </AccordionButton>
-                        <AccordionPanel pb={4}>
-                            Aqui estarão os parâmetros
-                        </AccordionPanel>
-                    </AccordionItem>
-                    <AccordionItem>
-                        <AccordionButton>
-                            <Box as='span' flex='1' textAlign='left'>
-                                ATRITO DE PONTA
-                            </Box>
-                            <AccordionIcon />
-                        </AccordionButton>
-                        <AccordionPanel pb={4}>
-                            <TableContainer>
-                                <Table variant='striped' colorScheme='gray'>
-                                    <Thead>
-                                        <Tr>
-                                            <Th>Solo</Th>
-                                            <Th>K (MPA)</Th>
-                                            <Th>α (%)</Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        <Tr>
-                                            <Td>Areia</Td>
-                                            <Td>
-                                                <Editable defaultValue='1,00'>
-                                                    <EditablePreview/>
-                                                    <EditableInput/>
-                                                </Editable>
-                                            </Td>
-                                            <Td>
-                                                <Editable defaultValue='1,4'>
-                                                    <EditablePreview/>
-                                                    <EditableInput/>
-                                                </Editable>
-                                            </Td>
-                                        </Tr>
-                                        <Tr>
-                                            <Td>Areia Siltosa</Td>
-                                            <Td>
-                                                <Editable defaultValue='0,8'>
-                                                    <EditablePreview/>
-                                                    <EditableInput/>
-                                                </Editable>
-                                            </Td>
-                                            <Td>
-                                                <Editable defaultValue='2,0'>
-                                                    <EditablePreview/>
-                                                    <EditableInput/>
-                                                </Editable>
-                                            </Td>
-                                        </Tr>
-                                    </Tbody>
-                                    <Tfoot>
-                                        <TableCaption>Aoki-Velloso (1975)</TableCaption>
-                                    </Tfoot>
-                                </Table>
-                            </TableContainer>
-                        </AccordionPanel>
-                    </AccordionItem>
+                    {Object.entries(parametersMethods[methodInput['selected_method']]).map(([key, value]) => {
+                        return (
+                            <AccordionItem>
+                                <AccordionButton>
+                                    <Box as='span' flex='1' textAlign='left'>
+                                        <strong>{key}</strong>
+                                    </Box>
+                                </AccordionButton>
+                                <AccordionPanel pb={4}>
+                                    <TableContainer>
+                                        <Table variant='striped' colorScheme='gray' size='sm'>
+                                            <Thead>
+                                                <Tr>
+                                                    {Object.entries(value[0]).map(([header, _]) => {
+                                                        return(
+                                                            <Th>{header}</Th>
+                                                        )
+                                                    })}
+                                                </Tr>
+                                            </Thead>
+                                            <Tbody>
+                                                {value.map((element, i) => {
+                                                    return(
+                                                        <Tr>
+                                                            {Object.entries(element).map(([_, content]) => {
+                                                                return (
+                                                                    <Td fontSize='md'>{content}</Td>
+                                                                )
+                                                            })}
+                                                        </Tr>
+                                                    )
+                                                })}
+                                            </Tbody>
+                                        </Table>
+                                    </TableContainer>
+                                </AccordionPanel>
+                            </AccordionItem>
+                        )
+                    })}
                 </Accordion>
             </div>
         </div>

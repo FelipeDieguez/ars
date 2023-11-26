@@ -1,29 +1,34 @@
-import Tab from '../../components/Tab'
+import { TabList, Tabs, Tab } from '@chakra-ui/react'
 
 function EsforcoDefinir({ geotechnicsStress, setGeotechnicsStress} ) {
     function onGeotechnicsStressChange(ev) {
-        const stress = ev.target.id
+        const stress = ev.target.name
         setGeotechnicsStress(stress)
+        console.log(geotechnicsStress)
     }
 
     return (
         <>
-            <Tab
-                text="Compressão"
-                id="compressao"
-                name="tabelas"
-                checked={geotechnicsStress === "compressao"}
-                onChange={onGeotechnicsStressChange}
-            />
-            {/* Adicionar Tração!
-                <Tab 
-                    text="Tração"
-                    id="tracao"
-                    name="tabelas"
-                    checked={geotechnicsStress === "tracao"}
-                    onChange={onGeotechnicsStressChange}
-                />
-            */}
+            <Tabs size='sm' variant='enclosed'>
+                <TabList>
+                    <Tab
+                        name='compressao'
+                        onClick={onGeotechnicsStressChange}
+                        _selected={{color: 'white', bg: 'blue.500'}}
+                        fontSize='md'
+                    >
+                        Compressão
+                    </Tab>
+                    {/* <Tab
+                        name='tracao'
+                        onClick={onGeotechnicsStressChange}
+                        _selected={{color: 'white', bg: 'blue'}}
+                        fontSize='md'
+                    >
+                        Tração
+                    </Tab> */}
+                </TabList>
+            </Tabs>
         </>
     )
 }

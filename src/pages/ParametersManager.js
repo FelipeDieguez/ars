@@ -13,10 +13,11 @@ import { parameterDuplicate, parameterEdit, parameterRemove } from './parameters
 function ParametersManager() {
     const navigate = useNavigate()
     const [methods, setMethods] = useState(Object.keys(parametersMethods))
+    const [parameters, setParameters] = useState(parametersMethods)
     const [methodInput, setMethodInput] = useState({'selected_method': 'Aoki-Velloso', 'method': '', 'parameters': parametersMethods['Aoki-Velloso']})
     const [formOpen, setFormOpen] = useState('')
     
-    const [updateParamaters, setUpdateParameters] = useState(0)
+    const [updateParameters, setUpdateParameters] = useState(0)
     const [projectExistsWarning, setProjectExistsWarning] = useState(false);
 
     function onMethodChange(ev) {
@@ -71,12 +72,14 @@ function ParametersManager() {
         api.get('/parameters')
             .then((response) => {
                 const custom_methods = response['data']
-                const new_methods_list = Object.keys(parametersMethods).concat(custom_methods)
-                setMethods(new_methods_list)
+                const new_methods_list = Object.assign({}, parametersMethods, custom_methods)
+                setMethods(Object.keys(new_methods_list))
+                setParameters(new_methods_list)
+                console.log(new_methods_list)
                 setUpdateParameters(0)
             })
         return
-    }, [updateParamaters])
+    }, [updateParameters])
 
     return (
         <div className={styles.page}>
@@ -187,7 +190,7 @@ function ParametersManager() {
             </div>
             <div className={styles.section}>
                 <Accordion defaultIndex={[0]} allowMultiple w='100%'>
-                    {Object.entries(parametersMethods[methodInput['selected_method']]).map(([key, value]) => {
+                    {Object.entries(parameters[methodInput['selected_method']]).map(([key, value]) => {
                         return (
                             <AccordionItem>
                                 <AccordionButton>

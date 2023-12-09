@@ -1,6 +1,6 @@
 import { api } from "../../../../utils/services/api"
 
-export function parameterList() {
+export function parameterList(data) {
     return api.get("/parameters")
 }
 

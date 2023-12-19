@@ -36,14 +36,26 @@
                 {"Solo": "Areia", "C (kPa)": 400}
         ],
         "FATORES DE CORREÇÃO (PONTA)": [
-            {"Solo": "Argilas", "Franki": 1, "Metálica": 1, "Pré-moldada (circ.)": 1, "Pré-moldada (retang.)": 1, "Escavada": 0.85, "Raiz": 0.85, "Hélice contínua": 0.3, "Ômega": 0, "Tubulão": 0.85},
-            {"Solo": "Solos intermediários", "Franki": 1, "Metálica": 1, "Pré-moldada (circ.)": 1, "Pré-moldada (retang.)": 1, "Escavada": 0.6, "Raiz": 0.6, "Hélice contínua": 0.3, "Ômega": 0, "Tubulão": 0.6},
-            {"Solo": "Areias", "Franki": 1, "Metálica": 1, "Pré-moldada (circ.)": 1, "Pré-moldada (retang.)": 1, "Escavada": 0.5, "Raiz": 0.5, "Hélice contínua": 0.3, "Ômega": 0, "Tubulão": 0.5}
+            {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+            {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+            {"Estaca": "Pré-moldada (circ.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+            {"Estaca": "Pré-moldada (retang.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+            {"Estaca": "Escavada", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
+            {"Estaca": "Raiz", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
+            {"Estaca": "Hélice Contínua", "Argilas": 0.3, "Solos intermediários": 0.3, "Areias": 0.3},
+            {"Estaca": "Ômega", "Argilas": 0, "Solos intermediários": 0, "Areias": 0},
+            {"Estaca": "Tubulão", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5}
         ],
         "FATORES DE CORREÇÃO (LATERAL)": [
-            {"Solo": "Argilas", "Franki": 1, "Metálica": 1, "Pré-moldada (circ.)": 1, "Pré-moldada (retang.)": 1, "Escavada": 0.8, "Raiz": 1.5, "Hélice contínua": 1, "Ômega": 0, "Tubulão": 0},
-            {"Solo": "Solos intermediários", "Franki": 1, "Metálica": 1, "Pré-moldada (circ.)": 1, "Pré-moldada (retang.)": 1, "Escavada": 0.65, "Raiz": 1.5, "Hélice contínua": 1, "Ômega": 0, "Tubulão": 0},
-            {"Solo": "Areias", "Franki": 1, "Metálica": 1, "Pré-moldada (circ.)": 1, "Pré-moldada (retang.)": 1, "Escavada": 0.5, "Raiz": 1.5, "Hélice contínua": 1, "Ômega": 0, "Tubulão": 0}
+            {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+            {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+            {"Estaca": "Pré-moldada (circ.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+            {"Estaca": "Pré-moldada (retang.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+            {"Estaca": "Escavada", "Argilas": 0.8, "Solos intermediários": 0.65, "Areias": 0.5},
+            {"Estaca": "Raiz", "Argilas": 1.5, "Solos intermediários": 1.5, "Areias": 1.5},
+            {"Estaca": "Hélice Contínua", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+            {"Estaca": "Ômega", "Argilas": 0, "Solos intermediários": 0, "Areias": 0},
+            {"Estaca": "Tubulão", "Argilas": 0, "Solos intermediários": 0, "Areias": 0}
         ]
     }
 }

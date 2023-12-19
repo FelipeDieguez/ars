@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 import { api } from '../utils/services/api'
 import parametersMethods from './parameters-manager/utils/data/parametersMethods.json'
-import { parameterDuplicate, parameterEdit, parameterRemove } from './parameters-manager/utils/services/parameters'
+import { parameterDuplicate, parameterEdit, parameterRemove, parameterSave } from './parameters-manager/utils/services/parameters'
 
 function ParametersManager() {
     const navigate = useNavigate()
@@ -26,11 +26,23 @@ function ParametersManager() {
         if (value === "Aoki-Velloso" || value === "Decourt-Quaresma") {
             setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods[value] }))
         }
+        else {
+            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parameters[prevInputs['selected_method']] }))
+        }
     }
 
     function onMethodInputChange(ev) {
         const value = ev.target.value
         setMethodInput(prevInputs => ({ ...prevInputs, ['method']: value }))
+    }
+
+    function onParameterInputChange(key, row, col, value) {
+        setMethodInput((prevInputs) => {
+            const newState = { ...prevInputs }
+            const col_name = Object.keys(prevInputs['parameters'][key][0])
+            newState['parameters'][key][row][col_name[col]] = parseFloat(value)
+            return newState
+        })
     }
 
     function onParametersAction(action) {
@@ -46,10 +58,19 @@ function ParametersManager() {
                 }
             },
             'edit': () => {
-                return
+                if (methods.some(methodName => methodName === methodInput.method)) {
+                    setProjectExistsWarning(true)
+                }
+                else {
+                    parameterEdit(methodInput)
+                    setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: prevInputs['method'] }))
+                    setMethodInput(prevInputs => ({ ...prevInputs, ['method']: '' }))
+                    setFormOpen('')
+                }
             },
             'remove': () => {
-                return
+                parameterRemove(methodInput)
+                setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['Aoki-Velloso'] }))
             }
         }
         for (const [key, value] of Object.entries(options)) {
@@ -61,7 +82,7 @@ function ParametersManager() {
     }
 
     function onSaveParameters() {
-        return
+        parameterSave(methodInput)
     }
 
     function onCloseParameters() {
@@ -75,7 +96,6 @@ function ParametersManager() {
                 const new_methods_list = Object.assign({}, parametersMethods, custom_methods)
                 setMethods(Object.keys(new_methods_list))
                 setParameters(new_methods_list)
-                console.log(new_methods_list)
                 setUpdateParameters(0)
             })
         return
@@ -89,6 +109,7 @@ function ParametersManager() {
                         onChange={onMethodChange}
                         variant='outline'
                         w='300px'
+                        value={methodInput['selected_method']}
                     >
                         {methods.map((method) => (
                             <option key={method}>{method}</option>
@@ -190,7 +211,7 @@ function ParametersManager() {
             </div>
             <div className={styles.section}>
                 <Accordion defaultIndex={[0]} allowMultiple w='100%'>
-                    {Object.entries(parameters[methodInput['selected_method']]).map(([key, value]) => {
+                    {Object.entries(methodInput['parameters']).map(([key, value]) => {
                         return (
                             <AccordionItem>
                                 <AccordionButton>
@@ -214,9 +235,26 @@ function ParametersManager() {
                                                 {value.map((element, i) => {
                                                     return(
                                                         <Tr>
-                                                            {Object.entries(element).map(([_, content]) => {
+                                                            {Object.entries(element).map(([_, content], col_index) => {
                                                                 return (
-                                                                    <Td fontSize='md'>{content}</Td>
+                                                                    <Td key={_}>
+                                                                        {methodInput["selected_method"] !== 'Aoki-Velloso' && methodInput["selected_method"] !== 'Decourt-Quaresma' && col_index !== 0 ? (
+                                                                            <Editable defaultValue={content} fontSize='md'>
+                                                                                <EditablePreview />
+                                                                                <EditableInput textAlign='center'
+                                                                                    onKeyPress={(event) => {
+                                                                                        if (!/[0-9.]/.test(event.key)) {
+                                                                                            event.preventDefault()}
+                                                                                        }}
+                                                                                    onChange={(event) => {
+                                                                                        onParameterInputChange(key, i, col_index, event.target.value)
+                                                                                    }}
+                                                                                />
+                                                                            </Editable>
+                                                                        ) : (
+                                                                            <Box fontSize='md'>{content}</Box>
+                                                                        )}
+                                                                    </Td>
                                                                 )
                                                             })}
                                                         </Tr>

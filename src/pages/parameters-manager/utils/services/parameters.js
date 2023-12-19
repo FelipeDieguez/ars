@@ -15,3 +15,7 @@ export function parameterEdit(data) {
 export function parameterRemove(data) {
     return api.post("/parameters/remove", data)
 }
+
+export function parameterSave(data) {
+    return api.post("/parameters/save", data)
+}

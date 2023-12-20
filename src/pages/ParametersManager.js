@@ -12,7 +12,6 @@ import { parameterDuplicate, parameterEdit, parameterRemove, parameterSave } fro
 
 function ParametersManager() {
     const navigate = useNavigate()
-    const [methods, setMethods] = useState(Object.keys(parametersMethods))
     const [parameters, setParameters] = useState(parametersMethods)
     const [methodInput, setMethodInput] = useState({'selected_method': 'Aoki-Velloso', 'method': '', 'parameters': parametersMethods['Aoki-Velloso']})
     const [formOpen, setFormOpen] = useState('')
@@ -48,7 +47,7 @@ function ParametersManager() {
     function onParametersAction(action) {
         const options = {
             'duplicate': () => {
-                if (methods.some(methodName => methodName === methodInput.method)) {
+                if (Object.keys(parameters).some(methodName => methodName === methodInput.method)) {
                     setProjectExistsWarning(true)
                 }
                 else {
@@ -58,7 +57,7 @@ function ParametersManager() {
                 }
             },
             'edit': () => {
-                if (methods.some(methodName => methodName === methodInput.method)) {
+                if (Object.keys(parameters).some(methodName => methodName === methodInput.method)) {
                     setProjectExistsWarning(true)
                 }
                 else {
@@ -94,7 +93,6 @@ function ParametersManager() {
             .then((response) => {
                 const custom_methods = response['data']
                 const new_methods_list = Object.assign({}, parametersMethods, custom_methods)
-                setMethods(Object.keys(new_methods_list))
                 setParameters(new_methods_list)
                 setUpdateParameters(0)
             })
@@ -111,7 +109,7 @@ function ParametersManager() {
                         w='300px'
                         value={methodInput['selected_method']}
                     >
-                        {methods.map((method) => (
+                        {Object.keys(parameters).map((method) => (
                             <option key={method}>{method}</option>
                         ))}
                     </Select>
@@ -241,7 +239,7 @@ function ParametersManager() {
                                                                         {methodInput["selected_method"] !== 'Aoki-Velloso' && methodInput["selected_method"] !== 'Decourt-Quaresma' && col_index !== 0 ? (
                                                                             <Editable defaultValue={content} fontSize='md'>
                                                                                 <EditablePreview />
-                                                                                <EditableInput textAlign='center'
+                                                                                <EditableInput textAlign='start'
                                                                                     onKeyPress={(event) => {
                                                                                         if (!/[0-9.]/.test(event.key)) {
                                                                                             event.preventDefault()}

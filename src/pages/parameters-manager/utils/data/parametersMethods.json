@@ -1,61 +1,81 @@
 {
-    "Aoki-Velloso": {
-        "PARÂMETROS DO SOLO": [
-                {"Solo": "Areia", "K (MPa)": 1.0, "α (%)": 1.4},
-                {"Solo": "Areia siltosa", "K (MPa)": 0.8, "α (%)": 2.0},
-                {"Solo": "Areia silto-argilosa", "K (MPa)": 0.7, "α (%)": 2.4},
-                {"Solo": "Areia argilosa", "K (MPa)": 0.6, "α (%)": 3.0},
-                {"Solo": "Areia argilo-siltosa", "K (MPa)": 0.5, "α (%)": 2.5},
-                {"Solo": "Silte", "K (MPa)": 0.4, "α (%)": 3.0},
-                {"Solo": "Silte arenoso", "K (MPa)": 0.55, "α (%)": 2.2},
-                {"Solo": "Silte areno-argiloso", "K (MPa)": 0.45, "α (%)": 2.8},
-                {"Solo": "Silte argiloso", "K (MPa)": 0.23, "α (%)": 3.4},
-                {"Solo": "Silte argilo-arenoso", "K (MPa)": 0.25, "α (%)": 3.0},
-                {"Solo": "Argila", "K (MPa)": 0.20, "α (%)": 6.0},
-                {"Solo": "Argila arenosa", "K (MPa)": 0.35, "α (%)": 2.4},
-                {"Solo": "Argila areno-siltosa", "K (MPa)": 0.3, "α (%)": 2.8},
-                {"Solo": "Argila siltosa", "K (MPa)": 0.22, "α (%)": 4.0},
-                {"Solo": "Argila silto-arenosa", "K (MPa)": 0.33, "α (%)": 3.0}
+    "ESTACAS": {
+        "Aoki-Velloso": {
+            "PARÂMETROS DO SOLO": [
+                    {"Solo": "Areia", "K (MPa)": 1.0, "α (%)": 1.4},
+                    {"Solo": "Areia siltosa", "K (MPa)": 0.8, "α (%)": 2.0},
+                    {"Solo": "Areia silto-argilosa", "K (MPa)": 0.7, "α (%)": 2.4},
+                    {"Solo": "Areia argilosa", "K (MPa)": 0.6, "α (%)": 3.0},
+                    {"Solo": "Areia argilo-siltosa", "K (MPa)": 0.5, "α (%)": 2.5},
+                    {"Solo": "Silte", "K (MPa)": 0.4, "α (%)": 3.0},
+                    {"Solo": "Silte arenoso", "K (MPa)": 0.55, "α (%)": 2.2},
+                    {"Solo": "Silte areno-argiloso", "K (MPa)": 0.45, "α (%)": 2.8},
+                    {"Solo": "Silte argiloso", "K (MPa)": 0.23, "α (%)": 3.4},
+                    {"Solo": "Silte argilo-arenoso", "K (MPa)": 0.25, "α (%)": 3.0},
+                    {"Solo": "Argila", "K (MPa)": 0.20, "α (%)": 6.0},
+                    {"Solo": "Argila arenosa", "K (MPa)": 0.35, "α (%)": 2.4},
+                    {"Solo": "Argila areno-siltosa", "K (MPa)": 0.3, "α (%)": 2.8},
+                    {"Solo": "Argila siltosa", "K (MPa)": 0.22, "α (%)": 4.0},
+                    {"Solo": "Argila silto-arenosa", "K (MPa)": 0.33, "α (%)": 3.0}
+                ],
+            "FATORES DE CORREÇÃO": [
+                {"Estaca": "Franki", "F1": 2.5, "F2": 5.0},
+                {"Estaca": "Metálica", "F1": 1.75, "F2": 3.5},
+                {"Estaca": "Pré-moldada", "F1": 0, "F2": 0},
+                {"Estaca": "Escavada", "F1": 3.0, "F2": 6.0},
+                {"Estaca": "Raiz", "F1": 2.0, "F2": 4.0},
+                {"Estaca": "Hélice Contínua", "F1": 2.0, "F2": 4.0},
+                {"Estaca": "Ômega", "F1": 2.0, "F2": 4.0}
+            ]
+        },
+        "Decourt-Quaresma": {
+            "PARÂMETROS DO SOLO": [
+                    {"Solo": "Argila", "C (kPa)": 120},
+                    {"Solo": "Silte argiloso", "C (kPa)": 200},
+                    {"Solo": "Silte", "C (kPa)": 225},
+                    {"Solo": "Silte arenoso", "C (kPa)": 250},
+                    {"Solo": "Areia", "C (kPa)": 400}
             ],
-        "FATORES DE CORREÇÃO": [
-            {"Estaca": "Franki", "F1": 2.5, "F2": 5.0},
-            {"Estaca": "Metálica", "F1": 1.75, "F2": 3.5},
-            {"Estaca": "Pré-moldada", "F1": 0, "F2": 0},
-            {"Estaca": "Escavada", "F1": 3.0, "F2": 6.0},
-            {"Estaca": "Raiz", "F1": 2.0, "F2": 4.0},
-            {"Estaca": "Hélice Contínua", "F1": 2.0, "F2": 4.0},
-            {"Estaca": "Ômega", "F1": 2.0, "F2": 4.0}
-        ]
+            "FATORES DE CORREÇÃO (PONTA)": [
+                {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Pré-moldada (circ.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Pré-moldada (retang.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Escavada", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
+                {"Estaca": "Raiz", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
+                {"Estaca": "Hélice Contínua", "Argilas": 0.3, "Solos intermediários": 0.3, "Areias": 0.3},
+                {"Estaca": "Ômega", "Argilas": 0, "Solos intermediários": 0, "Areias": 0},
+                {"Estaca": "Tubulão", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5}
+            ],
+            "FATORES DE CORREÇÃO (LATERAL)": [
+                {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Pré-moldada (circ.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Pré-moldada (retang.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Escavada", "Argilas": 0.8, "Solos intermediários": 0.65, "Areias": 0.5},
+                {"Estaca": "Raiz", "Argilas": 1.5, "Solos intermediários": 1.5, "Areias": 1.5},
+                {"Estaca": "Hélice Contínua", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Ômega", "Argilas": 0, "Solos intermediários": 0, "Areias": 0},
+                {"Estaca": "Tubulão", "Argilas": 0, "Solos intermediários": 0, "Areias": 0}
+            ]
+        }
     },
-    "Decourt-Quaresma": {
-        "PARÂMETROS DO SOLO": [
-                {"Solo": "Argila", "C (kPa)": 120},
-                {"Solo": "Silte argiloso", "C (kPa)": 200},
-                {"Solo": "Silte", "C (kPa)": 225},
-                {"Solo": "Silte arenoso", "C (kPa)": 250},
-                {"Solo": "Areia", "C (kPa)": 400}
-        ],
-        "FATORES DE CORREÇÃO (PONTA)": [
-            {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-            {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-            {"Estaca": "Pré-moldada (circ.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-            {"Estaca": "Pré-moldada (retang.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-            {"Estaca": "Escavada", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
-            {"Estaca": "Raiz", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
-            {"Estaca": "Hélice Contínua", "Argilas": 0.3, "Solos intermediários": 0.3, "Areias": 0.3},
-            {"Estaca": "Ômega", "Argilas": 0, "Solos intermediários": 0, "Areias": 0},
-            {"Estaca": "Tubulão", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5}
-        ],
-        "FATORES DE CORREÇÃO (LATERAL)": [
-            {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-            {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-            {"Estaca": "Pré-moldada (circ.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-            {"Estaca": "Pré-moldada (retang.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-            {"Estaca": "Escavada", "Argilas": 0.8, "Solos intermediários": 0.65, "Areias": 0.5},
-            {"Estaca": "Raiz", "Argilas": 1.5, "Solos intermediários": 1.5, "Areias": 1.5},
-            {"Estaca": "Hélice Contínua", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-            {"Estaca": "Ômega", "Argilas": 0, "Solos intermediários": 0, "Areias": 0},
-            {"Estaca": "Tubulão", "Argilas": 0, "Solos intermediários": 0, "Areias": 0}
-        ]
+    "SAPATAS": {
+        "Bulbo de Tensões": {
+            "PROPRIEDADES AREIA": [
+                {"Nspt": "< 5", "Compacidade": "Fofa", "γseca": 16, "γsaturada": 19},
+                {"Nspt": "5 - 8", "Compacidade": "Pouca compacta", "γseca": 16, "γsaturada": 19},
+                {"Nspt": "9 - 18", "Compacidade": "Mediamente compacta", "γseca": 17, "γsaturada": 20},
+                {"Nspt": "19 - 40", "Compacidade": "Compacta", "γseca": 18, "γsaturada": 21},
+                {"Nspt": "> 40", "Compacidade": "Muito compacta", "γseca": 18, "γsaturada": 21}
+            ],
+            "PROPRIEDADES ARGILA": [
+                {"Nspt": "≤ 2", "Consistência": "Muito mole", "γ": 13},
+                {"Nspt": "3 - 5", "Consistência": "Mole", "γ": 15},
+                {"Nspt": "6 - 10", "Consistência": "Média", "γ": 17},
+                {"Nspt": "11 - 19", "Consistência": "Rija", "γ": 19},
+                {"Nspt": "≥ 20", "Consistência": "Dura", "γ": 21}
+            ]
+        }
     }
 }

@@ -4,7 +4,7 @@ import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
 import styles from '../Geotechnics.module.css'
 
 function MetodoDefinir({ foundationClass, geotechnicsMethod, setGeotechnicsMethod }) {
-
+    
     if (foundationClass === "sapatas") {
         return (
             <>

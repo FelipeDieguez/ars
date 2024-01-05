@@ -37,17 +37,17 @@ function Main({ projectInputs, updateProjectInputs }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     function updateGeotechnicsInputs(name, value) {
-        setGeotechnicsInputs({ ...geotechnicsInputs, [name]: value })
+        setGeotechnicsInputs(prevInputs => ({ ...prevInputs, [name]: value }))
         setUpdateGeotechnics(1)
     }
 
     function updateStructureInputs(ev) {
         const { name, value } = ev.target
-        setStructureInputs({ ...structureInputs, [name]: value })
+        setStructureInputs(prevInputs => ({ ...prevInputs, [name]: value }))
     }
 
     function updateLayerInputs(name, value) {
-        setLayerInputs({ ...layerInputs, [name]: value })
+        setLayerInputs(prevInputs => ({ ...prevInputs, [name]: value }))
     }
 
     useEffect(() => {

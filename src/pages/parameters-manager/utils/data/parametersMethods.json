@@ -19,13 +19,16 @@
                     {"Solo": "Argila silto-arenosa", "K (MPa)": 0.33, "α (%)": 3.0}
                 ],
             "FATORES DE CORREÇÃO": [
-                {"Estaca": "Franki", "F1": 2.5, "F2": 5.0},
-                {"Estaca": "Metálica", "F1": 1.75, "F2": 3.5},
-                {"Estaca": "Pré-moldada", "F1": 0, "F2": 0},
                 {"Estaca": "Escavada", "F1": 3.0, "F2": 6.0},
+                {"Estaca": "Hélice contínua", "F1": 2.0, "F2": 4.0},
                 {"Estaca": "Raiz", "F1": 2.0, "F2": 4.0},
-                {"Estaca": "Hélice Contínua", "F1": 2.0, "F2": 4.0},
-                {"Estaca": "Ômega", "F1": 2.0, "F2": 4.0}
+                {"Estaca": "Pré-moldada (circ.)", "F1": 0, "F2": 0},
+                {"Estaca": "Pré-moldada (retang.)", "F1": 0, "F2": 0},
+                {"Estaca": "Barrete", "F1": 3.0, "F2": 6.0},
+                {"Estaca": "Franki", "F1": 2.5, "F2": 5.0},
+                {"Estaca": "Ômega", "F1": 2.0, "F2": 4.0},
+                {"Estaca": "Metálica", "F1": 1.75, "F2": 3.5},
+                {"Estaca": "Tubulão", "F1": 3.0, "F2": 6.0}
             ]
         },
         "Decourt-Quaresma": {
@@ -37,25 +40,27 @@
                     {"Solo": "Areia", "C (kPa)": 400}
             ],
             "FATORES DE CORREÇÃO (PONTA)": [
-                {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-                {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Escavada", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
+                {"Estaca": "Hélice contínua", "Argilas": 0.3, "Solos intermediários": 0.3, "Areias": 0.3},
+                {"Estaca": "Raiz", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
                 {"Estaca": "Pré-moldada (circ.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
                 {"Estaca": "Pré-moldada (retang.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-                {"Estaca": "Escavada", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
-                {"Estaca": "Raiz", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
-                {"Estaca": "Hélice Contínua", "Argilas": 0.3, "Solos intermediários": 0.3, "Areias": 0.3},
+                {"Estaca": "Barrete", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5},
+                {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
                 {"Estaca": "Ômega", "Argilas": 0, "Solos intermediários": 0, "Areias": 0},
+                {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
                 {"Estaca": "Tubulão", "Argilas": 0.85, "Solos intermediários": 0.6, "Areias": 0.5}
             ],
             "FATORES DE CORREÇÃO (LATERAL)": [
-                {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-                {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Escavada", "Argilas": 0.8, "Solos intermediários": 0.65, "Areias": 0.5},
+                {"Estaca": "Hélice contínua", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Raiz", "Argilas": 1.5, "Solos intermediários": 1.5, "Areias": 1.5},
                 {"Estaca": "Pré-moldada (circ.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
                 {"Estaca": "Pré-moldada (retang.)", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
-                {"Estaca": "Escavada", "Argilas": 0.8, "Solos intermediários": 0.65, "Areias": 0.5},
-                {"Estaca": "Raiz", "Argilas": 1.5, "Solos intermediários": 1.5, "Areias": 1.5},
-                {"Estaca": "Hélice Contínua", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
+                {"Estaca": "Barrete", "Argilas": 0.8, "Solos intermediários": 0.65, "Areias": 0.5},
+                {"Estaca": "Franki", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
                 {"Estaca": "Ômega", "Argilas": 0, "Solos intermediários": 0, "Areias": 0},
+                {"Estaca": "Metálica", "Argilas": 1, "Solos intermediários": 1, "Areias": 1},
                 {"Estaca": "Tubulão", "Argilas": 0, "Solos intermediários": 0, "Areias": 0}
             ]
         }

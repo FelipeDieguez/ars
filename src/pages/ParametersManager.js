@@ -262,7 +262,7 @@ function ParametersManager() {
                                                                     return (
                                                                         <Td key={_}>
                                                                             {methodInput['type'] === 'estacas' && methodInput["selected_method"] !== 'Aoki-Velloso' && methodInput["selected_method"] !== 'Decourt-Quaresma' && col_index !== 0 ? (
-                                                                                <Editable defaultValue={content} fontSize='md'>
+                                                                                <Editable defaultValue={content || '0'} fontSize='md'>
                                                                                     <EditablePreview />
                                                                                     <EditableInput textAlign='start'
                                                                                         onKeyPress={(event) => {
@@ -276,18 +276,18 @@ function ParametersManager() {
                                                                                 </Editable>
                                                                             ) : (
                                                                                 methodInput['type'] === 'sapatas' && methodInput["selected_method"] !== 'Bulbo de Tensões' && col_index > 1 ? (
-                                                                                    <Editable defaultValue={content} fontSize='md'>
-                                                                                    <EditablePreview />
-                                                                                    <EditableInput textAlign='start'
-                                                                                        onKeyPress={(event) => {
-                                                                                            if (!/[0-9.]/.test(event.key)) {
-                                                                                                event.preventDefault()}
+                                                                                    <Editable defaultValue={content || '0'} fontSize='md'>
+                                                                                        <EditablePreview />
+                                                                                        <EditableInput textAlign='start'
+                                                                                            onKeyPress={(event) => {
+                                                                                                if (!/[0-9.]/.test(event.key)) {
+                                                                                                    event.preventDefault()}
+                                                                                                }}
+                                                                                            onChange={(event) => {
+                                                                                                onParameterInputChange(key, i, col_index, event.target.value)
                                                                                             }}
-                                                                                        onChange={(event) => {
-                                                                                            onParameterInputChange(key, i, col_index, event.target.value)
-                                                                                        }}
-                                                                                    />
-                                                                                </Editable>
+                                                                                        />
+                                                                                    </Editable>
                                                                                 ) : (
                                                                                     <Box fontSize='md'>{content}</Box>
                                                                                 )

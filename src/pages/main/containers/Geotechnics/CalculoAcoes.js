@@ -4,9 +4,17 @@ import { calculate } from '../../utils/services/geotechnics'
 
 function CalculoAcoes({ foundationClass, geotechnicsInputs, geotechnicsData, setGeotechnicsData, parameters }) {
     function onCalculate() {
-        calculate([geotechnicsData, geotechnicsInputs, parameters[foundationClass][geotechnicsInputs['metodo']]]).then((response) => {
-            setGeotechnicsData(response["data"])
-        })
+        if (foundationClass === 'tubuloes') {
+            calculate([geotechnicsData, geotechnicsInputs, parameters['estacas'][geotechnicsInputs['metodo']]]).then((response) => {
+                setGeotechnicsData(response["data"])
+            })
+        }
+        else {
+            calculate([geotechnicsData, geotechnicsInputs, parameters[foundationClass][geotechnicsInputs['metodo']]]).then((response) => {
+                setGeotechnicsData(response["data"])
+            })
+        }
+        
     }
     return (
         <>

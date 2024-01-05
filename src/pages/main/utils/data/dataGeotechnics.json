@@ -1,41 +1,18 @@
 {
-    "estacas": {
-        "compressao": {
-            "metodo-1": [{
+    "estacas": [{
                 "Resistência Lateral": "",
                 "Resistência Ponta": "",
                 "C. Rup. (kN)": "",
                 "C. Adm. (kN)": ""
-            }],
-            "metodo-2": [{
-                "Resistência Lateral": "",
-                "Resistência Ponta": "",
-                "C. Rup. (kN)": "",
-                "C. Adm. (kN)": ""
-            }]
-        }
-    },
-    "sapatas": {
-        "compressao":{
-            "metodo-1": [{
+    }],
+    "sapatas": [{
                 "γsolo": "",
                 "Sobrecarga": "",
                 "T. Adm. (kPa)": ""
-            }]
-        }
-    },
-    "tubuloes": {
-        "compressao": {
-            "metodo-1": [{
-                "Resistência Ponta": "",
-                "T. Rup. (kPa)": "",
-                "T. Adm. (kPa)": ""
-            }],
-            "metodo-2": [{
+    }],
+    "tubuloes": [{
                 "Resistência Ponta": "",
                 "T. Rup. (kPa)": "",
                 "T. Adm. (kPa)": ""
             }]
-        }
-    }
 }

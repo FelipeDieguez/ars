@@ -1,7 +1,7 @@
 import Table from '../../components/Table'
 import geotechnicsHeaders from "../../utils/data/geotechnicsHeaders.json"
 
-function ResultadoTabela({ geotechnicsMethod, geotechnicsStress, geotechnicsData, structureInputs, updateLayerInputs }) {
+function ResultadoTabela({ geotechnicsData, structureInputs, updateLayerInputs }) {
     function mudancasResultadoTabela(ev) {
         const ordem = ev.target.id
         updateLayerInputs("ordem", +ordem.replace("input-", ""))
@@ -9,7 +9,7 @@ function ResultadoTabela({ geotechnicsMethod, geotechnicsStress, geotechnicsData
 
     return (
         <>
-            <Table dados={geotechnicsData[geotechnicsStress][geotechnicsMethod]}
+            <Table dados={geotechnicsData}
                     cabecalho={geotechnicsHeaders["cabecalhos"]}
                     structureInputs={structureInputs}
             />

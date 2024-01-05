@@ -1,6 +1,6 @@
 import { Select, Stack, Text } from "@chakra-ui/react"
 
-function CalculoEntradas2({ foundationClass, geotechnicsMethod, geotechnicsStress, updateGeotechnicsInputs, geotechnicsData }) {      
+function CalculoEntradas2({ foundationClass, updateGeotechnicsInputs, geotechnicsData }) {      
     function onGeotechnicsInputsChange(ev) {
         const { name, value } = ev.target
         updateGeotechnicsInputs(name, value)
@@ -32,7 +32,7 @@ function CalculoEntradas2({ foundationClass, geotechnicsMethod, geotechnicsStres
                         size='xs'
                         fontSize='md'
                     >
-                        {[...Array(geotechnicsData[geotechnicsStress][geotechnicsMethod].length+2).keys()].map((element) => (
+                        {[...Array(geotechnicsData.length+2).keys()].map((element) => (
                             <option key={element}>{element}</option>
                         ))}
                     </Select>
@@ -52,7 +52,7 @@ function CalculoEntradas2({ foundationClass, geotechnicsMethod, geotechnicsStres
                         size='xs'
                         fontSize='md'
                     >
-                        {[...Array(geotechnicsData[geotechnicsStress][geotechnicsMethod].length).keys()].map((element) => (
+                        {[...Array(geotechnicsData.length).keys()].map((element) => (
                             <option key={element}>{element}</option>
                         ))}
                     </Select>

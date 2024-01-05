@@ -1,10 +1,9 @@
 import { TabList, Tabs, Tab } from '@chakra-ui/react'
 
-function EsforcoDefinir({ geotechnicsStress, setGeotechnicsStress} ) {
+function EsforcoDefinir({ updateGeotechnicsInputs} ) {
     function onGeotechnicsStressChange(ev) {
         const stress = ev.target.name
-        setGeotechnicsStress(stress)
-        console.log(geotechnicsStress)
+        updateGeotechnicsInputs("esforco", stress)
     }
 
     return (

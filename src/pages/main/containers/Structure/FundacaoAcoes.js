@@ -14,7 +14,7 @@ function FundacaoAcoes({ geotechnicsData, geotechnicsInputs, structureInputs, up
             <Select
                 text="Profundidade (m)="
                 name="profundidade"
-                list={[...Array(geotechnicsData["compressao"]["metodo-1"].length+1).keys()]}
+                list={[...Array(geotechnicsData.length+1).keys()]}
                 width="45px"
                 onChange={updateStructureInputs}
                 />

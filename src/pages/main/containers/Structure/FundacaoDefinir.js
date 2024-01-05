@@ -3,13 +3,13 @@ import Tab from '../../components/Tab'
 import foundationTypes from "../../utils/data/foundationTypes.json"
 import geotechnicsMethods from "../../utils/data/geotechnicsMethods.json"
 
-function FundacaoDefinir({ foundationClass, setFoundationClass, setGeotechnicsMethod, setGeotechnicsStress, updateGeotechnicsInputs }) {
+function FundacaoDefinir({ foundationClass, setFoundationClass, updateGeotechnicsInputs }) {
     function onFoundationClassChange(ev) {
         const foundation_type = ev.target.id
         setFoundationClass(foundation_type)
-        setGeotechnicsMethod(geotechnicsMethods[foundation_type])
-        setGeotechnicsStress("compressao")
+        updateGeotechnicsInputs("metodo", geotechnicsMethods[foundation_type])
         updateGeotechnicsInputs("tipo", foundationTypes[foundation_type][0])
+        updateGeotechnicsInputs("esforco", "compressao")
     }
 
     return (

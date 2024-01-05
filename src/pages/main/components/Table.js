@@ -39,9 +39,15 @@ function Table ({ dados, cabecalho, structureInputs }) {
                                 className={styles.td}
                                 onClick={() => mudar_camada(i+1)}
                             >
-                                <label>
-                                    {camada[h]}
-                                </label>
+                                {h === 'Cota' ? (
+                                    <label>
+                                        {camada[h]-1+'-'+camada[h]}
+                                    </label>
+                                ) : (
+                                    <label>
+                                        {camada[h]}
+                                    </label>
+                                )}
                             </td>)
                         })}
                     </tr>

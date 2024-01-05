@@ -1,4 +1,4 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Editable, EditableInput, EditablePreview, Select, Tab, TabList, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Editable, EditableInput, EditablePreview, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Select, Tab, TabList, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Tfoot, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
 import { Checkbox, Heading, IconButton, Input, InputGroup, InputLeftAddon, Tooltip, useSafeLayoutEffect } from '@chakra-ui/react'
 import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, AlertDialogCloseButton} from '@chakra-ui/react'
 import { AddIcon, CheckIcon, CloseIcon, CopyIcon, DeleteIcon, EditIcon, ExternalLinkIcon, SearchIcon, SettingsIcon } from '@chakra-ui/icons'
@@ -13,7 +13,7 @@ import { parameterDuplicate, parameterEdit, parameterRemove, parameterSave } fro
 function ParametersManager() {
     const navigate = useNavigate()
     const [parameters, setParameters] = useState(parametersMethods)
-    const [methodInput, setMethodInput] = useState({'type': 'ESTACAS', 'selected_method': 'Aoki-Velloso', 'method': '', 'parameters': parametersMethods['ESTACAS']['Aoki-Velloso']})
+    const [methodInput, setMethodInput] = useState({'type': 'estacas', 'selected_method': 'Aoki-Velloso', 'method': '', 'parameters': parametersMethods['estacas']['Aoki-Velloso']})
     const [formOpen, setFormOpen] = useState('')
     
     const [updateParameters, setUpdateParameters] = useState(0)
@@ -23,10 +23,10 @@ function ParametersManager() {
         const value = ev.target.value
         setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: value }))
         if (value === "Aoki-Velloso" || value === "Decourt-Quaresma" ) {
-            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['ESTACAS'][value] }))
+            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['estacas'][value] }))
         }
         else if (value === 'Bulbo de Tensões') {
-            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['SAPATAS'][value] }))
+            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['sapatas'][value] }))
         }
         else {
             setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parameters[prevInputs['type']][prevInputs['selected_method']] }))
@@ -40,13 +40,13 @@ function ParametersManager() {
 
     function onMethodInputTypeChange(ev) {
         setMethodInput(prevInputs => ({ ...prevInputs, ['type']: Object.keys(parametersMethods)[ev] }))
-        if (Object.keys(parametersMethods)[ev] === 'ESTACAS') {
+        if (Object.keys(parametersMethods)[ev] === 'estacas') {
             setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: 'Aoki-Velloso' }))
-            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['ESTACAS']['Aoki-Velloso'] }))
+            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['estacas']['Aoki-Velloso'] }))
         }
-        else if (Object.keys(parametersMethods)[ev] === 'SAPATAS') {
+        else if (Object.keys(parametersMethods)[ev] === 'sapatas') {
             setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: 'Bulbo de Tensões' })) 
-            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['SAPATAS']['Bulbo de Tensões'] }))
+            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['sapatas']['Bulbo de Tensões'] }))
         }
     }
 
@@ -62,7 +62,7 @@ function ParametersManager() {
     function onParametersAction(action) {
         const options = {
             'duplicate': () => {
-                if (Object.keys({...parameters.ESTACAS,...parameters.SAPATAS}).some(methodName => methodName === methodInput.method)) {
+                if (Object.keys({...parameters.estacas,...parameters.sapatas}).some(methodName => methodName === methodInput.method)) {
                     setProjectExistsWarning(true)
                 }
                 else {
@@ -72,7 +72,7 @@ function ParametersManager() {
                 }
             },
             'edit': () => {
-                if (Object.keys({...parameters.ESTACAS,...parameters.SAPATAS}).some(methodName => methodName === methodInput.method)) {
+                if (Object.keys({...parameters.estacas,...parameters.sapatas}).some(methodName => methodName === methodInput.method)) {
                     setProjectExistsWarning(true)
                 }
                 else {
@@ -108,7 +108,7 @@ function ParametersManager() {
         api.get('/parameters')
             .then((response) => {
                 const custom_methods = response['data']
-                const new_methods_list = {"ESTACAS": {...parametersMethods["ESTACAS"], ...custom_methods["ESTACAS"]}, "SAPATAS": {...parametersMethods["SAPATAS"], ...custom_methods["SAPATAS"]}}
+                const new_methods_list = {"estacas": {...parametersMethods["estacas"], ...custom_methods["estacas"]}, "sapatas": {...parametersMethods["sapatas"], ...custom_methods["sapatas"]}}
                 setParameters(new_methods_list)
                 setUpdateParameters(0)
             })
@@ -116,54 +116,88 @@ function ParametersManager() {
     }, [updateParameters])
 
     return (
-        <div className={styles.page}>
-            <div className={styles.menu}>
-                <Tabs onChange={onMethodInputTypeChange} variant='soft-rounded' colorScheme='blue'>
-                    <TabList>
-                        <Tab checked={methodInput['type'] === 'ESTACAS'}>Métodos de Cálculo Estacas</Tab>
-                        <Tab checked={methodInput['type'] === 'SAPATAS'}>Métodos de Cálculo Sapatas</Tab>
-                    </TabList>
-                </Tabs>
-            </div>
-            <div className={styles.menu}>
-                <div className={styles.leftMenu}>
-                    <Select 
-                        onChange={onMethodChange}
-                        variant='outline'
-                        w='300px'
-                        value={methodInput['selected_method']}
-                    >
-                        {Object.keys(parameters[methodInput['type']]).map((method) => (
-                            <option key={method}>{method}</option>
-                        ))}
-                    </Select>
-                    <Tooltip hasArrow label='Duplicar' bg='gray' color='black' fontSize='md'>
+        <>
+            <div className={styles.page}>
+                <div className={styles.menu}>
+                    <Tabs onChange={onMethodInputTypeChange} variant='soft-rounded' colorScheme='blue'>
+                        <TabList>
+                            <Tab checked={methodInput['type'] === 'estacas'}>Métodos de Cálculo Estacas</Tab>
+                            <Tab checked={methodInput['type'] === 'sapatas'}>Métodos de Cálculo Sapatas</Tab>
+                        </TabList>
+                    </Tabs>
+                </div>
+                <div className={styles.menu}>
+                    <div className={styles.leftMenu}>
+                        <Select 
+                            onChange={onMethodChange}
+                            variant='outline'
+                            w='300px'
+                            value={methodInput['selected_method']}
+                        >
+                            {Object.keys(parameters[methodInput['type']]).map((method) => (
+                                <option key={method}>{method}</option>
+                            ))}
+                        </Select>
+                        <Popover isOpen={formOpen === 'duplicate'} onOpen={() => setFormOpen('duplicate')} onClose={() => setFormOpen('')}>
+                            <PopoverTrigger>
+                                <IconButton
+                                    icon={<Tooltip hasArrow label='Duplicar' bg='gray' color='black' fontSize='md'><CopyIcon /></Tooltip>}
+                                    borderWidth='sm'
+                                    borderRadius='none'
+                                    borderColor='border'
+                                    variant='solid'
+                                    colorScheme='blue'
+                                    isDisabled={methodInput['selected_method'] !== "Aoki-Velloso" && methodInput['selected_method'] !== "Decourt-Quaresma" && methodInput['selected_method'] !== "Bulbo de Tensões"}
+                                />
+                            </PopoverTrigger>
+                            <PopoverContent flexDirection={'row'}>
+                                <PopoverArrow backgroundColor={'black'}/>
+                                <Input
+                                    type='text'
+                                    placeholder='Digite o nome do método'
+                                    onChange={onMethodInputChange}
+                                />
+                                <IconButton
+                                    icon={<CheckIcon />}
+                                    onClick={() => onParametersAction('duplicate')}
+                                />
+                                <IconButton
+                                    icon={<CloseIcon />}
+                                    onClick={() => setFormOpen('')}
+                                />
+                            </PopoverContent>
+                        </Popover>
+                        <Popover isOpen={formOpen === 'edit'} onOpen={() => setFormOpen('edit')} onClose={() => setFormOpen('')}>
+                            <PopoverTrigger>
+                                <IconButton
+                                    icon={<Tooltip hasArrow label='Renomear' bg='gray' color='black' fontSize='md'><EditIcon /></Tooltip>}
+                                    borderWidth='sm'
+                                    borderRadius='none'
+                                    borderColor='border'
+                                    variant='solid'
+                                    colorScheme='blue'
+                                    isDisabled={methodInput['selected_method'] === "Aoki-Velloso" || methodInput['selected_method'] === "Decourt-Quaresma" || methodInput['selected_method'] === "Bulbo de Tensões"}
+                                />
+                            </PopoverTrigger>
+                            <PopoverContent flexDirection={'row'}>
+                                <PopoverArrow backgroundColor={'black'}/>
+                                <Input
+                                    type='text'
+                                    placeholder='Digite o nome do método'
+                                    onChange={onMethodInputChange}
+                                />
+                                <IconButton
+                                    icon={<CheckIcon />}
+                                    onClick={() => onParametersAction('edit')}
+                                />
+                                <IconButton
+                                    icon={<CloseIcon />}
+                                    onClick={() => setFormOpen('')}
+                                />
+                            </PopoverContent>
+                        </Popover>
                         <IconButton
-                            icon={<CopyIcon />}
-                            borderWidth='sm'
-                            borderRadius='none'
-                            borderColor='border'
-                            variant='solid'
-                            colorScheme='blue'
-                            onClick={() => {setFormOpen('duplicate')}}
-                            isDisabled={methodInput['selected_method'] !== "Aoki-Velloso" && methodInput['selected_method'] !== "Decourt-Quaresma" && methodInput['selected_method'] !== "Bulbo de Tensões"}
-                        />
-                    </Tooltip>
-                    <Tooltip hasArrow label='Renomear' bg='gray' color='black' fontSize='md'>
-                        <IconButton
-                            icon={<EditIcon />}
-                            borderWidth='sm'
-                            borderRadius='none'
-                            borderColor='border'
-                            variant='solid'
-                            colorScheme='blue'
-                            onClick={() => {setFormOpen('edit')}}
-                            isDisabled={methodInput['selected_method'] === "Aoki-Velloso" || methodInput['selected_method'] === "Decourt-Quaresma" || methodInput['selected_method'] === "Bulbo de Tensões"}
-                        />
-                    </Tooltip>
-                    <Tooltip hasArrow label='Remover' bg='gray' color='black' fontSize='md'>
-                        <IconButton
-                            icon={<DeleteIcon />}
+                            icon={<Tooltip hasArrow label='Remover' bg='gray' color='black' fontSize='md'><DeleteIcon /></Tooltip>}
                             borderWidth='sm'
                             borderRadius='none'
                             borderColor='border'
@@ -172,141 +206,124 @@ function ParametersManager() {
                             onClick={() => {onParametersAction('remove')}}
                             isDisabled={methodInput['selected_method'] === "Aoki-Velloso" || methodInput['selected_method'] === "Decourt-Quaresma" || methodInput['selected_method'] === "Bulbo de Tensões"}
                         />
-                    </Tooltip>
-                    {formOpen !== '' && (
-                        <>
-                            <Input
-                                type='text'
-                                placeholder='Digite o nome do método'
-                                onChange={onMethodInputChange}
-                            />
+                    </div>
+                    <div className={styles.rightMenu}>
+                        <Tooltip hasArrow label='Salvar' bg='gray' color='black' fontSize='md'>
                             <IconButton
                                 icon={<CheckIcon />}
-                                onClick={() => onParametersAction(formOpen)}
+                                borderWidth='sm'
+                                borderRadius='none'
+                                borderColor='border'
+                                variant='solid'
+                                colorScheme='blue'
+                                onClick={() => {onSaveParameters()}}
                             />
+                        </Tooltip>
+                        <Tooltip hasArrow label='Fechar' bg='gray' color='black' fontSize='md'>
                             <IconButton
                                 icon={<CloseIcon />}
-                                onClick={() => setFormOpen('')}
+                                borderWidth='sm'
+                                borderRadius='none'
+                                borderColor='border'
+                                variant='solid'
+                                colorScheme='blue'
+                                onClick={() => {onCloseParameters()}}
                             />
-                        </>
-                    )}
-                    {projectExistsWarning && (
-                        <div className={styles.page}>
-                            <AlertDialog isOpen={projectExistsWarning}>
-                                <AlertDialogOverlay>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>Metódo já existe</AlertDialogHeader>
-                                        <AlertDialogCloseButton onClick={() => setProjectExistsWarning(false)}/>
-                                        <AlertDialogBody>
-                                            O método com esse nome já existe. Escolha um nome diferente.
-                                        </AlertDialogBody>
-                                    </AlertDialogContent>
-                                </AlertDialogOverlay>
-                            </AlertDialog>
-                        </div>
-                    )}
+                        </Tooltip>
+                    </div>
                 </div>
-                <div className={styles.rightMenu}>
-                    <Tooltip hasArrow label='Salvar' bg='gray' color='black' fontSize='md'>
-                        <IconButton
-                            icon={<CheckIcon />}
-                            borderWidth='sm'
-                            borderRadius='none'
-                            borderColor='border'
-                            variant='solid'
-                            colorScheme='blue'
-                            onClick={() => {onSaveParameters()}}
-                        />
-                    </Tooltip>
-                    <Tooltip hasArrow label='Fechar' bg='gray' color='black' fontSize='md'>
-                        <IconButton
-                            icon={<CloseIcon />}
-                            borderWidth='sm'
-                            borderRadius='none'
-                            borderColor='border'
-                            variant='solid'
-                            colorScheme='blue'
-                            onClick={() => {onCloseParameters()}}
-                        />
-                    </Tooltip>
-                </div>
-            </div>
-            <div className={styles.section}>
-                <Accordion defaultIndex={[0]} allowMultiple w='100%'>
-                    {Object.entries(methodInput['parameters']).map(([key, value]) => {
-                        return (
-                            <AccordionItem>
-                                <AccordionButton>
-                                    <Box as='span' flex='1' textAlign='left'>
-                                        <strong>{key}</strong>
-                                    </Box>
-                                </AccordionButton>
-                                <AccordionPanel pb={4}>
-                                    <TableContainer>
-                                        <Table variant='striped' colorScheme='gray' size='sm'>
-                                            <Thead>
-                                                <Tr>
-                                                    {Object.entries(value[0]).map(([header, _]) => {
+                <div className={styles.section}>
+                    <Accordion defaultIndex={[0]} allowMultiple w='100%'>
+                        {Object.entries(methodInput['parameters']).map(([key, value]) => {
+                            return (
+                                <AccordionItem>
+                                    <AccordionButton>
+                                        <Box as='span' flex='1' textAlign='left'>
+                                            <strong>{key}</strong>
+                                        </Box>
+                                    </AccordionButton>
+                                    <AccordionPanel pb={4}>
+                                        <TableContainer>
+                                            <Table variant='striped' colorScheme='gray' size='sm'>
+                                                <Thead>
+                                                    <Tr>
+                                                        {Object.entries(value[0]).map(([header, _]) => {
+                                                            return(
+                                                                <Th>{header}</Th>
+                                                            )
+                                                        })}
+                                                    </Tr>
+                                                </Thead>
+                                                <Tbody>
+                                                    {value.map((element, i) => {
                                                         return(
-                                                            <Th>{header}</Th>
+                                                            <Tr>
+                                                                {Object.entries(element).map(([_, content], col_index) => {
+                                                                    return (
+                                                                        <Td key={_}>
+                                                                            {methodInput['type'] === 'estacas' && methodInput["selected_method"] !== 'Aoki-Velloso' && methodInput["selected_method"] !== 'Decourt-Quaresma' && col_index !== 0 ? (
+                                                                                <Editable defaultValue={content} fontSize='md'>
+                                                                                    <EditablePreview />
+                                                                                    <EditableInput textAlign='start'
+                                                                                        onKeyPress={(event) => {
+                                                                                            if (!/[0-9.]/.test(event.key)) {
+                                                                                                event.preventDefault()}
+                                                                                            }}
+                                                                                        onChange={(event) => {
+                                                                                            onParameterInputChange(key, i, col_index, event.target.value)
+                                                                                        }}
+                                                                                    />
+                                                                                </Editable>
+                                                                            ) : (
+                                                                                methodInput['type'] === 'sapatas' && methodInput["selected_method"] !== 'Bulbo de Tensões' && col_index > 1 ? (
+                                                                                    <Editable defaultValue={content} fontSize='md'>
+                                                                                    <EditablePreview />
+                                                                                    <EditableInput textAlign='start'
+                                                                                        onKeyPress={(event) => {
+                                                                                            if (!/[0-9.]/.test(event.key)) {
+                                                                                                event.preventDefault()}
+                                                                                            }}
+                                                                                        onChange={(event) => {
+                                                                                            onParameterInputChange(key, i, col_index, event.target.value)
+                                                                                        }}
+                                                                                    />
+                                                                                </Editable>
+                                                                                ) : (
+                                                                                    <Box fontSize='md'>{content}</Box>
+                                                                                )
+                                                                            )}
+                                                                        </Td>
+                                                                    )
+                                                                })}
+                                                            </Tr>
                                                         )
                                                     })}
-                                                </Tr>
-                                            </Thead>
-                                            <Tbody>
-                                                {value.map((element, i) => {
-                                                    return(
-                                                        <Tr>
-                                                            {Object.entries(element).map(([_, content], col_index) => {
-                                                                return (
-                                                                    <Td key={_}>
-                                                                        {methodInput['type'] === 'ESTACAS' && methodInput["selected_method"] !== 'Aoki-Velloso' && methodInput["selected_method"] !== 'Decourt-Quaresma' && col_index !== 0 ? (
-                                                                            <Editable defaultValue={content} fontSize='md'>
-                                                                                <EditablePreview />
-                                                                                <EditableInput textAlign='start'
-                                                                                    onKeyPress={(event) => {
-                                                                                        if (!/[0-9.]/.test(event.key)) {
-                                                                                            event.preventDefault()}
-                                                                                        }}
-                                                                                    onChange={(event) => {
-                                                                                        onParameterInputChange(key, i, col_index, event.target.value)
-                                                                                    }}
-                                                                                />
-                                                                            </Editable>
-                                                                        ) : (
-                                                                            methodInput['type'] === 'SAPATAS' && methodInput["selected_method"] !== 'Bulbo de Tensões' && col_index > 1 ? (
-                                                                                <Editable defaultValue={content} fontSize='md'>
-                                                                                <EditablePreview />
-                                                                                <EditableInput textAlign='start'
-                                                                                    onKeyPress={(event) => {
-                                                                                        if (!/[0-9.]/.test(event.key)) {
-                                                                                            event.preventDefault()}
-                                                                                        }}
-                                                                                    onChange={(event) => {
-                                                                                        onParameterInputChange(key, i, col_index, event.target.value)
-                                                                                    }}
-                                                                                />
-                                                                            </Editable>
-                                                                            ) : (
-                                                                                <Box fontSize='md'>{content}</Box>
-                                                                            )
-                                                                        )}
-                                                                    </Td>
-                                                                )
-                                                            })}
-                                                        </Tr>
-                                                    )
-                                                })}
-                                            </Tbody>
-                                        </Table>
-                                    </TableContainer>
-                                </AccordionPanel>
-                            </AccordionItem>
-                        )
-                    })}
-                </Accordion>
+                                                </Tbody>
+                                            </Table>
+                                        </TableContainer>
+                                    </AccordionPanel>
+                                </AccordionItem>
+                            )
+                        })}
+                    </Accordion>
+                </div>
             </div>
-        </div>
+        {projectExistsWarning && (
+            <div className={styles.page}>
+                <AlertDialog isOpen={projectExistsWarning}>
+                    <AlertDialogOverlay>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>Metódo já existe</AlertDialogHeader>
+                            <AlertDialogCloseButton onClick={() => setProjectExistsWarning(false)}/>
+                            <AlertDialogBody>
+                                O método com esse nome já existe. Escolha um nome diferente.
+                            </AlertDialogBody>
+                        </AlertDialogContent>
+                    </AlertDialogOverlay>
+                </AlertDialog>
+            </div>
+        )}
+        </>
     )
 }
 

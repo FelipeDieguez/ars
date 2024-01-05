@@ -66,13 +66,15 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
     }
 
     useEffect(() => {
-        api.post('/soilinvestigation', layerInputs)
-            .then((response) => {
-                setSoilInvestigationList(response['data'])
-                setUpdateSoilInvestigation(0)
-                setUpdateGeotechnics(1)
+        if (layerInputs['projeto'] !== '') {
+            api.post('/soilinvestigation', layerInputs)
+                .then((response) => {
+                    setSoilInvestigationList(response['data'])
+                    setUpdateSoilInvestigation(0)
+                    setUpdateGeotechnics(1)
             })
-    }, [ updateSoilInvestigation ])
+        }
+    }, [ updateSoilInvestigation, layerInputs['projeto'] ])
 
     return (
         <>

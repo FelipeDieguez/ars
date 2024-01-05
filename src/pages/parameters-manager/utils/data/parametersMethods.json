@@ -1,5 +1,5 @@
 {
-    "ESTACAS": {
+    "estacas": {
         "Aoki-Velloso": {
             "PARÂMETROS DO SOLO": [
                     {"Solo": "Areia", "K (MPa)": 1.0, "α (%)": 1.4},
@@ -60,7 +60,7 @@
             ]
         }
     },
-    "SAPATAS": {
+    "sapatas": {
         "Bulbo de Tensões": {
             "PROPRIEDADES AREIA": [
                 {"Nspt": "< 5", "Compacidade": "Fofa", "γseca": 16, "γsaturada": 19},

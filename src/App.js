@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 import Main from './pages/Main'
-import ProjectManager from './pages/ProjectManager'
 import ParametersManager from './pages/ParametersManager'
 
 function App() {
@@ -16,14 +15,9 @@ function App() {
     <Router>
         <Routes>
           <Route path='/' element={
-            <ProjectManager
-              projectInputs={projectInputs}
-              updateProjectInputs={updateProjectInputs}
-            />
-          }/>
-          <Route path='/main' element={
             <Main
               projectInputs={projectInputs}
+              updateProjectInputs={updateProjectInputs}
             />
           }/>
           <Route path='/parameters' element={

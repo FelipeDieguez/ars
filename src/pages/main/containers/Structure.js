@@ -5,7 +5,7 @@ import styles from './Structure.module.css'
 import { Button } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
-function Structure({ foundationClass, setFoundationClass, setGeotechnicsMethod, setGeotechnicsStress, geotechnicsInputs, structureInputs, geotechnicsData, updateGeotechnicsInputs, updateStructureInputs }) {
+function Structure({ foundationClass, setFoundationClass, geotechnicsInputs, structureInputs, geotechnicsData, updateGeotechnicsInputs, updateStructureInputs }) {
     const navigate = useNavigate()
     
     function onOpenProjectManager() {
@@ -18,8 +18,6 @@ function Structure({ foundationClass, setFoundationClass, setGeotechnicsMethod, 
                 <FundacaoDefinir
                     foundationClass={foundationClass}
                     setFoundationClass={setFoundationClass}
-                    setGeotechnicsMethod={setGeotechnicsMethod}
-                    setGeotechnicsStress={setGeotechnicsStress}
                     updateGeotechnicsInputs={updateGeotechnicsInputs} 
                 />
             </nav>
@@ -31,7 +29,6 @@ function Structure({ foundationClass, setFoundationClass, setGeotechnicsMethod, 
                         updateStructureInputs={updateStructureInputs}
                 />
             </header>
-            <Button onClick={onOpenProjectManager}>GERENCIADOR DE PROJETOS</Button>
         </div>
     )
 }

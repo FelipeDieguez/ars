@@ -15,11 +15,13 @@ import ResultadoTabela from './Geotechnics/ResultadoTabela'
 import SondagemAcoes from './Geotechnics/SondagemAcoes'
 
 import styles from './Geotechnics.module.css'
+import { IconButton } from '@chakra-ui/react'
+import { ArrowRightIcon } from '@chakra-ui/icons'
 
 // criando contexto para compartilhar dados entre componentes
 export const LayerContext = createContext({})
 
-function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod, geotechnicsStress, setGeotechnicsStress, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, updateGeotechnics, setUpdateGeotechnics, layerInputs, updateLayerInputs }) {
+function Geotechnics({ foundationClass, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, updateGeotechnics, setUpdateGeotechnics, layerInputs, updateLayerInputs, parameters, onOpen }) {
     const [soilClass, setSoilClass] = useState("areia")
 
     return (
@@ -58,8 +60,9 @@ function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod,
                         <div className={styles.steps}>
                             <MetodoDefinir
                                 foundationClass={foundationClass}
-                                geotechnicsMethod={geotechnicsMethod}
-                                setGeotechnicsMethod={setGeotechnicsMethod}
+                                geotechnicsInputs={geotechnicsInputs}
+                                updateGeotechnicsInputs={updateGeotechnicsInputs}
+                                parameters={parameters}
                             />
                         </div>
                         <div className={styles.steps}>
@@ -78,17 +81,17 @@ function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod,
                             <div className={styles.step}>
                                 <CalculoEntradas2
                                     foundationClass={foundationClass}
-                                    geotechnicsMethod={geotechnicsMethod}
-                                    geotechnicsStress={geotechnicsStress}
                                     updateGeotechnicsInputs={updateGeotechnicsInputs}
                                     geotechnicsData={geotechnicsData}
                                 />
                             </div>
                             <div className={styles.step}>
                                 <CalculoAcoes
+                                    foundationClass={foundationClass}
                                     geotechnicsInputs={geotechnicsInputs}
                                     geotechnicsData={geotechnicsData}
                                     setGeotechnicsData={setGeotechnicsData}
+                                    parameters={parameters}
                                 />
                             </div>
                         </div>
@@ -96,26 +99,33 @@ function Geotechnics({ foundationClass, geotechnicsMethod, setGeotechnicsMethod,
                 </header>
                 <nav>
                     <EsforcoDefinir
-                        geotechnicsStress={geotechnicsStress}
-                        setGeotechnicsStress={setGeotechnicsStress}
+                        updateGeotechnicsInputs={updateGeotechnicsInputs}
                     />
                 </nav>
                 <section>
                     <ResultadoTabela
-                        geotechnicsMethod={geotechnicsMethod}
-                        geotechnicsStress={geotechnicsStress}
                         geotechnicsData={geotechnicsData}
                         structureInputs={structureInputs}
                         updateLayerInputs={updateLayerInputs}
                     />
                 </section>
                 <footer className={styles.footer}>
-                    <SondagemAcoes
-                        updateGeotechnics={updateGeotechnics}
-                        setUpdateGeotechnics={setUpdateGeotechnics}
-                        layerInputs={layerInputs}
-                        updateLayerInputs={updateLayerInputs}
-                    />
+                    <div className={styles.leftFooter}>
+                        <IconButton
+                            colorScheme='blue'
+                            aria-label='Abrir Gerenciador de Projetos'
+                            icon={<ArrowRightIcon />}
+                            onClick={onOpen}
+                        />
+                    </div>
+                    <div className={styles.rightFooter}>
+                        <SondagemAcoes
+                            updateGeotechnics={updateGeotechnics}
+                            setUpdateGeotechnics={setUpdateGeotechnics}
+                            layerInputs={layerInputs}
+                            updateLayerInputs={updateLayerInputs}
+                        />
+                    </div>
                 </footer>
             </div>
         </LayerContext.Provider>

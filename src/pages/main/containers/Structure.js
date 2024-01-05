@@ -1,9 +1,10 @@
-import FundacaoDefinir from './Structure/FundacaoDefinir'
-import FundacaoAcoes from './Structure/FundacaoAcoes'
-
 import styles from './Structure.module.css'
 import { Button } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
+import ColumnsManager from './Structure/ColumnsManager'
+import SolutionsManager from './Structure/SolutionsManager'
+import FoundationsSolution from './Structure/FoundationsSolution'
+import FoundationsManager from './Structure/FoundationsManager'
 
 function Structure({ foundationClass, setFoundationClass, geotechnicsInputs, structureInputs, geotechnicsData, updateGeotechnicsInputs, updateStructureInputs }) {
     const navigate = useNavigate()
@@ -14,21 +15,25 @@ function Structure({ foundationClass, setFoundationClass, geotechnicsInputs, str
 
     return (
         <div className={styles.grid}>
-            <nav>
-                <FundacaoDefinir
+            <div className={styles.firstTitle}>
+                <strong>ESTRUTURAS</strong>
+            </div>
+            <div className={styles.stepsColumn} style={{ border: 'none' }}>
+                <ColumnsManager/>
+            </div>
+            <div className={styles.stepsColumn} style={{ border: 'none' }}>
+                <SolutionsManager/>
+            </div>
+            <div className={styles.stepsColumn} style={{ height: '60%' }}>
+                <FoundationsSolution
                     foundationClass={foundationClass}
                     setFoundationClass={setFoundationClass}
                     updateGeotechnicsInputs={updateGeotechnicsInputs} 
                 />
-            </nav>
-            <header>
-                <FundacaoAcoes
-                        geotechnicsData={geotechnicsData}
-                        geotechnicsInputs={geotechnicsInputs}
-                        structureInputs={structureInputs}
-                        updateStructureInputs={updateStructureInputs}
-                />
-            </header>
+            </div>
+            <div className={styles.stepsColumn} style={{ height: '25%' }}>
+                <FoundationsManager/>
+            </div>
         </div>
     )
 }

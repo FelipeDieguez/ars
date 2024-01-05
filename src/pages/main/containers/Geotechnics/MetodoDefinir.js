@@ -11,9 +11,12 @@ function MetodoDefinir({ foundationClass, geotechnicsInputs, updateGeotechnicsIn
                 <Label text="MÉTODOS:" />
             </div>
             <Select
+                name='metodo'
                 onChange={(ev) => updateGeotechnicsInputs('metodo', ev.target.value)}
                 variant='outline'
                 w='300px'
+                size='xs'
+                fontSize='md'
                 value={geotechnicsInputs['metodo']}
             >
                 {Object.keys(foundationClass === 'tubuloes' ? parameters['estacas'] : parameters[foundationClass]).map((method) => (

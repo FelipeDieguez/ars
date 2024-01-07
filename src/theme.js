@@ -10,8 +10,8 @@ const theme = {
         selected: '#d9d9d9'
     },
     fonts: {
-        title: 'Open Sans, sans-serif',
-        body: 'Open Sans, sans-serif'
+        title: 'Roboto, sans-serif',
+        body: 'Roboto, sans-serif'
     },
     fontSizes: {
         sm: '10px',

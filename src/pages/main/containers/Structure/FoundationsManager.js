@@ -15,7 +15,7 @@ function FoundationsManager({ foundationClass, setFoundationClass, updateGeotech
 
     return (
         <>
-            <div className={styles.stepsRow}>
+            <div className={styles.containerRow}>
                 <div className={styles.step}>
                     <Tooltip hasArrow label='Criar' bg='gray' color='black' fontSize='md'>
                         <IconButton

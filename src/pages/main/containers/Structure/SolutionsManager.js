@@ -6,7 +6,7 @@ function SolutionsManager({  }) {
 
     return (
         <>
-            <div className={styles.stepsRow}>
+            <div className={styles.containerRow}>
                 <div className={styles.step}>
                     <div className={styles.secondTitle}>
                         SOLUÇÃO:

@@ -13,7 +13,6 @@ function EsforcoDefinir({ updateGeotechnicsInputs} ) {
                     <Tab
                         name='compressao'
                         onClick={onGeotechnicsStressChange}
-                        _selected={{color: 'white', bg: 'blue.500'}}
                         fontSize='md'
                     >
                         Compressão

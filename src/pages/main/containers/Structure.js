@@ -18,20 +18,20 @@ function Structure({ foundationClass, setFoundationClass, geotechnicsInputs, str
             <div className={styles.firstTitle}>
                 <strong>ESTRUTURAS</strong>
             </div>
-            <div className={styles.stepsColumn} style={{ border: 'none' }}>
+            <div className={styles.containerColumn}>
                 <ColumnsManager/>
             </div>
-            <div className={styles.stepsColumn} style={{ border: 'none' }}>
+            <div className={styles.containerColumn}>
                 <SolutionsManager/>
             </div>
-            <div className={styles.stepsColumn} style={{ height: '60%' }}>
+            <div className={styles.containerColumn} style={{ height: '60%' }}>
                 <FoundationsSolution
                     foundationClass={foundationClass}
                     setFoundationClass={setFoundationClass}
                     updateGeotechnicsInputs={updateGeotechnicsInputs} 
                 />
             </div>
-            <div className={styles.stepsColumn} style={{ height: '25%' }}>
+            <div className={styles.containerColumn} style={{ height: '25%' }}>
                 <FoundationsManager/>
             </div>
         </div>

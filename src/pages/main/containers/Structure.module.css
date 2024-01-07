@@ -5,6 +5,7 @@
     height: 100%;
     background: #F3F3F3;
     border: 2px solid #000000;
+    padding: 10px;
 }
 
 .section{
@@ -13,19 +14,26 @@
     height: auto;
     background: #F3F3F3;
     border: 1px solid #000000;
+    padding: 10px;
 }
 
-.stepsColumn {
+.containerColumn {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 0px 10px 0px 10px;
 }
 
-.stepsRow {
+.containerRow {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 0px 0px 5px 0px;
+}
+
+.stepRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 0px 5px 0px;
 }
 
 .step {
@@ -33,13 +41,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin: 3px 3px 3px 3px;
 }
 
 .firstTitle {
     font-size: 15px;
     color: #000000;
-    padding: 10px 10px 0px 10px;
 }
 
 .secondTitle {

@@ -6,7 +6,7 @@
                     {"Solo": "Areia siltosa", "K (MPa)": 0.8, "α (%)": 2.0},
                     {"Solo": "Areia silto-argilosa", "K (MPa)": 0.7, "α (%)": 2.4},
                     {"Solo": "Areia argilosa", "K (MPa)": 0.6, "α (%)": 3.0},
-                    {"Solo": "Areia argilo-siltosa", "K (MPa)": 0.5, "α (%)": 2.5},
+                    {"Solo": "Areia argilo-siltosa", "K (MPa)": 0.5, "α (%)": 2.8},
                     {"Solo": "Silte", "K (MPa)": 0.4, "α (%)": 3.0},
                     {"Solo": "Silte arenoso", "K (MPa)": 0.55, "α (%)": 2.2},
                     {"Solo": "Silte areno-argiloso", "K (MPa)": 0.45, "α (%)": 2.8},

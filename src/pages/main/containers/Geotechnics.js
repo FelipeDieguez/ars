@@ -24,6 +24,11 @@ export const LayerContext = createContext({})
 function Geotechnics({ foundationClass, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, updateGeotechnics, setUpdateGeotechnics, layerInputs, updateLayerInputs, parameters, onOpen }) {
     const [soilClass, setSoilClass] = useState("areia")
 
+    function onProjectManagerOpen() {
+        updateLayerInputs('sondagem', '')
+        onOpen()
+    }
+
     return (
         <LayerContext.Provider value={{ 
             layerInputs,
@@ -115,7 +120,7 @@ function Geotechnics({ foundationClass, geotechnicsInputs, updateGeotechnicsInpu
                             colorScheme='blue'
                             aria-label='Abrir Gerenciador de Projetos'
                             icon={<ArrowRightIcon />}
-                            onClick={onOpen}
+                            onClick={onProjectManagerOpen}
                         />
                     </div>
                     <div className={styles.rightFooter}>

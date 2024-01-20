@@ -8,12 +8,12 @@ export const api = axios.create({
 });
 
 // Intercerpetor de requisições
-api.interceptors.request.use(
-    (config) => {
-        config.headers = {
-            "Access-Control-Allow-Origin": '*'
-        };
-        return config;
-    },
-    (error) => Promise.reject(error)
-);
+// api.interceptors.request.use(
+//     (config) => {
+//         config.headers = {
+//             "Access-Control-Allow-Origin": '*'
+//         };
+//         return config;
+//     },
+//     (error) => Promise.reject(error)
+// );

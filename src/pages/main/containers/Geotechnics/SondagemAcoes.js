@@ -30,7 +30,7 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
     function onSoilInvestigationAction(action) {
         const options = {
             'register': () => {
-                if (soilInvestigationList.some(name => name['py/tuple'][0] === soilInvestigationName)) {
+                if (soilInvestigationList.some(name => name === soilInvestigationName)) {
                     setExistsWarning(true)
                 } else {
                     soilInvestigationRegister([layerInputs, soilInvestigationName])
@@ -38,12 +38,12 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
                 }
             },
             'edit': () => {
-                if (soilInvestigationList.some(name => name['py/tuple'][0] === soilInvestigationName)) {
+                if (soilInvestigationList.some(name => name === soilInvestigationName)) {
                     setExistsWarning(true)
                 }
                 else {
                     soilInvestigationEdit([layerInputs, soilInvestigationName])
-                    updateLayerInputs("sondagem", soilInvestigationName)
+                    updateLayerInputs('sondagem', soilInvestigationName)
                     setFormOpen('')
                 }
             },
@@ -53,7 +53,7 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
                 }
                 else {
                     soilInvestigationRemove(layerInputs)
-                    updateLayerInputs("sondagem", soilInvestigationList[0]['py/tuple'][0])
+                    updateLayerInputs('sondagem', soilInvestigationList[0])
                 }
             }
         }
@@ -76,6 +76,14 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
         }
     }, [ updateSoilInvestigation, layerInputs['projeto'] ])
 
+    useEffect(() => {
+        api.post('/soilinvestigation', {'projeto': layerInputs['projeto']})
+            .then((response) => {
+                updateLayerInputs('sondagem', response['data'][0])
+                setUpdateGeotechnics(1)
+        })
+    }, [layerInputs['projeto']])
+
     return (
         <>
             <Select
@@ -83,7 +91,7 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
                 onChange={onLayerInputsChange}
             >
                 {soilInvestigationList.map((name, i) => (
-                    <option key={i} value={name['py/tuple']}> {name['py/tuple']} </option>
+                    <option key={i} value={name}> {name} </option>
                 ))}
             </Select>
             <Tooltip hasArrow label='Criar' bg='gray' color='black' fontSize='md'>

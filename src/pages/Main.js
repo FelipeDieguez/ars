@@ -31,7 +31,7 @@ function Main({ projectInputs, updateProjectInputs }) {
     const [structureInputs, setStructureInputs] = useState(initialStructureInputs)
     const [geotechnicsData, setGeotechnicsData] = useState([{}])
     const [updateGeotechnics, setUpdateGeotechnics] = useState(0)
-    const [layerInputs, setLayerInputs] = useState({"projeto": projectInputs["selected_name"], "sondagem": "", "ordem": "", "solo": "Areia", "nspt": "0"})
+    const [layerInputs, setLayerInputs] = useState({"projeto": "", "sondagem": "", "ordem": "", "solo": "Areia", "nspt": "0"})
     const [parameters, setParameters] = useState(parametersMethods)
 
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -51,7 +51,8 @@ function Main({ projectInputs, updateProjectInputs }) {
     }
 
     useEffect(() => {
-        if (layerInputs['projeto'] !== '') {
+        console.log(layerInputs)
+        if (layerInputs['projeto'] !== '' && layerInputs['sondagem'] && layerInputs['sondagem'] !== '') {
             api.post('/layer', layerInputs)
                 .then((response) => {
                     const data = []
@@ -62,7 +63,7 @@ function Main({ projectInputs, updateProjectInputs }) {
                     setUpdateGeotechnics(0)
             })
         }
-    }, [ foundationClass, updateGeotechnics, layerInputs['projeto'] ])
+    }, [ foundationClass, updateGeotechnics, layerInputs['projeto'], layerInputs['sondagem'] ])
 
     useEffect(() => {
         api.get('/parameters')

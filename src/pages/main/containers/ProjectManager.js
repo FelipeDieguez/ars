@@ -23,7 +23,7 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
     function onSearchInputChange(ev) {
         const value = ev.target.value
         setSearchTerm(value)
-        setUpdateProjects(1)
+        setUpdateProjects(prev => prev + 1)
     }
 
     function onProjectInputChange(ev) {
@@ -34,6 +34,7 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
     function onOpenProject(ev) {
         if (projectInputs['selected_name'] !== '') {
             updateLayerInputs('projeto', projectInputs["selected_name"])
+            updateProjectInputs('selected_name', '')
             onClose()
         }
         else {
@@ -49,6 +50,9 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
                 }
                 else {
                     projectRegister(projectInputs)
+                        .then(() => {
+                            setUpdateProjects(prev => prev + 1)
+                        })
                     setFormOpen('')
                 }
             },
@@ -61,6 +65,9 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
                 }
                 else {
                     projectEdit(projectInputs)
+                        .then(() => {
+                            setUpdateProjects(prev => prev + 1)
+                        })
                     updateProjectInputs('selected_name', '')
                     setFormOpen('')
                 }
@@ -71,6 +78,9 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
                 }
                 else {
                     projectRemove(projectInputs)
+                        .then(() => {
+                            setUpdateProjects(prev => prev + 1)
+                        })
                     updateProjectInputs('selected_name', '')
                 }
             }
@@ -80,7 +90,6 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
                 value()
             }
         }
-        setUpdateProjects(1)
     }
 
     function onOpenParameters() {
@@ -95,7 +104,6 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
                     project.name.toLowerCase().includes(searchTerm.toLowerCase())
                 )
                 setFilteredProjects(filter)
-                setUpdateProjects(0)
             })
     }, [updateProjects])
 

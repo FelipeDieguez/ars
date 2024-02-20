@@ -3,7 +3,7 @@ import { Radio, RadioGroup, Select, Stack } from '@chakra-ui/react'
 
 import styles from '../Geotechnics.module.css'
 
-function MetodoDefinir({ foundationClass, geotechnicsInputs, updateGeotechnicsInputs, parameters }) {
+function MetodoDefinir({ foundationClass, geotechnicsInputs, updateGeotechnicsInputs, methodsData }) {
 
     return (
         <>
@@ -19,7 +19,7 @@ function MetodoDefinir({ foundationClass, geotechnicsInputs, updateGeotechnicsIn
                 fontSize='md'
                 value={geotechnicsInputs['metodo']}
             >
-                {Object.keys(foundationClass === 'tubuloes' ? parameters['estacas'] : parameters[foundationClass]).map((method) => (
+                {Object.keys(foundationClass === 'tubuloes' ? methodsData['estacas'] : methodsData[foundationClass]).map((method) => (
                     <option key={method}>{method}</option>
                 ))}
             </Select>

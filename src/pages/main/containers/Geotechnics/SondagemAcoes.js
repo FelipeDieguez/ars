@@ -1,59 +1,69 @@
-import { Select, Input } from "@chakra-ui/react";
+import { Select, Input, Popover, PopoverTrigger, PopoverContent, PopoverArrow } from "@chakra-ui/react";
 import { Tooltip, IconButton } from "@chakra-ui/react"
 import { AddIcon, EditIcon, DeleteIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons"
 import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, AlertDialogCloseButton} from '@chakra-ui/react'
 import { useState, useEffect } from "react";
 
 import styles from '../Geotechnics.module.css'
-import { soilInvestigationRegister, soilInvestigationEdit, soilInvestigationRemove } from '../../utils/services/geotechnics'
+import { investigationRegister, investigationEdit, investigationRemove, layerList } from '../../utils/services/geotechnics'
 import { api } from '../../../../utils/services/api'
 
-function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, updateLayerInputs }) {
+function SondagemAcoes({ projectInputs, investigationInputs, updateInvestigationInputs, investigationsData, setInvestigationsData, setUpdateGeotechnics }) {
     const [formOpen, setFormOpen] = useState('')
-    const [soilInvestigationList, setSoilInvestigationList] = useState([])
-    const [soilInvestigationName, setSoilInvestigationName] = useState('')
     const [updateSoilInvestigation, setUpdateSoilInvestigation] = useState(0)
     const [existsWarning, setExistsWarning] = useState(false)
     const [lastWarning, setLastWarning] = useState(false)
 
-    function onLayerInputsChange(ev) {
+    function onInvestigationSelectedChange(ev) {
         const value = ev.target.value
-        updateLayerInputs("sondagem", value)
-        setUpdateGeotechnics(1)
+        updateInvestigationInputs('selected_name', value)
+        setUpdateGeotechnics(prev => prev + 1)
     }
 
-    function onSoilInvestigationNameChange(ev) {
+    function onInvestigationInputChange(ev) {
         const value = ev.target.value
-        setSoilInvestigationName(value)
+        updateInvestigationInputs('name_input', value)
     }
 
     function onSoilInvestigationAction(action) {
         const options = {
             'register': () => {
-                if (soilInvestigationList.some(name => name === soilInvestigationName)) {
+                if (investigationsData.some(name => name === investigationInputs['name_input'])) {
                     setExistsWarning(true)
                 } else {
-                    soilInvestigationRegister([layerInputs, soilInvestigationName])
+                    investigationRegister([projectInputs, investigationInputs])
+                        .then(() => {
+                            setUpdateSoilInvestigation(prev => prev + 1)
+                        })
                     setFormOpen('')
+                    updateInvestigationInputs('selected_name', investigationInputs['name_input'])
+                    updateInvestigationInputs('name_input', '')
                 }
             },
             'edit': () => {
-                if (soilInvestigationList.some(name => name === soilInvestigationName)) {
+                if (investigationsData.some(name => name === investigationInputs['name_input'])) {
                     setExistsWarning(true)
                 }
                 else {
-                    soilInvestigationEdit([layerInputs, soilInvestigationName])
-                    updateLayerInputs('sondagem', soilInvestigationName)
+                    investigationEdit([projectInputs, investigationInputs])
+                        .then(() => {
+                            setUpdateSoilInvestigation(prev => prev + 1)
+                        })
                     setFormOpen('')
+                    updateInvestigationInputs('selected_name', investigationInputs['name_input'])
+                    updateInvestigationInputs('name_input', '')
                 }
             },
             'remove': () => {
-                if (soilInvestigationList.length === 1) {
+                if (investigationsData.length === 1) {
                     setLastWarning(true)
                 }
                 else {
-                    soilInvestigationRemove(layerInputs)
-                    updateLayerInputs('sondagem', soilInvestigationList[0])
+                    investigationRemove([projectInputs, investigationInputs])
+                        .then(() => {
+                            setUpdateSoilInvestigation(prev => prev + 1)
+                        })
+                    updateInvestigationInputs('selected_name', investigationsData[0])
                 }
             }
         }
@@ -62,78 +72,53 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
                 value()
             }
         }
-        setUpdateSoilInvestigation(1)
     }
 
     useEffect(() => {
-        if (layerInputs['projeto'] !== '') {
-            api.post('/soilinvestigation', layerInputs)
+        if (projectInputs['selected_name'] !== '') {
+            api.post('/investigation', projectInputs)
                 .then((response) => {
-                    setSoilInvestigationList(response['data'])
-                    setUpdateSoilInvestigation(0)
-                    setUpdateGeotechnics(1)
+                    setInvestigationsData(response['data'])
+                    if (investigationInputs['selected_name'] === '') {
+                        updateInvestigationInputs('selected_name', response['data'][0])
+                    }
+                    else {
+                        setUpdateGeotechnics(prev => prev + 1)
+                    }
+                    
             })
         }
-    }, [ updateSoilInvestigation, layerInputs['projeto'] ])
-
-    useEffect(() => {
-        api.post('/soilinvestigation', {'projeto': layerInputs['projeto']})
-            .then((response) => {
-                updateLayerInputs('sondagem', response['data'][0])
-                setUpdateGeotechnics(1)
-        })
-    }, [layerInputs['projeto']])
+    }, [ updateSoilInvestigation, projectInputs['selected_name'] ])
 
     return (
         <>
             <Select
                 w='250px'
-                onChange={onLayerInputsChange}
+                onChange={onInvestigationSelectedChange}
+                value={investigationInputs['selected_name']}
             >
-                {soilInvestigationList.map((name, i) => (
+                {investigationsData.map((name, i) => (
                     <option key={i} value={name}> {name} </option>
                 ))}
             </Select>
-            <Tooltip hasArrow label='Criar' bg='gray' color='black' fontSize='md'>
-                <IconButton
-                    icon={<AddIcon />}
-                    borderWidth='sm'
-                    borderRadius='none'
-                    borderColor='border'
-                    variant='solid'
-                    colorScheme='blue'
-                    onClick={() => setFormOpen('register')}
-                />
-            </Tooltip>
-            <Tooltip hasArrow label='Editar' bg='gray' color='black' fontSize='md'>
-                <IconButton
-                    icon={<EditIcon />}
-                    borderWidth='sm'
-                    borderRadius='none'
-                    borderColor='border'
-                    variant='solid'
-                    colorScheme='blue'
-                    onClick={() => setFormOpen('edit')}
-                />
-            </Tooltip>
-            <Tooltip hasArrow label='Remover' bg='gray' color='black' fontSize='md'>
-                <IconButton
-                    icon={<DeleteIcon />}
-                    borderWidth='sm'
-                    borderRadius='none'
-                    borderColor='border'
-                    variant='solid'
-                    colorScheme='blue'
-                    onClick={() => onSoilInvestigationAction('remove')}
-                />
-            </Tooltip>
-            {formOpen !== '' && (
-                <>
+            <Popover placement='bottom' isOpen={formOpen === 'register'} onOpen={() => setFormOpen('register')} onClose={() => setFormOpen('')}>
+                <PopoverTrigger>
+                    <IconButton
+                        icon={<Tooltip hasArrow label='Criar' bg='gray' color='black' fontSize='md'><AddIcon /></Tooltip>}
+                        borderWidth='sm'
+                        borderRadius='none'
+                        borderColor='border'
+                        variant='solid'
+                        colorScheme='blue'
+                    />
+                </PopoverTrigger>
+                <PopoverContent flexDirection={'row'}>
+                    <PopoverArrow backgroundColor={'black'}/>
                     <Input
                         type='text'
                         placeholder='Digite o nome da sondagem'
-                        onChange={onSoilInvestigationNameChange}
-                        w='250px'
+                        onChange={onInvestigationInputChange}
+                        value={investigationInputs['name_input']}
                     />
                     <IconButton
                         icon={<CheckIcon />}
@@ -141,10 +126,54 @@ function SondagemAcoes({ updateGeotechnics, setUpdateGeotechnics, layerInputs, u
                     />
                     <IconButton
                         icon={<CloseIcon />}
-                        onClick={() => setFormOpen('')}
+                        onClick={() => {
+                            setFormOpen('')
+                            updateInvestigationInputs('name_input', '')
+                        }}
                     />
-                </>
-            )}
+                </PopoverContent>
+            </Popover>
+            <Popover placement='bottom' isOpen={formOpen === 'edit'} onOpen={() => setFormOpen('edit')} onClose={() => setFormOpen('')}>
+                <PopoverTrigger>
+                    <IconButton
+                        icon={<Tooltip hasArrow label='Editar' bg='gray' color='black' fontSize='md'><EditIcon /></Tooltip>}
+                        borderWidth='sm'
+                        borderRadius='none'
+                        borderColor='border'
+                        variant='solid'
+                        colorScheme='blue'
+                    />
+                </PopoverTrigger>
+                <PopoverContent flexDirection={'row'}>
+                    <PopoverArrow backgroundColor={'black'}/>
+                    <Input
+                        type='text'
+                        placeholder='Digite o nome da sondagem'
+                        onChange={onInvestigationInputChange}
+                        value={investigationInputs['name_input']}
+                    />
+                    <IconButton
+                        icon={<CheckIcon />}
+                        onClick={() => onSoilInvestigationAction(formOpen)}
+                    />
+                    <IconButton
+                        icon={<CloseIcon />}
+                        onClick={() => {
+                            setFormOpen('')
+                            updateInvestigationInputs('name_input', '')
+                        }}
+                    />
+                </PopoverContent>
+            </Popover>
+            <IconButton
+                icon={<Tooltip hasArrow label='Remover' bg='gray' color='black' fontSize='md'><DeleteIcon /></Tooltip>}
+                borderWidth='sm'
+                borderRadius='none'
+                borderColor='border'
+                variant='solid'
+                colorScheme='blue'
+                onClick={() => onSoilInvestigationAction('remove')}
+            />
             {existsWarning && (
                 <div className={styles.page}>
                     <AlertDialog isOpen={existsWarning}>

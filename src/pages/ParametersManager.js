@@ -8,50 +8,46 @@ import { useEffect, useState } from 'react';
 
 import { api } from '../utils/services/api'
 import parametersMethods from './parameters-manager/utils/data/parametersMethods.json'
-import { parameterDuplicate, parameterEdit, parameterRemove, parameterSave } from './parameters-manager/utils/services/parameters'
+import { methodDuplicate, methodEdit, methodRemove, methodSave } from './parameters-manager/utils/services/methods'
 
-function ParametersManager() {
+function ParametersManager({ methodInputs, setMethodInputs, updateMethodInputs, methodsData, setUpdateMethods }) {
     const navigate = useNavigate()
-    const [parameters, setParameters] = useState(parametersMethods)
-    const [methodInput, setMethodInput] = useState({'type': 'estacas', 'selected_method': 'Aoki-Velloso', 'method': '', 'parameters': parametersMethods['estacas']['Aoki-Velloso']})
     const [formOpen, setFormOpen] = useState('')
-    
-    const [updateParameters, setUpdateParameters] = useState(0)
     const [projectExistsWarning, setProjectExistsWarning] = useState(false);
 
-    function onMethodChange(ev) {
+    function onMethodSelectedChange(ev) {
         const value = ev.target.value
-        setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: value }))
+        updateMethodInputs('selected_name', value)
         if (value === "Aoki-Velloso" || value === "Decourt-Quaresma" ) {
-            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['estacas'][value] }))
+            updateMethodInputs('parameters', parametersMethods['estacas'][value])
         }
         else if (value === 'Bulbo de Tensões') {
-            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['sapatas'][value] }))
+            updateMethodInputs('parameters', parametersMethods['sapatas'][value])
         }
         else {
-            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parameters[prevInputs['type']][prevInputs['selected_method']] }))
+            updateMethodInputs('parameters', methodsData[methodInputs['foundation_class']][value])
         }
     }
 
     function onMethodInputChange(ev) {
         const value = ev.target.value
-        setMethodInput(prevInputs => ({ ...prevInputs, ['method']: value }))
+        updateMethodInputs('name_input', value)
     }
 
-    function onMethodInputTypeChange(ev) {
-        setMethodInput(prevInputs => ({ ...prevInputs, ['type']: Object.keys(parametersMethods)[ev] }))
+    function onMethodFoundationClassChange(ev) {
+        updateMethodInputs('foundation_class', Object.keys(parametersMethods)[ev])
         if (Object.keys(parametersMethods)[ev] === 'estacas') {
-            setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: 'Aoki-Velloso' }))
-            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['estacas']['Aoki-Velloso'] }))
+            updateMethodInputs('selected_name', 'Aoki-Velloso')
+            updateMethodInputs('parameters', parametersMethods['estacas']['Aoki-Velloso'])
         }
         else if (Object.keys(parametersMethods)[ev] === 'sapatas') {
-            setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: 'Bulbo de Tensões' })) 
-            setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods['sapatas']['Bulbo de Tensões'] }))
+            updateMethodInputs('selected_name', 'Bulbo de Tensões')
+            updateMethodInputs('parameters', parametersMethods['sapatas']['Bulbo de Tensões'])
         }
     }
 
     function onParameterInputChange(key, row, col, value) {
-        setMethodInput((prevInputs) => {
+        setMethodInputs((prevInputs) => {
             const newState = { ...prevInputs }
             const col_name = Object.keys(prevInputs['parameters'][key][0])
             newState['parameters'][key][row][col_name[col]] = parseFloat(value)
@@ -59,33 +55,43 @@ function ParametersManager() {
         })
     }
 
-    function onParametersAction(action) {
+    function onMethodActions(action) {
         const options = {
             'duplicate': () => {
-                if (Object.keys({...parameters.estacas,...parameters.sapatas}).some(methodName => methodName === methodInput.method)) {
+                if (Object.keys({...methodsData.estacas,...methodsData.sapatas}).some(name => name === methodInputs.name_input)) {
                     setProjectExistsWarning(true)
                 }
                 else {
-                    parameterDuplicate(methodInput)
-                    setMethodInput(prevInputs => ({ ...prevInputs, ['method']: '' }))
+                    methodDuplicate(methodInputs)
+                        .then(() => {
+                            setUpdateMethods(prev => prev + 1)
+                        })
+                    updateMethodInputs('selected_name', methodInputs['name_input'])
                     setFormOpen('')
+                    updateMethodInputs('name_input', '')
                 }
             },
             'edit': () => {
-                if (Object.keys({...parameters.estacas,...parameters.sapatas}).some(methodName => methodName === methodInput.method)) {
+                if (Object.keys({...methodsData.estacas,...methodsData.sapatas}).some(name => name === methodInputs.name_input)) {
                     setProjectExistsWarning(true)
                 }
                 else {
-                    parameterEdit(methodInput)
-                    setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: prevInputs['method'] }))
-                    setMethodInput(prevInputs => ({ ...prevInputs, ['method']: '' }))
+                    methodEdit(methodInputs)
+                        .then(() => {
+                            setUpdateMethods(prev => prev + 1)
+                        })
+                    updateMethodInputs('selected_name', methodInputs['name_input'])
                     setFormOpen('')
+                    updateMethodInputs('name_input', '')
                 }
             },
             'remove': () => {
-                parameterRemove(methodInput)
-                setMethodInput(prevInputs => ({ ...prevInputs, ['selected_method']: Object.keys(parametersMethods[methodInput['type']])[0]}))
-                setMethodInput(prevInputs => ({ ...prevInputs, ['parameters']: parametersMethods[methodInput['type']][Object.keys(parametersMethods[methodInput['type']])[0]] }))
+                methodRemove(methodInputs)
+                    .then(() => {
+                        setUpdateMethods(prev => prev + 1)
+                    })
+                updateMethodInputs('selected_name', Object.keys(parametersMethods[methodInputs['foundation_class']])[0])
+                updateMethodInputs('parameters', parametersMethods[methodInputs['foundation_class']][Object.keys(parametersMethods[methodInputs['foundation_class']])[0]])
             }
         }
         for (const [key, value] of Object.entries(options)) {
@@ -93,48 +99,37 @@ function ParametersManager() {
                 value()
             }
         }
-        setUpdateParameters(1)
     }
 
-    function onSaveParameters() {
-        parameterSave(methodInput)
+    function onMethodSave() {
+        methodSave(methodInputs)
     }
 
     function onCloseParameters() {
+        updateMethodInputs('foundation_class', 'estacas')
         navigate('/')
     }
-
-    useEffect(() => {
-        api.get('/parameters')
-            .then((response) => {
-                const custom_methods = response['data']
-                const new_methods_list = {"estacas": {...parametersMethods["estacas"], ...custom_methods["estacas"]}, "sapatas": {...parametersMethods["sapatas"], ...custom_methods["sapatas"]}}
-                setParameters(new_methods_list)
-                setUpdateParameters(0)
-            })
-        return
-    }, [updateParameters])
 
     return (
         <>
             <div className={styles.page}>
                 <div className={styles.menu}>
-                    <Tabs onChange={onMethodInputTypeChange} variant='soft-rounded' colorScheme='blue'>
+                    <Tabs onChange={onMethodFoundationClassChange} variant='soft-rounded' colorScheme='blue' value={methodInputs['foundation_class']}>
                         <TabList>
-                            <Tab checked={methodInput['type'] === 'estacas'}>Métodos de Cálculo Estacas</Tab>
-                            <Tab checked={methodInput['type'] === 'sapatas'}>Métodos de Cálculo Sapatas</Tab>
+                            <Tab checked={methodInputs['foundation_class'] === 'estacas'}>Métodos de Cálculo Estacas</Tab>
+                            <Tab checked={methodInputs['foundation_class'] === 'sapatas'}>Métodos de Cálculo Sapatas</Tab>
                         </TabList>
                     </Tabs>
                 </div>
                 <div className={styles.menu}>
                     <div className={styles.leftMenu}>
                         <Select 
-                            onChange={onMethodChange}
+                            onChange={onMethodSelectedChange}
                             variant='outline'
                             w='300px'
-                            value={methodInput['selected_method']}
+                            value={methodInputs['selected_name']}
                         >
-                            {Object.keys(parameters[methodInput['type']]).map((method) => (
+                            {Object.keys(methodsData[methodInputs['foundation_class']]).map((method) => (
                                 <option key={method}>{method}</option>
                             ))}
                         </Select>
@@ -147,7 +142,7 @@ function ParametersManager() {
                                     borderColor='border'
                                     variant='solid'
                                     colorScheme='blue'
-                                    isDisabled={methodInput['selected_method'] !== "Aoki-Velloso" && methodInput['selected_method'] !== "Decourt-Quaresma" && methodInput['selected_method'] !== "Bulbo de Tensões"}
+                                    isDisabled={methodInputs['selected_name'] !== "Aoki-Velloso" && methodInputs['selected_name'] !== "Decourt-Quaresma" && methodInputs['selected_name'] !== "Bulbo de Tensões"}
                                 />
                             </PopoverTrigger>
                             <PopoverContent flexDirection={'row'}>
@@ -156,14 +151,18 @@ function ParametersManager() {
                                     type='text'
                                     placeholder='Digite o nome do método'
                                     onChange={onMethodInputChange}
+                                    value={methodInputs['name_input']}
                                 />
                                 <IconButton
                                     icon={<CheckIcon />}
-                                    onClick={() => onParametersAction('duplicate')}
+                                    onClick={() => onMethodActions('duplicate')}
                                 />
                                 <IconButton
                                     icon={<CloseIcon />}
-                                    onClick={() => setFormOpen('')}
+                                    onClick={() => {
+                                        setFormOpen('')
+                                        setMethodInputs(prevInputs => ({ ...prevInputs, ['name_input']: '' }))
+                                    }}
                                 />
                             </PopoverContent>
                         </Popover>
@@ -176,7 +175,7 @@ function ParametersManager() {
                                     borderColor='border'
                                     variant='solid'
                                     colorScheme='blue'
-                                    isDisabled={methodInput['selected_method'] === "Aoki-Velloso" || methodInput['selected_method'] === "Decourt-Quaresma" || methodInput['selected_method'] === "Bulbo de Tensões"}
+                                    isDisabled={methodInputs['selected_name'] === "Aoki-Velloso" || methodInputs['selected_name'] === "Decourt-Quaresma" || methodInputs['selected_name'] === "Bulbo de Tensões"}
                                 />
                             </PopoverTrigger>
                             <PopoverContent flexDirection={'row'}>
@@ -185,14 +184,18 @@ function ParametersManager() {
                                     type='text'
                                     placeholder='Digite o nome do método'
                                     onChange={onMethodInputChange}
+                                    value={methodInputs['name_input']}
                                 />
                                 <IconButton
                                     icon={<CheckIcon />}
-                                    onClick={() => onParametersAction('edit')}
+                                    onClick={() => onMethodActions('edit')}
                                 />
                                 <IconButton
                                     icon={<CloseIcon />}
-                                    onClick={() => setFormOpen('')}
+                                    onClick={() => {
+                                        setFormOpen('')
+                                        setMethodInputs(prevInputs => ({ ...prevInputs, ['name_input']: '' }))
+                                    }}
                                 />
                             </PopoverContent>
                         </Popover>
@@ -203,8 +206,8 @@ function ParametersManager() {
                             borderColor='border'
                             variant='solid'
                             colorScheme='blue'
-                            onClick={() => {onParametersAction('remove')}}
-                            isDisabled={methodInput['selected_method'] === "Aoki-Velloso" || methodInput['selected_method'] === "Decourt-Quaresma" || methodInput['selected_method'] === "Bulbo de Tensões"}
+                            onClick={() => {onMethodActions('remove')}}
+                            isDisabled={methodInputs['selected_name'] === "Aoki-Velloso" || methodInputs['selected_name'] === "Decourt-Quaresma" || methodInputs['selected_name'] === "Bulbo de Tensões"}
                         />
                     </div>
                     <div className={styles.rightMenu}>
@@ -216,7 +219,7 @@ function ParametersManager() {
                                 borderColor='border'
                                 variant='solid'
                                 colorScheme='blue'
-                                onClick={() => {onSaveParameters()}}
+                                onClick={() => {onMethodSave()}}
                             />
                         </Tooltip>
                         <Tooltip hasArrow label='Fechar' bg='gray' color='black' fontSize='md'>
@@ -234,74 +237,86 @@ function ParametersManager() {
                 </div>
                 <div className={styles.section}>
                     <Accordion defaultIndex={[0]} allowMultiple w='100%'>
-                        {Object.entries(methodInput['parameters']).map(([key, value]) => {
+                        {Object.entries(methodInputs['parameters']).map(([key, value]) => {
                             return (
                                 <AccordionItem>
-                                    <AccordionButton>
-                                        <Box as='span' flex='1' textAlign='left'>
-                                            <strong>{key}</strong>
-                                        </Box>
-                                    </AccordionButton>
-                                    <AccordionPanel pb={4}>
-                                        <TableContainer>
-                                            <Table variant='striped' colorScheme='gray' size='sm'>
-                                                <Thead>
-                                                    <Tr>
-                                                        {Object.entries(value[0]).map(([header, _]) => {
-                                                            return(
-                                                                <Th>{header}</Th>
-                                                            )
-                                                        })}
-                                                    </Tr>
-                                                </Thead>
-                                                <Tbody>
-                                                    {value.map((element, i) => {
-                                                        return(
+                                    {key === Object.keys(methodInputs['parameters'])[0] ? (
+                                        <AccordionButton>
+                                            <Box as='span' flex='1' textAlign='left'>
+                                                <strong>{key}: {value}</strong>
+                                            </Box>
+                                        </AccordionButton>
+                                    ) : (
+                                        <>
+                                            <AccordionButton>
+                                                <Box as='span' flex='1' textAlign='left'>
+                                                    <strong>{key}</strong>
+                                                </Box>
+                                            </AccordionButton>
+                                            <AccordionPanel pb={4}>
+                                                <TableContainer>
+                                                    <Table variant='striped' colorScheme='gray' size='sm'>
+                                                        <Thead>
                                                             <Tr>
-                                                                {Object.entries(element).map(([_, content], col_index) => {
-                                                                    return (
-                                                                        <Td key={_}>
-                                                                            {methodInput['type'] === 'estacas' && methodInput["selected_method"] !== 'Aoki-Velloso' && methodInput["selected_method"] !== 'Decourt-Quaresma' && col_index !== 0 ? (
-                                                                                <Editable defaultValue={content || '0'} fontSize='md'>
-                                                                                    <EditablePreview />
-                                                                                    <EditableInput textAlign='start'
-                                                                                        onKeyPress={(event) => {
-                                                                                            if (!/[0-9.]/.test(event.key)) {
-                                                                                                event.preventDefault()}
-                                                                                            }}
-                                                                                        onChange={(event) => {
-                                                                                            onParameterInputChange(key, i, col_index, event.target.value)
-                                                                                        }}
-                                                                                    />
-                                                                                </Editable>
-                                                                            ) : (
-                                                                                methodInput['type'] === 'sapatas' && methodInput["selected_method"] !== 'Bulbo de Tensões' && col_index > 1 ? (
-                                                                                    <Editable defaultValue={content || '0'} fontSize='md'>
-                                                                                        <EditablePreview />
-                                                                                        <EditableInput textAlign='start'
-                                                                                            onKeyPress={(event) => {
-                                                                                                if (!/[0-9.]/.test(event.key)) {
-                                                                                                    event.preventDefault()}
-                                                                                                }}
-                                                                                            onChange={(event) => {
-                                                                                                onParameterInputChange(key, i, col_index, event.target.value)
-                                                                                            }}
-                                                                                        />
-                                                                                    </Editable>
-                                                                                ) : (
-                                                                                    <Box fontSize='md'>{content}</Box>
-                                                                                )
-                                                                            )}
-                                                                        </Td>
+                                                                {/* Preciso de alguma forma ter o state de qual método esse método foi duplicado para puxar o cabeçalho certo */}
+                                                                {/* {Object.entries(parametersMethods[methodInput['type']][methodInput['selected_method']])} */}
+                                                                {Object.entries(value[0]).map(([header, _]) => {
+                                                                    return(
+                                                                        <Th key={header}>{header}</Th>
                                                                     )
                                                                 })}
                                                             </Tr>
-                                                        )
-                                                    })}
-                                                </Tbody>
-                                            </Table>
-                                        </TableContainer>
-                                    </AccordionPanel>
+                                                        </Thead>
+                                                        <Tbody>
+                                                            {value.map((element, i) => {
+                                                                return(
+                                                                    <Tr key={i}>
+                                                                        {Object.entries(element).map(([_, content], col_index) => {
+                                                                            return (
+                                                                                <Td key={col_index}>
+                                                                                    {methodInputs['foundation_class'] === 'estacas' && methodInputs["selected_name"] !== 'Aoki-Velloso' && methodInputs["selected_name"] !== 'Decourt-Quaresma' && col_index !== 0 ? (
+                                                                                        <Editable defaultValue={content || '0'} fontSize='md'>
+                                                                                            <EditablePreview />
+                                                                                            <EditableInput textAlign='start'
+                                                                                                onKeyPress={(event) => {
+                                                                                                    if (!/[0-9.]/.test(event.key)) {
+                                                                                                        event.preventDefault()}
+                                                                                                    }}
+                                                                                                onChange={(event) => {
+                                                                                                    onParameterInputChange(key, i, col_index, event.target.value)
+                                                                                                }}
+                                                                                            />
+                                                                                        </Editable>
+                                                                                    ) : (
+                                                                                        methodInputs['foundation_class'] === 'sapatas' && methodInputs["selected_name"] !== 'Bulbo de Tensões' && col_index > 1 ? (
+                                                                                            <Editable defaultValue={content || '0'} fontSize='md'>
+                                                                                                <EditablePreview />
+                                                                                                <EditableInput textAlign='start'
+                                                                                                    onKeyPress={(event) => {
+                                                                                                        if (!/[0-9.]/.test(event.key)) {
+                                                                                                            event.preventDefault()}
+                                                                                                        }}
+                                                                                                    onChange={(event) => {
+                                                                                                        onParameterInputChange(key, i, col_index, event.target.value)
+                                                                                                    }}
+                                                                                                />
+                                                                                            </Editable>
+                                                                                        ) : (
+                                                                                            <Box fontSize='md'>{content}</Box>
+                                                                                        )
+                                                                                    )}
+                                                                                </Td>
+                                                                            )
+                                                                        })}
+                                                                    </Tr>
+                                                                )
+                                                            })}
+                                                        </Tbody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </AccordionPanel>
+                                        </>
+                                    )}
                                 </AccordionItem>
                             )
                         })}

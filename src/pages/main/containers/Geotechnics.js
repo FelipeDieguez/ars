@@ -21,11 +21,11 @@ import { ArrowRightIcon } from '@chakra-ui/icons'
 // criando contexto para compartilhar dados entre componentes
 export const LayerContext = createContext({})
 
-function Geotechnics({ foundationClass, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, updateGeotechnics, setUpdateGeotechnics, layerInputs, updateLayerInputs, parameters, onOpen }) {
+function Geotechnics({ projectInputs, foundationClass, investigationInputs, updateInvestigationInputs, investigationsData, setInvestigationsData, geotechnicsInputs, updateGeotechnicsInputs, structureInputs, geotechnicsData, setGeotechnicsData, updateGeotechnics, setUpdateGeotechnics, layerInputs, updateLayerInputs, methodsData, onOpen, isLoading }) {
     const [soilClass, setSoilClass] = useState("areia")
 
     function onProjectManagerOpen() {
-        updateLayerInputs('sondagem', '')
+        updateInvestigationInputs('selected_name', '')
         onOpen()
     }
 
@@ -57,6 +57,8 @@ function Geotechnics({ foundationClass, geotechnicsInputs, updateGeotechnicsInpu
                             </div>
                             <div className={styles.step}>
                                 <CamadaAcoes
+                                    projectInputs={projectInputs}
+                                    investigationInputs={investigationInputs}
                                     layerInputs={layerInputs}
                                     setUpdateGeotechnics={setUpdateGeotechnics}
                                 />
@@ -67,7 +69,7 @@ function Geotechnics({ foundationClass, geotechnicsInputs, updateGeotechnicsInpu
                                 foundationClass={foundationClass}
                                 geotechnicsInputs={geotechnicsInputs}
                                 updateGeotechnicsInputs={updateGeotechnicsInputs}
-                                parameters={parameters}
+                                methodsData={methodsData}
                             />
                         </div>
                         <div className={styles.steps}>
@@ -93,10 +95,11 @@ function Geotechnics({ foundationClass, geotechnicsInputs, updateGeotechnicsInpu
                             <div className={styles.step}>
                                 <CalculoAcoes
                                     foundationClass={foundationClass}
+                                    layerInputs={layerInputs}
                                     geotechnicsInputs={geotechnicsInputs}
                                     geotechnicsData={geotechnicsData}
                                     setGeotechnicsData={setGeotechnicsData}
-                                    parameters={parameters}
+                                    methodsData={methodsData}
                                 />
                             </div>
                         </div>
@@ -111,7 +114,8 @@ function Geotechnics({ foundationClass, geotechnicsInputs, updateGeotechnicsInpu
                     <ResultadoTabela
                         geotechnicsData={geotechnicsData}
                         structureInputs={structureInputs}
-                        updateLayerInputs={updateLayerInputs}
+                        layerInputs={layerInputs} updateLayerInputs={updateLayerInputs}
+                        isLoading={isLoading}
                     />
                 </section>
                 <footer className={styles.footer}>
@@ -125,10 +129,10 @@ function Geotechnics({ foundationClass, geotechnicsInputs, updateGeotechnicsInpu
                     </div>
                     <div className={styles.rightFooter}>
                         <SondagemAcoes
-                            updateGeotechnics={updateGeotechnics}
+                            projectInputs={projectInputs}
+                            investigationInputs={investigationInputs} updateInvestigationInputs={updateInvestigationInputs}
+                            investigationsData={investigationsData} setInvestigationsData={setInvestigationsData}
                             setUpdateGeotechnics={setUpdateGeotechnics}
-                            layerInputs={layerInputs}
-                            updateLayerInputs={updateLayerInputs}
                         />
                     </div>
                 </footer>

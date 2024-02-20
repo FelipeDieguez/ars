@@ -16,26 +16,26 @@ export function layerRemove(data) {
   return api.post('/layer/remove', data);
 }
 
-export function soilInvestigationList(data) {
-  return api.post('/soilinvestigation', data)
+export function investigationList(data) {
+  return api.post('/investigation', data)
 }
 
-export function soilInvestigationRegister(data) {
-  return api.post('/soilinvestigation/register', data)
+export function investigationRegister(data) {
+  return api.post('/investigation/register', data)
 }
 
-export function soilInvestigationEdit(data) {
-  return api.post('/soilinvestigation/edit', data)
+export function investigationEdit(data) {
+  return api.post('/investigation/edit', data)
 }
 
-export function soilInvestigationRemove(data) {
-  return api.post('/soilinvestigation/remove', data)
+export function investigationRemove(data) {
+  return api.post('/investigation/remove', data)
 }
 
-export function calculate(data) {
-  return api.post('/investigation/calculate', data);
+export function geotechnicsCalculate(data) {
+  return api.post('/geotechnics/calculate', data);
 }
 
-export function memorial(data) {
-  return api.post('/investigation/memorial', data);
+export function geotechnicsMemorial(data) {
+  return api.post('/geotechnics/memorial', data);
 }

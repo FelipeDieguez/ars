@@ -5,7 +5,7 @@ import soilTypes from '../../utils/data/soilTypes.json'
 function CamadaDefinir({ soilClass, setSoilClass, updateLayerInputs }) {
     function onSoilClassChange(ev) {
         setSoilClass(ev)
-        updateLayerInputs('solo', soilTypes[ev][0])
+        updateLayerInputs('Solo', soilTypes[ev][0])
     }
     
     return (

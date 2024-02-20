@@ -1,6 +1,7 @@
 {
     "estacas": {
         "Aoki-Velloso": {
+            "TIPO DO MÉTODO": "Aoki-Velloso",
             "PARÂMETROS DO SOLO": [
                     {"Solo": "Areia", "K (MPa)": 1.0, "α (%)": 1.4},
                     {"Solo": "Areia siltosa", "K (MPa)": 0.8, "α (%)": 2.0},
@@ -32,6 +33,7 @@
             ]
         },
         "Decourt-Quaresma": {
+            "TIPO DO MÉTODO": "Decourt-Quaresma",
             "PARÂMETROS DO SOLO": [
                     {"Solo": "Argila", "C (kPa)": 120},
                     {"Solo": "Silte argiloso", "C (kPa)": 200},
@@ -67,6 +69,7 @@
     },
     "sapatas": {
         "Bulbo de Tensões": {
+            "TIPO DO MÉTODO": "Bulbo de Tensões",
             "PROPRIEDADES AREIA": [
                 {"Nspt": "< 5", "Compacidade": "Fofa", "γseca": 16, "γsaturada": 19},
                 {"Nspt": "5 - 8", "Compacidade": "Pouca compacta", "γseca": 16, "γsaturada": 19},

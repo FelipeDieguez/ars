@@ -1,21 +1,29 @@
-import { Button } from '@chakra-ui/react'
+import { Button, IconButton, Tooltip } from '@chakra-ui/react'
 
-import { calculate } from '../../utils/services/geotechnics'
+import { geotechnicsCalculate, geotechnicsMemorial } from '../../utils/services/geotechnics'
+import { CalendarIcon } from '@chakra-ui/icons'
 
-function CalculoAcoes({ foundationClass, geotechnicsInputs, geotechnicsData, setGeotechnicsData, parameters }) {
+function CalculoAcoes({ foundationClass, layerInputs, geotechnicsInputs, geotechnicsData, setGeotechnicsData, methodsData }) {
     function onCalculate() {
         if (foundationClass === 'tubuloes') {
-            calculate([geotechnicsData, geotechnicsInputs, parameters['estacas'][geotechnicsInputs['metodo']]]).then((response) => {
+            geotechnicsCalculate([geotechnicsData, geotechnicsInputs, methodsData['estacas'][geotechnicsInputs['metodo']]]).then((response) => {
                 setGeotechnicsData(response["data"])
             })
         }
         else {
-            calculate([geotechnicsData, geotechnicsInputs, parameters[foundationClass][geotechnicsInputs['metodo']]]).then((response) => {
+            console.log(foundationClass, geotechnicsInputs['metodo'], methodsData)
+            geotechnicsCalculate([geotechnicsData, geotechnicsInputs, methodsData[foundationClass][geotechnicsInputs['metodo']]]).then((response) => {
                 setGeotechnicsData(response["data"])
             })
         }
-        
     }
+
+    function onMemorial() {
+        geotechnicsMemorial([geotechnicsData, geotechnicsInputs, methodsData['estacas'][geotechnicsInputs['metodo']], layerInputs]).then((response) => {
+            window.open(response["data"])
+        })
+    }
+
     return (
         <>
             <Button
@@ -28,6 +36,15 @@ function CalculoAcoes({ foundationClass, geotechnicsInputs, geotechnicsData, set
             >
                 Calcular
             </Button>
+            <IconButton
+                icon={<Tooltip hasArrow label='Gerar Memorial' bg='gray' color='black' fontSize='md'><CalendarIcon /></Tooltip>}
+                borderWidth='sm'
+                borderColor='border'
+                variant='solid'
+                colorScheme='blue'
+                size='sm'
+                onClick={onMemorial}
+            />
         </>
     )
 }

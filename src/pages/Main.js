@@ -25,20 +25,29 @@ const initialStructureInputs = {
     "profundidade": "0"
 }
 
-function Main({ projectInputs, updateProjectInputs }) {
-    const [foundationClass, setFoundationClass] = useState("estacas")
+function Main({ projectInputs, updateProjectInputs, projectsData, searchTerm, setSearchTerm, filteredProjects, setUpdateProjects, methodsData }) {
+    const [foundationClass, setFoundationClass] = useState('estacas')
+
+    const [investigationInputs, setInvestigationInputs] = useState({'selected_name': '', 'name_input': ''})
+    const [investigationsData, setInvestigationsData] = useState([])
+
+    const [layerInputs, setLayerInputs] = useState({'Cota': '', 'Solo': 'Areia', 'Nspt': 0})
+    const [geotechnicsData, setGeotechnicsData] = useState([{}])
+
     const [geotechnicsInputs, setGeotechnicsInputs] = useState(initialGeotechnicsInputs)
     const [structureInputs, setStructureInputs] = useState(initialStructureInputs)
-    const [geotechnicsData, setGeotechnicsData] = useState([{}])
-    const [updateGeotechnics, setUpdateGeotechnics] = useState(0)
-    const [layerInputs, setLayerInputs] = useState({"projeto": "", "sondagem": "", "ordem": "", "solo": "Areia", "nspt": "0"})
-    const [parameters, setParameters] = useState(parametersMethods)
 
+    const [updateGeotechnics, setUpdateGeotechnics] = useState(0)
+    const [isLoading, setIsLoading] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    function updateInvestigationInputs(key, value) {
+        setInvestigationInputs(prevInputs => ({ ...prevInputs, [key]: value }))
+    }
 
     function updateGeotechnicsInputs(name, value) {
         setGeotechnicsInputs(prevInputs => ({ ...prevInputs, [name]: value }))
-        setUpdateGeotechnics(1)
+        setUpdateGeotechnics(prev => prev + 1)
     }
 
     function updateStructureInputs(ev) {
@@ -51,30 +60,21 @@ function Main({ projectInputs, updateProjectInputs }) {
     }
 
     useEffect(() => {
-        console.log(layerInputs)
-        if (layerInputs['projeto'] !== '' && layerInputs['sondagem'] && layerInputs['sondagem'] !== '') {
-            api.post('/layer', layerInputs)
+        if (projectInputs['selected_name'] !== '' && investigationInputs['selected_name'] && investigationInputs['selected_name'] !== '') {
+            setIsLoading(true)
+            api.post('/layer', [projectInputs, investigationInputs])
                 .then((response) => {
                     const data = []
                     response["data"].map((layer, _) => {
                         data.push(Object.assign(layer, dataGeotechnics[foundationClass][0]))
                     })
-                    setGeotechnicsData(data)
-                    setUpdateGeotechnics(0)
-            })
+                    setGeotechnicsData(data)   
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                })
         }
-    }, [ foundationClass, updateGeotechnics, layerInputs['projeto'], layerInputs['sondagem'] ])
-
-    useEffect(() => {
-        api.get('/parameters')
-            .then((response) => {
-                const custom_methods = response['data']
-                const new_methods_list = {"estacas": {...parametersMethods["estacas"], ...custom_methods["estacas"]}, "sapatas": {...parametersMethods["sapatas"], ...custom_methods["sapatas"]}}
-                setParameters(new_methods_list)
-                setUpdateGeotechnics(0)
-            })
-        return
-    }, [updateGeotechnics])
+    }, [ foundationClass, updateGeotechnics, projectInputs['selected_name'], investigationInputs['selected_name'] ])
 
     useEffect(() => {
         onOpen();
@@ -83,23 +83,29 @@ function Main({ projectInputs, updateProjectInputs }) {
     return (
         <>
             <ProjectManager
-                projectInputs={projectInputs}
-                updateProjectInputs={updateProjectInputs}
-                updateLayerInputs={updateLayerInputs}
+                projectInputs={projectInputs} updateProjectInputs={updateProjectInputs}
+                projectsData={projectsData}
+                searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+                filteredProjects={filteredProjects}
+                setUpdateProjects={setUpdateProjects}
                 isOpen={isOpen}
                 onOpen={onOpen}
                 onClose={onClose}
             />
             <div className={styles.page}>
                 <Geotechnics
+                    projectInputs={projectInputs}
                     foundationClass={foundationClass}
+                    investigationInputs={investigationInputs} updateInvestigationInputs={updateInvestigationInputs}
+                    investigationsData={investigationsData} setInvestigationsData={setInvestigationsData}
                     geotechnicsInputs={geotechnicsInputs} updateGeotechnicsInputs={updateGeotechnicsInputs}
                     structureInputs={structureInputs}
                     geotechnicsData={geotechnicsData} setGeotechnicsData={setGeotechnicsData}
                     updateGeotechnics={updateGeotechnics} setUpdateGeotechnics={setUpdateGeotechnics}
                     layerInputs={layerInputs} updateLayerInputs={updateLayerInputs}
-                    parameters={parameters}
+                    methodsData={methodsData}
                     onOpen={onOpen}
+                    isLoading={isLoading}
                 />
                 <Structure
                     foundationClass={foundationClass}

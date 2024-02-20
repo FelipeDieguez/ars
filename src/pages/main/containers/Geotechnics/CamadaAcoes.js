@@ -1,22 +1,30 @@
 import { Button } from '@chakra-ui/react'
 import { layerRegister, layerEdit, layerRemove } from '../../utils/services/geotechnics'
 
-function CamadaAcoes({ layerInputs, setUpdateGeotechnics }) {
+function CamadaAcoes({ projectInputs, investigationInputs, layerInputs, setUpdateGeotechnics }) {
     function onLayerActions(ev) {
         const action = ev.target.name
-        console.log(action, ev)
         const options = {
             "register": () => {
-                layerRegister(layerInputs)
+                layerRegister([projectInputs, investigationInputs, layerInputs])
+                    .then(() => {
+                        setUpdateGeotechnics(prev => prev + 1)
+                    })
             },
             "edit": () => {
-                if (layerInputs["ordem"] !== "") {
-                    layerEdit(layerInputs)
+                if (layerInputs['Cota'] !== "") {
+                    layerEdit([projectInputs, investigationInputs, layerInputs])
+                        .then(() => {
+                            setUpdateGeotechnics(prev => prev + 1)
+                        })
                 }
             },
             "remove": () => {
-                if (layerInputs["ordem"] !== "") {
-                    layerRemove(layerInputs)
+                if (layerInputs['Cota'] !== "") {
+                    layerRemove([projectInputs, investigationInputs, layerInputs])
+                        .then(() => {
+                            setUpdateGeotechnics(prev => prev + 1)
+                        })
                 }
             }
         }
@@ -25,7 +33,7 @@ function CamadaAcoes({ layerInputs, setUpdateGeotechnics }) {
                 value()
             }
         }
-        setUpdateGeotechnics(1)
+        
     }
 
     return (

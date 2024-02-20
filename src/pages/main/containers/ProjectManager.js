@@ -10,13 +10,9 @@ import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, Ale
 import { AddIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, ExternalLinkIcon, SearchIcon, SettingsIcon } from '@chakra-ui/icons'
 import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from '@chakra-ui/react'
 
-function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs, isOpen, onOpen, onClose }) {
+function ProjectManager({ projectInputs, updateProjectInputs, projectsData, searchTerm, setSearchTerm, filteredProjects, setUpdateProjects, isOpen, onOpen, onClose }) {
     const navigate = useNavigate()
-    const [projects, setProjects] = useState([])
-    const [filteredProjects, setFilteredProjects] = useState([])
-    const [updateProjects, setUpdateProjects] = useState(0)
     const [formOpen, setFormOpen] = useState('')
-    const [searchTerm, setSearchTerm] = useState('')
     const [warningMessage, setWarningMessage] = useState(false)
     const [projectExistsWarning, setProjectExistsWarning] = useState(false);
 
@@ -24,17 +20,16 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
         const value = ev.target.value
         setSearchTerm(value)
         setUpdateProjects(prev => prev + 1)
+        updateProjectInputs('selected_name', '')
     }
 
     function onProjectInputChange(ev) {
         const value = ev.target.value
-        updateProjectInputs('name', value)
+        updateProjectInputs('name_input', value)
     }
 
     function onOpenProject(ev) {
         if (projectInputs['selected_name'] !== '') {
-            updateLayerInputs('projeto', projectInputs["selected_name"])
-            updateProjectInputs('selected_name', '')
             onClose()
         }
         else {
@@ -45,7 +40,7 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
     function onProjectAction(action) {
         const options = {
             'register': () => {
-                if (projects.some(project => project.name === projectInputs.name)) {
+                if (projectsData.some(name => name === projectInputs.name_input)) {
                     setProjectExistsWarning(true)
                 }
                 else {
@@ -60,7 +55,7 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
                 if (projectInputs['selected_name'] === '') {
                     setWarningMessage(true)
                 }
-                else if (projects.some(project => project.name === projectInputs.name)) {
+                else if (projectsData.some(name => name === projectInputs.name_input)) {
                     setProjectExistsWarning(true)
                 }
                 else {
@@ -94,18 +89,8 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
 
     function onOpenParameters() {
         navigate('/parameters')
+        updateProjectInputs('selected_name', '')
     }
-
-    useEffect(() => {
-        api.get('/projects')
-            .then((response) => {
-                setProjects(response['data'])
-                const filter = response['data'].filter(project =>
-                    project.name.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-                setFilteredProjects(filter)
-            })
-    }, [updateProjects])
 
     return (
         <>
@@ -198,14 +183,14 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
                                         </Tr>
                                     </Thead>
                                     <Tbody>
-                                        {filteredProjects.map((project, i) => {
+                                        {filteredProjects.map((name, i) => {
                                             return(
-                                                <Tr background={projectInputs['selected_name'] === project['name'] ? 'selected' : 'white'}
+                                                <Tr background={projectInputs['selected_name'] === name ? 'selected' : 'white'}
                                                     cursor='pointer'
                                                     border='1px'
                                                     h='25px'
                                                 >
-                                                    <Td onClick={() => updateProjectInputs('selected_name', project['name'])} 
+                                                    <Td onClick={() => updateProjectInputs('selected_name', name)} 
                                                     borderBottom='0px'
                                                     display='flex'
                                                     justifyContent='center'
@@ -214,7 +199,7 @@ function ProjectManager({ projectInputs, updateProjectInputs, updateLayerInputs,
                                                     padding='0px'
                                                     w='100%'
                                                     >
-                                                        {project['name']}
+                                                        {name}
                                                     </Td>
                                                 </Tr>
                                             )

@@ -13,7 +13,7 @@ function CamadaEntradas({ soilClass, updateLayerInputs }) {
             <Stack direction='row'>
                 <Text fontSize='md'>Solo:</Text>
                 <Select
-                    name="solo"
+                    name='Solo'
                     onChange={onLayerInputsChange}
                     width="180px"
                     size='xs'
@@ -27,7 +27,7 @@ function CamadaEntradas({ soilClass, updateLayerInputs }) {
             <Stack direction='row'>
                 <Text fontSize='md'>Nspt=</Text>
                 <Input 
-                    name='nspt'
+                    name='Nspt'
                     onKeyPress={(event) => {
                         if (!/[0-9]/.test(event.key)) {
                             event.preventDefault()}

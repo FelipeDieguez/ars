@@ -6,7 +6,7 @@ import SolutionsManager from './Structure/SolutionsManager'
 import FoundationsSolution from './Structure/FoundationsSolution'
 import FoundationsManager from './Structure/FoundationsManager'
 
-function Structure({ foundationClass, setFoundationClass, geotechnicsInputs, structureInputs, geotechnicsData, updateGeotechnicsInputs, updateStructureInputs }) {
+function Structure({ projectInputs, foundationClass, setFoundationClass, geotechnicsInputs, structureInputs, geotechnicsData, updateGeotechnicsInputs, updateStructureInputs }) {
     const navigate = useNavigate()
     
     function onOpenProjectManager() {
@@ -19,10 +19,9 @@ function Structure({ foundationClass, setFoundationClass, geotechnicsInputs, str
                 <strong>ESTRUTURAS</strong>
             </div>
             <div className={styles.containerColumn}>
-                <ColumnsManager/>
-            </div>
-            <div className={styles.containerColumn}>
-                <SolutionsManager/>
+                <ColumnsManager
+                    projectInputs={projectInputs}
+                />
             </div>
             <div className={styles.containerColumn} style={{ height: '60%' }}>
                 <FoundationsSolution
@@ -30,6 +29,9 @@ function Structure({ foundationClass, setFoundationClass, geotechnicsInputs, str
                     setFoundationClass={setFoundationClass}
                     updateGeotechnicsInputs={updateGeotechnicsInputs} 
                 />
+            </div>
+            <div className={styles.containerColumn}>
+                <SolutionsManager/>
             </div>
             <div className={styles.containerColumn} style={{ height: '25%' }}>
                 <FoundationsManager/>

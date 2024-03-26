@@ -108,6 +108,7 @@ function Main({ projectInputs, updateProjectInputs, projectsData, searchTerm, se
                     isLoading={isLoading}
                 />
                 <Structure
+                    projectInputs={projectInputs}
                     foundationClass={foundationClass}
                     setFoundationClass={setFoundationClass}
                     geotechnicsInputs={geotechnicsInputs}
